@@ -51,6 +51,11 @@ module.exports = (env) => {
         module: {
             rules: [
                 {
+                    test: /\.tsx?$/,
+                    exclude: /node_modules/,
+                    use: 'ts-loader',
+                },
+                {
                     test: /\.svelte$/,
                     exclude: /node_modules/,
                     use: {
