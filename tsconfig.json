@@ -1,0 +1,26 @@
+{
+    "extends": "@tsconfig/svelte/tsconfig.json",
+    "include": [
+        "src",
+        "webpack.config.js"
+    ],
+    "exclude": [
+        "node_modules/*"
+    ],
+    "compilerOptions": {
+        "target": "es2020",
+        "module": "es2020",
+        "moduleResolution": "node",
+        "baseUrl": "./",
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ]
+        },
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "skipLibCheck": true
+    }
+}
