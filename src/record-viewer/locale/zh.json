@@ -1,0 +1,20 @@
+{
+    "locale.name": "繁體中文",
+    "settings.main.title": "設定",
+    "settings.filter.title": "歌曲篩選",
+    "settings.filter.const": "依 譜面定數",
+    "settings.filter.diff": "依 譜面難度",
+    "settings.filter.diff.warn": "*至少選一個吧割",
+    "settings.filter.diff.notify": "*依照難度篩選，可能會使得B30的記錄變得不準確",
+    "settings.filter.genre": "依 歌曲類別",
+    "settings.filter.genre.all": "全部開啟/關閉",
+    "settings.data.title": "遊戲數據",
+    "settings.data.constdata": "使用的定數資料",
+    "settings.data.constdata.intl": "國際版 (NEW+)",
+    "settings.data.constdata.jp": "日版 (SUN)",
+    "settings.data.overpower": "顯示OVER POWER",
+    "settings.data.playcount": "顯示個別歌曲遊玩次數",
+    "settings.ui.title": "使用者介面",
+    "settings.ui.locale": "語言",
+    "settings.ui.theme": "佈景主題"
+}

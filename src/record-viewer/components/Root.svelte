@@ -1,11 +1,14 @@
 <script lang="ts">
     import Header from "./Header.svelte"
-    import { theme } from "../store"
+    import { page, showConfig } from "../store"
+    import { theme } from "../config"
+    import Buttons from "./Buttons.svelte"
+    import Settings from "./Settings.svelte"
 
-    let currentHash = window.location.hash.slice(1)
+    $page = window.location.hash.slice(1)
 
     function routeChange() {
-        currentHash = window.location.hash.slice(1)
+        $page = window.location.hash.slice(1)
     }
 </script>
 
@@ -14,14 +17,15 @@
     <link rel="stylesheet" href="/common/styles/theme-{$theme}.css" />
 </svelte:head>
 
-<Header page="{currentHash}" />
+<Buttons />
+<Header />
 <main>
-    <h2>Hello World {currentHash}</h2>
-    <select name="theme" bind:value={$theme}>
-        <option value="dark">Dark</option>
-        <option value="purple">Purple</option>
-    </select>
+    <h2>Hello World {$page}</h2>
 </main>
+
+{#if $showConfig}
+    <Settings />
+{/if}
 
 <style lang="sass">
     :global(::-webkit-scrollbar)
@@ -44,6 +48,17 @@
         text-decoration: none
         &:hover
             text-decoration: underline dotted
+    :global(button)
+        border: none
+        justify-content: center
+        display: inline-flex
+        align-items: center
+        cursor: pointer
+        user-select: none
+        transition-duration: 0.1s
+        filter: brightness(.7)
+        &:hover
+            filter: brightness(1)
     :global(body)
         background-color: var(--theme-bg-main)
         color: var(--theme-text)
@@ -51,6 +66,7 @@
         font-size: 14px
         min-height: 100%
         min-width: fit-content
+        font-family: "ヒラギノ角ゴ Pro W3","メイリオ",Meiryo,"ＭＳ Ｐゴシック","MS P Gothic",sans-serif
     main
         width: fit-content
         margin: auto

@@ -1,9 +1,12 @@
-import { locales } from "./config"
+import { locale } from "./config"
 
-const translation = {}
+const translations = new Map<string, Map<string, string>>()
+const translationNames = new Map<string, string>()
 
-for (let l of locales) {
-    translation[l] = require(`./locale/${l}.json`)
+for (let l of locale.accepts) {
+    translations.set(l, new Map(Object.entries(require(`./locale/${l}.json`))))
+    translationNames.set(l, translations.get(l)?.get("locale.name") || "Undefined locale name")
 }
 
-export default translation
+export default translations
+export { translations, translationNames }

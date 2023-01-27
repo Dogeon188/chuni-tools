@@ -1,0 +1,20 @@
+{
+    "locale.name": "English",
+    "settings.main.title": "Settings",
+    "settings.filter.title": "Filter",
+    "settings.filter.const": "By Chart Constant",
+    "settings.filter.diff": "By Difficulty",
+    "settings.filter.diff.warn": "*should select at least one!",
+    "settings.filter.diff.notify": "*Filtering difficulties might cause the \"Best 30\" data to be inaccurate.",
+    "settings.filter.genre": "By Genre",
+    "settings.filter.genre.all": "Toggle ALL",
+    "settings.data.title": "Game Data",
+    "settings.data.constdata": "Chart Constant Data to Use",
+    "settings.data.constdata.intl": "International Ver. (NEW+)",
+    "settings.data.constdata.jp": "Japanese Ver. (SUN)",
+    "settings.data.overpower": "Show Over Power",
+    "settings.data.playcount": "Show Play Count",
+    "settings.ui.title": "User Interface",
+    "settings.ui.locale": "Language",
+    "settings.ui.theme": "Theme"
+}

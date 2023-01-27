@@ -1,7 +1,7 @@
 const sveltePreprocessor = require("svelte-preprocess")
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { readdirSync } = require('fs')
-const path = require('path')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const { readdirSync } = require("fs")
+const path = require("path")
 
 const scriptEntryPoints = {}
 readdirSync("./src/scripts")
@@ -45,7 +45,6 @@ module.exports = (env) => {
                     return path.join("./.exclude/style/", chunkName + ".css")
                 }
                 return path.join("./build/", chunkName, "/main.bundle.js")
-                // return chunkName + "/main.bundle.js"
             }
         },
         module: {
@@ -78,11 +77,13 @@ module.exports = (env) => {
             ]
         },
         mode,
-        // devtool: prod ? false : 'source-map',
-        devtool: false,
-        plugins: [new MiniCssExtractPlugin({
-            filename: (pathData) => (path.join("./build/common/styles/", pathData.chunk.name + ".css"))
-        })],
+        optimization: { minimize: prod },
+        devtool: prod ? false : 'source-map',
+        plugins: [
+            new MiniCssExtractPlugin({
+                filename: (pathData) => (path.join("./build/common/styles/", pathData.chunk.name + ".css"))
+            })
+        ],
         devServer: { hot: true }
     }
 }
