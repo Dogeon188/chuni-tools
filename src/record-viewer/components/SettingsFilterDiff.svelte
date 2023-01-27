@@ -1,6 +1,7 @@
 <script lang="ts">
     import { filterDiff } from "../config"
     import { t } from "../i18n"
+    import { difficulties } from "@/common/song"
 </script>
 
 <div class="wrapper">
@@ -13,7 +14,7 @@
         {/if}
     </span>
     <div class="btns">
-        {#each ["BAS", "ADV", "EXP", "MAS", "ULT"] as diff}
+        {#each difficulties as diff}
             <label>
                 <input
                     type="checkbox"

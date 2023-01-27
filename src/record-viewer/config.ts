@@ -1,5 +1,6 @@
 import { Writable, writable } from "svelte/store"
-import { genres } from "./const"
+import { genres } from "@/common/song"
+import { Language } from "@/common/lang"
 
 interface Config<T> extends Writable<T> {
     reset(): void
@@ -132,8 +133,8 @@ function flagsConfig(
     }
 }
 
-const locales = ["en", "zh"]
-export const locale = stringConfig("locale", "en", locales)
+const locales = Object.values(Language)
+export const locale = stringConfig("locale", Language.en_US, locales)
 
 const themes = ["dark", "purple"]
 export const theme = stringConfig("theme", "dark", themes)
@@ -146,9 +147,7 @@ export const filterDiff = flagsConfig("filterDiff", {
 })
 
 let filterGenreConfig: Record<string, boolean> = {}
-for (let g of genres) {
-    filterGenreConfig[g] = true
-}
+for (let g of genres) { filterGenreConfig[g] = true }
 export const filterGenre = flagsConfig("filterGenre", filterGenreConfig)
 
 const availableConstData = ["intl", "jp"]
