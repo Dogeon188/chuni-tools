@@ -1,6 +1,8 @@
-import { Writable, writable } from "svelte/store"
+import { get, Writable, writable } from "svelte/store"
 import { genres } from "@/common/song"
 import { Language } from "@/common/lang"
+import { getPostMessageFunc } from "@/common/bookmarklet"
+import { chuniNet } from "@/common/const"
 
 interface Config<T> extends Writable<T> {
     reset(): void
@@ -134,7 +136,10 @@ function flagsConfig(
 }
 
 const locales = Object.values(Language)
-export const locale = stringConfig("locale", Language.en_US, locales)
+export const locale = stringConfig("locale", Language.en_US, locales, (val) => {
+    const send = getPostMessageFunc(window.opener, chuniNet)
+    send("saveConfig", {lang: get(locale)})
+})
 
 const themes = ["dark", "purple"]
 export const theme = stringConfig("theme", "dark", themes)

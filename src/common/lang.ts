@@ -3,8 +3,12 @@ export enum Language {
     zh_TW = "zh_TW",
 }
 
+export function saveLanguage(l: Language) {
+    localStorage.chuniToolsLang = l
+}
+
 function loadLanguage() {
-    const raw = localStorage.ChuniToolsLang;
+    const raw = localStorage.chuniToolsLang;
     switch (raw) {
         case Language.en_US:
             return Language.en_US;

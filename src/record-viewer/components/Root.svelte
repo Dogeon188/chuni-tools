@@ -1,18 +1,30 @@
 <script lang="ts">
     import Header from "./Header.svelte"
     import { page, showConfig } from "../store"
-    import { theme } from "../config"
+    import { theme, locale } from "../config"
     import Buttons from "./Buttons.svelte"
     import Settings from "./Settings.svelte"
+    import { getPostMessageFunc } from "@/common/bookmarklet"
+    import { chuniNet } from "@/common/const"
 
     $page = window.location.hash.slice(1)
 
     function routeChange() {
         $page = window.location.hash.slice(1)
     }
+
+    function sendReady() {
+        const send = getPostMessageFunc(window.opener, chuniNet)
+        send("saveConfig", {lang: $locale})
+        send("request", {target: "recordList"})
+    }
+
+    function handleMessage(e: MessageEvent) {
+        console.log(e.data)
+    }
 </script>
 
-<svelte:window on:hashchange={routeChange} />
+<svelte:window on:hashchange={routeChange} on:load|once={sendReady} on:message={handleMessage}/>
 <svelte:head>
     <link rel="stylesheet" href="/common/styles/theme-{$theme}.css" />
 </svelte:head>

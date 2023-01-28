@@ -19,4 +19,4 @@ export enum Genre {
     "ゲキマイ" = "9"
 }
 export const genres = Object.keys(Genre)
-export const genreAll = 99
+export const genreAll = "99"
