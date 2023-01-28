@@ -11,9 +11,9 @@ export function getScriptHost(scriptName: string) {
     return "http://127.0.0.1:5500/"
 }
 
-export function getPostMessageFunc(w: WindowProxy, origin: string) {
-    return (action: string, payload: any) => {
-        const obj = { action, payload };
-        w.postMessage(obj, origin);
-    };
+export function getPostMessageFunc(w: WindowProxy, origin: string): PostMessageFunc {
+    return (action, payload) => {
+        const obj = { action, payload }
+        w.postMessage(obj, origin)
+    }
 }

@@ -1,6 +1,6 @@
 import { getInitialLang, Language, saveLanguage } from "@/common/lang"
 import { getCookie } from "@/common/cookie"
-import { fetchRecordList } from "@/common/fetch"
+import { fetchPlayerStats, fetchBestRecord, fetchPlayHistory, fetchRecentRecord, fetchSongPlayCount } from "@/common/fetch"
 import { getPostMessageFunc, getScriptHost } from "@/common/bookmarklet"
 import { chuniNet } from "@/common/const"
 
@@ -54,25 +54,59 @@ import { chuniNet } from "@/common/const"
         b.innerText = UIString.analyzeRating
         b.href = getScriptHost("fetch-all") + "/record-viewer/#best"
         b.target = "recordViewer"
-        d.querySelector(".mt_10")?.insertAdjacentElement("afterbegin", b)
+        d.getElementById("inner")?.insertAdjacentElement("beforebegin", b)
     }
 
-    function messageHandler (e: MessageEvent) {
+    function handleMessageRequest(e: CrossPageRequestMessageEvent, send: PostMessageFunc) {
+        console.log("%cReceived request for: %c" + e.data.payload.target,
+            "color: gray",
+            "color: white")
+        let res
+        switch (e.data.payload.target) {
+            case "bestRecord":
+                console.log(
+                    "%c    Target difficulty: %c" + e.data.payload.difficulty,
+                    "color: gray",
+                    "color: white")
+                res = fetchBestRecord(e.data.payload.difficulty)
+                break
+            case "playHistory": res = fetchPlayHistory(); break
+            case "recentRecord": res = fetchRecentRecord(); break
+            case "playerStats": res = fetchPlayerStats(); break
+            case "songPlayCount":
+                console.log(
+                    "%c    Target song id: %c" + e.data.payload.idx,
+                    "color: gray",
+                    "color: white")
+                console.log(
+                    "%c    Target difficulty: %c" + e.data.payload.difficulty,
+                    "color: gray",
+                    "color: white")
+                res = fetchSongPlayCount(e.data.payload.idx!, e.data.payload.difficulty!)
+                break;
+        }
+        res?.then((r) => {
+            send("respond", {
+                target: e.data.payload.target,
+                uuid: e.data.payload.uuid,
+                data: r
+            })
+        }).catch((er: any) => {
+            send("respond", { target: e.data.payload.target, error: er })
+        })
+    }
+
+    function messageHandler(e: MessageEvent) {
         const send = getPostMessageFunc(<WindowProxy>e.source, e.origin)
         switch (e.data.action) {
-            case "request":
-                console.log("Received request: " + e.data.payload.target)
-                if (e.data.payload.target === "recordList") {
-                    fetchRecordList().then((recordList) => {
-                        send("recordList", recordList)
-                    })
-                }
-                break;
+            case "request": handleMessageRequest(e, send); break
             case "saveConfig":
                 if (e.data.payload.lang) saveLanguage(e.data.payload.lang)
-                console.log("Change language preferences to: " + e.data.payload.lang)
+                console.log("%cChange language preferences to: %c" + e.data.payload.lang,
+                    "color: gray",
+                    "color: white")
             default:
-                break;
+                break
         }
     }
 

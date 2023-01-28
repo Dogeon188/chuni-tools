@@ -13,18 +13,13 @@
         $page = window.location.hash.slice(1)
     }
 
-    function sendReady() {
+    async function sendReady() {
         const send = getPostMessageFunc(window.opener, chuniNet)
-        send("saveConfig", {lang: $locale})
-        send("request", {target: "recordList"})
-    }
-
-    function handleMessage(e: MessageEvent) {
-        console.log(e.data)
+        send("saveConfig", { lang: $locale })
     }
 </script>
 
-<svelte:window on:hashchange={routeChange} on:load|once={sendReady} on:message={handleMessage}/>
+<svelte:window on:hashchange={routeChange} on:load|once={sendReady} />
 <svelte:head>
     <link rel="stylesheet" href="/common/styles/theme-{$theme}.css" />
 </svelte:head>

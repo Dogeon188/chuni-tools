@@ -1,9 +1,21 @@
 import { getCookie } from "./cookie"
 import { parseNumber } from "./number"
-import { genreAll, Difficulty } from "./song"
+import { genreAll, Difficulty, difficulties } from "./song"
 import { chuniNet } from "./const"
 
-export async function fetchRecordList(diff: Difficulty = Difficulty.master) {
+async function fetchChuniPage(url: string, fd?: FormData) {
+    const res = await fetch(chuniNet + url, {
+        headers: { "Cache-Control": "no-cache" },
+        method: fd ? "POST" : "GET",
+        body: fd
+    })
+    if (res.url.indexOf("/error") != -1) {
+        throw new Error("Request failed: rejected by server")
+    }
+    return new DOMParser().parseFromString(await res.text(), "text/html")
+}
+
+export async function fetchBestRecord(diff: Difficulty = Difficulty.master) {
     const fd = new FormData()
     fd.append("genre", genreAll)
     fd.append("token", getCookie("_t"))
@@ -14,16 +26,8 @@ export async function fetchRecordList(diff: Difficulty = Difficulty.master) {
         [Difficulty.advanced]: "sendAdvanced",
         [Difficulty.basic]: "sendBasic"
     }[diff]
+    const dom = await fetchChuniPage("/mobile/record/musicGenre/" + api, fd)
 
-    const res = await fetch(chuniNet + "/mobile/record/musicGenre/" + api, {
-        headers: { "Cache-Control": "no-cache" },
-        method: "POST",
-        body: fd
-    })
-    if (res.url.indexOf("/error") != -1) {
-        throw new Error("Request failed: rejected by server")
-    }
-    const dom = new DOMParser().parseFromString(await res.text(), "text/html")
     const recordList = Array.from(
         dom.querySelectorAll(".box01.w420")[1].querySelectorAll("form")
     ).map((f) => {
@@ -31,13 +35,90 @@ export async function fetchRecordList(diff: Difficulty = Difficulty.master) {
         const scoreText = f.querySelector(".text_b")?.innerHTML
         return {
             title: f.querySelector(".music_title")?.innerHTML,
-            score: parseNumber(scoreText ?? "-1"),
+            score: scoreText ? parseNumber(scoreText) : undefined,
             difficulty: diff,
             clear: icons?.querySelector(`img[src*="alljustice"]`) ? "AJ" :
                 icons?.querySelector(`img[src*="fullcombo"]`) ? "FC" : "",
             idx: (<HTMLInputElement>f.querySelector(`input[name="idx"]`)).value
         }
-    }).filter((s) => s.title !== null && s.score > 0)
-
+    }).filter((s) => s.title !== null && s.score && s.score > 0)
     return recordList
+}
+
+export async function fetchPlayHistory() {
+    const dom = await fetchChuniPage("/mobile/record/playlog")
+
+    const recentRecord = (Array.from(
+        dom.querySelectorAll(".mt_10 .frame02.w400")
+    )).map((d) => {
+        const scoreStr = d.querySelector(".play_musicdata_score_text")?.innerHTML
+        const diffSrc = (<HTMLImageElement>d.querySelector(".play_track_result img")).src
+        const diffStr = /musiclevel_.*(?=\.png)/.exec(diffSrc)![0].slice(11)
+        const icons = <Array<HTMLDivElement>>Array.from(d.querySelectorAll(".play_musicdata_icon"))
+        return {
+            title: d.querySelector(".play_musicdata_title")?.innerHTML,
+            score: parseNumber(scoreStr!),
+            difficulty: diffStr == "ultimate" ? "ULT" : Difficulty[<keyof typeof Difficulty>diffStr],
+            clear: icons.some((di) => di.querySelector(`img[src*="alljustice"]`)) ? "AJ" :
+                icons.some((di) => di.querySelector(`img[src*="fullcombo"]`)) ? "FC" : "",
+            timestamp: Date.parse(d.querySelector(".play_datalist_date")?.innerHTML!)
+        }
+    })
+    return recentRecord
+}
+
+export async function fetchRecentRecord() {
+    const dom = await fetchChuniPage("/mobile/home/playerData/ratingDetailRecent")
+    return Array.from(dom.querySelectorAll("form")).map((f) => {
+        const diffIdxStr = (<HTMLInputElement>dom.querySelector("input[name=diff]"))?.value
+        return {
+            title: f.querySelector(".music_title")?.innerHTML,
+            score: parseNumber(f.querySelector(".text_b")?.innerHTML!),
+            difficulty: Object.values(Difficulty)[parseInt(diffIdxStr!)],
+            clear: "-"
+        }
+    })
+}
+
+export async function fetchPlayerStats() {
+    const dom = await fetchChuniPage("/mobile/home/playerData")
+
+    const honorBg = <HTMLDivElement>dom.querySelector(".player_honor_short")
+    const honorColor = /honor_bg_.*(?=\.png)/.exec(honorBg.style.backgroundImage)
+    const rating = (<Array<HTMLImageElement>>Array.from(
+        dom.querySelectorAll(".player_rating_num_block img")
+    )).map((i) => {
+        if (/rating_.*_comma.png/.test(i.src)) return "."
+        const imgSrc = /rating_.*_[0-9]*(?=\.png)/.exec(i.src)
+        return imgSrc![0].slice(-1)
+    }).join("")
+    return {
+        name: dom.querySelector(".player_name_in")?.innerHTML,
+        honor: {
+            text: dom.querySelector(".player_honor_text_view span")?.innerHTML,
+            color: honorColor ? honorColor[0].slice(9) : "normal"
+        },
+        rating,
+        ratingMax: dom.querySelector(".player_rating_max")?.innerHTML,
+        playCount: dom.querySelector(".user_data_play_count .user_data_text")?.innerHTML
+    }
+}
+
+export async function fetchSongPlayCount(idx: string, diff: Difficulty) {
+    const fd = new FormData()
+    fd.append("idx", idx)
+    fd.append("genre", genreAll)
+    fd.append("diff", difficulties.indexOf(diff).toString())
+    fd.append("token", getCookie("_t"))
+    const dom = await fetchChuniPage("/mobile/record/musicGenre/sendMusicDetail/", fd)
+
+    // console.log(`.music_box.bg_${Difficulty[<keyof typeof Difficulty>diff]} .box14 > div`)
+
+    const pcStr = dom.querySelectorAll(
+        `.music_box.bg_${Object.entries(Difficulty).find((v) => v[1] === diff)![0]} .box14 > div`
+    )[1].querySelector(".text_b")
+        ?.innerHTML
+        .replace("times", "")
+
+    return parseInt(pcStr!)
 }
