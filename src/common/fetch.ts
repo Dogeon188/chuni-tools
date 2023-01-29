@@ -1,4 +1,4 @@
-import { getCookie } from "./cookie"
+import { getCookie } from "./web"
 import { parseNumber } from "./number"
 import { genreAll, Difficulty, difficulties } from "./song"
 import { chuniNet } from "./const"
@@ -70,12 +70,12 @@ export async function fetchPlayHistory() {
 export async function fetchRecentRecord() {
     const dom = await fetchChuniPage("/mobile/home/playerData/ratingDetailRecent")
     return Array.from(dom.querySelectorAll("form")).map((f) => {
-        const diffIdxStr = (<HTMLInputElement>dom.querySelector("input[name=diff]"))?.value
+        const diffIdxStr = (<HTMLInputElement>f.querySelector("input[name=diff]"))?.value
         return {
             title: f.querySelector(".music_title")?.innerHTML,
             score: parseNumber(f.querySelector(".text_b")?.innerHTML!),
             difficulty: Object.values(Difficulty)[parseInt(diffIdxStr!)],
-            clear: "-"
+            clear: ""
         }
     })
 }
@@ -111,8 +111,6 @@ export async function fetchSongPlayCount(idx: string, diff: Difficulty) {
     fd.append("diff", difficulties.indexOf(diff).toString())
     fd.append("token", getCookie("_t"))
     const dom = await fetchChuniPage("/mobile/record/musicGenre/sendMusicDetail/", fd)
-
-    // console.log(`.music_box.bg_${Difficulty[<keyof typeof Difficulty>diff]} .box14 > div`)
 
     const pcStr = dom.querySelectorAll(
         `.music_box.bg_${Object.entries(Difficulty).find((v) => v[1] === diff)![0]} .box14 > div`

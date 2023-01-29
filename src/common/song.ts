@@ -18,5 +18,5 @@ export enum Genre {
     "イロドリ" = "7",
     "ゲキマイ" = "9"
 }
-export const genres = Object.keys(Genre)
+export const genres = Object.keys(Genre) as (keyof typeof Genre)[]
 export const genreAll = "99"

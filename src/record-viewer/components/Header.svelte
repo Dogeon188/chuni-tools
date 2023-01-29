@@ -1,14 +1,17 @@
 <script lang="ts">
-    import { page } from "../store"
+    import { page$ } from "../store"
 </script>
 
 <header>
-    <h3 class:selected={$page == "best"}>
-        <a href="#best">BEST</a>
-    </h3>
-    <h3 class:selected={$page == "recent"}>
-        <a href="#recent">RECENT</a>
-    </h3>
+    <a href="#best">
+        <h3 class:selected={$page$ == "best"}>BEST</h3>
+    </a>
+    <a href="#recent">
+        <h3 class:selected={$page$ == "recent"}>RECENT</h3>
+    </a>
+    <a href="#history">
+        <h3 class:selected={$page$ == "history"}>HISTORY</h3>
+    </a>
 </header>
 
 <style lang="sass">
@@ -16,12 +19,14 @@
         display: flex
         gap: .5rem
         padding: 0 1rem
-    h3
-        margin: 0
-        padding: 1rem 5%
+    a
+        padding: 1rem 3%
         cursor: pointer
-        a
+        &:hover
+            text-decoration-color: var(--theme-text-dim)
+        h3
+            margin: 0
             color: var(--theme-text-dim)
-        &.selected a
+        h3.selected
             color: var(--theme-text)
 </style>

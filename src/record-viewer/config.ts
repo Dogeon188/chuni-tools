@@ -1,8 +1,9 @@
 import { get, Writable, writable } from "svelte/store"
-import { genres } from "@/common/song"
-import { Language } from "@/common/lang"
-import { getPostMessageFunc } from "@/common/bookmarklet"
+import { Genre, genres } from "@/common/song"
+import { getInitialLang, Language } from "@/common/lang"
+import { getPostMessageFunc } from "@/common/web"
 import { chuniNet } from "@/common/const"
+import { bestRecord$, playHistory$, recentRecord$ } from "./store"
 
 interface Config<T> extends Writable<T> {
     reset(): void
@@ -135,13 +136,12 @@ function flagsConfig(
     }
 }
 
-const locales = Object.values(Language)
-export const locale = stringConfig("locale", Language.en_US, locales, (val) => {
+export const language = stringConfig("language", getInitialLang(), Object.values(Language), () => {
     const send = getPostMessageFunc(window.opener, chuniNet)
-    send("saveConfig", {lang: get(locale)})
+    send("saveConfig", { lang: get(language) })
 })
 
-const themes = ["dark", "purple"]
+const themes = ["dark", "purple", "bright"]
 export const theme = stringConfig("theme", "dark", themes)
 
 export const filterConstMin = numberConfig("filterConstMin", 1, 1, 15.4)
@@ -149,15 +149,23 @@ export const filterConstMax = numberConfig("filterConstMax", 15.4, 1, 15.4)
 
 export const filterDiff = flagsConfig("filterDiff", {
     "BAS": false, "ADV": false, "EXP": true, "MAS": true, "ULT": true
+}, () => {
+    bestRecord$.updateDiffFilter()
 })
 
-let filterGenreConfig: Record<string, boolean> = {}
+let filterGenreConfig = {} as Record<keyof typeof Genre, boolean>
 for (let g of genres) { filterGenreConfig[g] = true }
 export const filterGenre = flagsConfig("filterGenre", filterGenreConfig)
 
 const availableConstData = ["intl", "jp"]
-export const usedConstData = stringConfig("usedConstData", "intl", availableConstData)
+export const usedConstData = stringConfig("usedConstData", "intl", availableConstData, () => {
+    recentRecord$.updateConstData()
+    playHistory$.updateConstData()
+    bestRecord$.updateConstData()
+})
 
 export const showOverPower = booleanConfig("showOverPower", false)
 
 export const showPlayCount = booleanConfig("showPlaycount", false)
+
+export const configs = [language, theme, filterConstMax, filterConstMin, filterDiff, filterGenre, usedConstData, showOverPower, showPlayCount,]

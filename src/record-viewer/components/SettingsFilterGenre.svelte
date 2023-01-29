@@ -71,5 +71,5 @@
     .btn-all
         grid-column: 2 / 4
         .btn
-            border-color: #b61
+            border-color: var(--theme-bg-altr)
 </style>

@@ -1,14 +1,15 @@
 <script lang="ts">
     import { fade } from "svelte/transition"
-    import { showConfig } from "../store"
+    import { showConfig$ } from "../store"
     import {
-        locale,
+        language,
         theme,
         filterConstMax,
         filterConstMin,
         showPlayCount,
         showOverPower,
         usedConstData,
+        configs,
     } from "../config"
     import { translationNames } from "../translations"
     import { t } from "../i18n"
@@ -17,13 +18,14 @@
     import UiDualSlider from "./UIDualSlider.svelte"
     import SettingsFilterDiff from "./SettingsFilterDiff.svelte"
     import SettingsFilterGenre from "./SettingsFilterGenre.svelte"
+    import SettingsFetchPlayCount from "./SettingsFetchPlayCount.svelte"
 </script>
 
 <div class="wrapper" transition:fade={{ duration: 100 }}>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class="modal-bg" on:click={showConfig.toggle} />
+    <div class="modal-bg" on:click={showConfig$.toggle} />
     <div class="modal">
-        <button class="close-btn" on:click={showConfig.toggle}>✕</button>
+        <button class="close-btn" on:click={showConfig$.toggle}>✕</button>
         <h3 style="margin: 0;">{@html $t("settings.main.title")}</h3>
 
         <h4>{@html $t("settings.filter.title")}</h4>
@@ -40,19 +42,22 @@
         <hr />
         
         <h4>{@html $t("settings.data.title")}</h4>
-        <UiSelect label={$t("settings.data.constdata")} bind:value={$usedConstData}>
+        <UiSelect label={$t("settings.data.constData")} bind:value={$usedConstData}>
             {#each usedConstData.accepts as d}
-                <option value={d}>{$t("settings.data.constdata." + d)}</option>
+                <option value={d}>{$t("settings.data.constData." + d)}</option>
             {/each}
         </UiSelect>
         <UiSwitch label={$t("settings.data.overpower")} bind:checked={$showOverPower} />
         <UiSwitch label={$t("settings.data.playcount")} bind:checked={$showPlayCount} />
+        {#if $showPlayCount}
+            <SettingsFetchPlayCount />
+        {/if}
         
         <hr />
         
         <h4>{@html $t("settings.ui.title")}</h4>
-        <UiSelect label={$t("settings.ui.locale")} bind:value={$locale}>
-            {#each locale.accepts as l}
+        <UiSelect label={$t("settings.ui.locale")} bind:value={$language}>
+            {#each language.accepts as l}
                 <option value={l}>{translationNames.get(l)}</option>
             {/each}
         </UiSelect>
@@ -61,6 +66,17 @@
                 <option value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>
             {/each}
         </UiSelect>
+
+        <hr />
+
+        <button
+            class="btn reset-btn"
+            on:click={() => {
+                localStorage.clear()
+                for (const config of configs) config.reset()
+            }}>
+            {@html $t("settings.main.reset")}
+        </button>
     </div>
 </div>
 
@@ -101,6 +117,15 @@
         background-color: var(--theme-border)
         color: var(--theme-text)
         border-radius: 40%
+    .reset-btn
+        display: block
+        margin-left: auto
+        background-color: var(--theme-reset)
+        width: fit-content
+        padding: .5rem 1.5rem
+        border-radius: .8rem
+        font-weight: bold
+        color: var(--theme-text)
     h4
         margin: .5rem 0
         color: var(--theme-text-dim)

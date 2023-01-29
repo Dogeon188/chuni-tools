@@ -1,5 +1,5 @@
 import { getInitialLang, Language } from "@/common/lang"
-import { getScriptHost } from "@/common/bookmarklet"
+import { getScriptHost } from "@/common/web"
 import { chuniNet, chuniNetBase } from "@/common/const"
 
 (function (d: Document, w: Window & { chuniTools: boolean }) {

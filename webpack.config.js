@@ -2,6 +2,7 @@ const sveltePreprocessor = require("svelte-preprocess")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const { readdirSync } = require("fs")
 const path = require("path")
+const { DefinePlugin } = require("webpack")
 
 const scriptEntryPoints = {}
 readdirSync("./src/scripts")
@@ -82,6 +83,9 @@ module.exports = (env) => {
         plugins: [
             new MiniCssExtractPlugin({
                 filename: (pathData) => (path.join("./build/common/styles/", pathData.chunk.name + ".css"))
+            }),
+            new DefinePlugin({
+                "__APP_VERSION__": `"${process.env.npm_package_version}"`
             })
         ],
         devServer: { hot: true }

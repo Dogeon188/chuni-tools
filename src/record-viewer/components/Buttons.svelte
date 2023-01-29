@@ -1,14 +1,26 @@
 <script lang="ts">
-    import { showConfig } from "../store"
+    import { showConfig$ } from "../store"
+    import { usedConstData } from "../config"
+    import { saveResultAsPicture } from "../share"
 </script>
 
 <div class="wrapper">
-    <!-- <button on:click={saveResultAsPicture}>
+    <button on:click={saveResultAsPicture}>
         <svg width="18" height="18">
             <path d="M7 2H11V8H15L9 14 3 8H7V2ZM3 14H15V16H3V14Z" fill="white" />
         </svg>
-    </button> -->
-    <button on:click={showConfig.toggle}>
+    </button>
+    {#if usedConstData.accepts.indexOf("jp") > -1}
+        <button
+            class="btn"
+            style="font-weight:bold"
+            on:click={() => {
+                $usedConstData = $usedConstData == "jp" ? "intl" : "jp"
+            }}>
+            {$usedConstData == "jp" ? "JP" : "IN"}
+        </button>
+    {/if}
+    <button on:click={showConfig$.toggle}>
         <svg width="18" height="18">
             <path d="M2 4H16V6H2V4ZM2 8H16V10H2V8ZM2 12H16V14H2V12Z" fill="white" />
         </svg>
@@ -24,10 +36,11 @@
         gap: 1rem
         position: fixed
         right: 1rem
-        top: 0.3rem
+        top: 0.6rem
     button
         width: 2.5rem
         height: 2.5rem
         background: var(--theme-border)
         border-radius: 40%
+        color: white
 </style>

@@ -1,5 +1,7 @@
 /// <reference types="svelte" />
 
+declare let __APP_VERSION__: string
+
 type PostMessageFunc = (action: string, payload: any) => void
 
 type CrossPageRequestMessageEvent = MessageEvent<{
@@ -14,7 +16,6 @@ type CrossPageRequestMessageEvent = MessageEvent<{
     }
 }>
 
-
 type PlayRecord = {
     title: string,
     score: number,
@@ -22,11 +23,10 @@ type PlayRecord = {
     clear: "AJ" | "FC" | ""
 }
 
+type BestRecord = PlayRecord & { idx: string }
+type RecentRecord = PlayRecord & { timestamp: number }
 
-type BestPlayRecord = PlayRecord & { idx: string }
-type RecentPlayRecord = PlayRecord & { timestamp: number }
-
-type ParsedRecord = (BestPlayRecord | RecentPlayRecord ) & {
+type ParsedRecord = (BestRecord & RecentRecord ) & {
     const: number
     rank: string
     rating: number
@@ -34,7 +34,7 @@ type ParsedRecord = (BestPlayRecord | RecentPlayRecord ) & {
     op: number
     opmax: number
     playCount?: number
-    genre: number
+    genre: string
 }
 
 type PlayerStats = {
@@ -43,4 +43,13 @@ type PlayerStats = {
     rating: string,
     ratingMax: string,
     playCount: string
+}
+
+type SongConstData = {
+    BAS: number,
+    ADV: number,
+    EXP: number,
+    MAS: number,
+    ULT?: number,
+
 }

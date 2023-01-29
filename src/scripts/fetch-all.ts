@@ -1,7 +1,7 @@
 import { getInitialLang, Language, saveLanguage } from "@/common/lang"
-import { getCookie } from "@/common/cookie"
+import { getCookie } from "@/common/web"
 import { fetchPlayerStats, fetchBestRecord, fetchPlayHistory, fetchRecentRecord, fetchSongPlayCount } from "@/common/fetch"
-import { getPostMessageFunc, getScriptHost } from "@/common/bookmarklet"
+import { getPostMessageFunc, getScriptHost } from "@/common/web"
 import { chuniNet } from "@/common/const"
 
 (async function (d: Document) {
@@ -85,6 +85,10 @@ import { chuniNet } from "@/common/const"
                 res = fetchSongPlayCount(e.data.payload.idx!, e.data.payload.difficulty!)
                 break;
         }
+        send("preflight", {
+            target: e.data.payload.target,
+            uuid: e.data.payload.uuid,
+        })
         res?.then((r) => {
             send("respond", {
                 target: e.data.payload.target,
@@ -92,7 +96,12 @@ import { chuniNet } from "@/common/const"
                 data: r
             })
         }).catch((er: any) => {
-            send("respond", { target: e.data.payload.target, error: er })
+            console.error(er)
+            send("respond", {
+                target: e.data.payload.target,
+                uuid: e.data.payload.uuid,
+                error: er
+            })
         })
     }
 

@@ -44,7 +44,7 @@ export function calcRating(song: ParsedRecord) {
 }
 
 export function calcOp(song: ParsedRecord) {
-    let e1 = { "AJ": 1, "FC": 0.5, "": 0, "-": 0 }[song.clear]
+    let e1 = { "AJ": 1, "FC": 0.5, "": 0 }[song.clear]
     if (song.score == 1010000) return (song.const + 3) * 5
     if (song.score > 1007500) return (song.const + 2) * 5 + e1 + (song.score - 1007500) * 0.0015
     return song.rating * 5 + e1

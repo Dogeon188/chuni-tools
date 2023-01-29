@@ -61,7 +61,9 @@
         cursor: pointer
         transition: .2s
         color: var(--theme-text-control)
+        border: 4px solid var(--theme-bg-control)
         @each $diff in ("ULT", "MAS", "EXP", "ADV", "BAS")
             &[data-diff="#{$diff}"]
-                border: 4px solid var(--theme-song-#{to-lower-case($diff)})
+                // border: 4px solid var(--theme-song-#{to-lower-case($diff)})
+                color: var(--theme-song-#{to-lower-case($diff)})
 </style>

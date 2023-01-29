@@ -1,5 +1,5 @@
 import { derived } from "svelte/store"
-import { locale } from "./config"
+import { language } from "./config"
 import translations from "./translations"
 
 function translate(locale: string, key: string, vars: Record<string, string>) {
@@ -18,6 +18,6 @@ function translate(locale: string, key: string, vars: Record<string, string>) {
 }
 
 export const t = derived(
-    locale,
-    ($locale) => (
-        (key: string, vars = {}) => translate($locale, key, vars)))
+    language,
+    ($language) => (
+        (key: string, vars = {}) => translate($language, key, vars)))
