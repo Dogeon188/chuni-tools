@@ -8,7 +8,7 @@ export function getScriptHost(scriptName: string) {
             return url.origin + path.substring(0, path.lastIndexOf("/scripts"))
         }
     }
-    return "http://127.0.0.1:5500/"
+    return "https://dogeon188.github.io/chuni-tools/"
 }
 
 export function getPostMessageFunc(w: WindowProxy, origin: string): PostMessageFunc {

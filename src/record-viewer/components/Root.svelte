@@ -33,7 +33,7 @@
 
 <svelte:window on:hashchange={routeChange} on:load|once={sendReady} />
 <svelte:head>
-    <link rel="stylesheet" href="/common/styles/theme-{$theme}.css" />
+    <link rel="stylesheet" href="../common/styles/theme-{$theme}.css" />
 </svelte:head>
 
 {#await Promise.all( [playerStats$.init(), recentRecord$.init(), playHistory$.init(), bestRecord$.init()] )}

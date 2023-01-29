@@ -20,6 +20,7 @@ readdirSync("./src/common/styles")
 module.exports = (env) => {
     const mode = env.development ? "development" : "production"
     const prod = mode === 'production'
+    const outputPath = prod ? "./docs" : "./build"
     return {
         entry: {
             "record-viewer": "@/record-viewer/main.ts",
@@ -39,13 +40,13 @@ module.exports = (env) => {
             filename: (pathData) => {
                 const chunkName = pathData.chunk.name
                 if (scriptEntryPoints[chunkName]) {
-                    return path.join("./build/scripts/", chunkName + ".js")
+                    return path.join(outputPath, "./scripts/", chunkName + ".js")
                 }
                 if (styleEntryPoints[chunkName]) {
                     // workaround for sass building
                     return path.join("./.exclude/style/", chunkName + ".css")
                 }
-                return path.join("./build/", chunkName, "/main.bundle.js")
+                return path.join(outputPath, chunkName, "/main.bundle.js")
             }
         },
         module: {
@@ -82,7 +83,7 @@ module.exports = (env) => {
         devtool: prod ? false : 'source-map',
         plugins: [
             new MiniCssExtractPlugin({
-                filename: (pathData) => (path.join("./build/common/styles/", pathData.chunk.name + ".css"))
+                filename: (pathData) => (path.join(outputPath, "./common/styles/", pathData.chunk.name + ".css"))
             }),
             new DefinePlugin({
                 "__APP_VERSION__": `"${process.env.npm_package_version}"`
