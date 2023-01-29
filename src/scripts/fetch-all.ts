@@ -4,6 +4,30 @@ import { fetchPlayerStats, fetchBestRecord, fetchPlayHistory, fetchRecentRecord,
 import { getPostMessageFunc, getScriptHost } from "@/common/web"
 import { chuniNet } from "@/common/const"
 
+const buttonStyleRule = `.chuni-tool-btn {
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    display: block;
+    width: fit-content;
+    text-decoration: none;
+    border-radius: .5rem;
+    border: 4px solid #567;
+    background-color: #234;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    filter: brightness(.7);
+    transition: 0.2s;
+}`
+const buttonHoverStyleRule = `
+.chuni-tool-btn:hover {
+    filter: brightness(1);
+    color: white;
+}`;
+
 (async function (d: Document) {
     const UIString = {
         [Language.en_US]: {
@@ -27,30 +51,8 @@ import { chuniNet } from "@/common/const"
     function insertOpenerBtn() {
         const b = d.createElement("a")
         b.className = "chuni-tool-btn"
-        d.styleSheets[0].insertRule(`
-            .chuni-tool-btn {
-                color: white;
-                font-size: 1.5em;
-                font-weight: bold;
-                padding: 1.5rem;
-                margin: 2rem auto;
-                display: block;
-                width: fit-content;
-                text-decoration: none;
-                border-radius: .5rem;
-                border: 4px solid #567;
-                background-color: #234;
-                text-align: center;
-                cursor: pointer;
-                user-select: none;
-                filter: brightness(.7);
-                transition: 0.2s;
-            }`)
-        d.styleSheets[0].insertRule(`
-            .chuni-tool-btn:hover {
-                filter: brightness(1);
-                color: white;
-            }`)
+        d.styleSheets[0].insertRule(buttonStyleRule)
+        d.styleSheets[0].insertRule(buttonHoverStyleRule)
         b.innerText = UIString.analyzeRating
         b.href = getScriptHost("fetch-all") + "/record-viewer/#best"
         b.target = "recordViewer"

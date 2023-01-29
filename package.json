@@ -8,6 +8,10 @@
   },
   "author": "Dogeon188",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dogeon188/chuni-tools.git"
+  },
   "devDependencies": {
     "@tsconfig/svelte": "^2.0.1",
     "css-loader": "^6.7.3",

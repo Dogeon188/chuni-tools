@@ -18,6 +18,7 @@
     import RecordTable from "./RecordTable.svelte"
     import Loading from "./Loading.svelte"
     import MessageText from "./MessageText.svelte"
+    import { t } from "../i18n"
 
     $page$ = window.location.hash.slice(1)
 
@@ -34,6 +35,7 @@
 <svelte:window on:hashchange={routeChange} on:load|once={sendReady} />
 <svelte:head>
     <link rel="stylesheet" href="../common/styles/theme-{$theme}.css" />
+    <title>{$t("main.title")}</title>
 </svelte:head>
 
 {#await Promise.all( [playerStats$.init(), recentRecord$.init(), playHistory$.init(), bestRecord$.init()] )}

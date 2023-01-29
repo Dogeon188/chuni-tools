@@ -10,7 +10,7 @@
     <div class="modal-bg" />
     <div class="modal">
         <h3>
-            {@html $t("loading.title")}
+            {@html $t("main.title")}
             <!-- svelte-ignore missing-declaration -->
             <span class="app-version">@{__APP_VERSION__}</span>
         </h3>

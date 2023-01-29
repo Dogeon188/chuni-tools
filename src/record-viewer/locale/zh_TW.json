@@ -1,6 +1,6 @@
 {
     "locale.name": "繁體中文",
-    "loading.title": "CHUNITHM 查分器",
+    "main.title": "CHUNITHM 查分器",
     "loading.constData": "使用來自 {{name}} 的定數資料",
     "loading.error": "哇，看來我們這裡出了一點小意外，<br/>這可能是因為過期的憑證所導致的。<br/>可以考慮 <em>重新整理</em> 或 <em>重新登入 CHUNITHM-NET</em> 再試試。",
     "settings.main.title": "設定",
