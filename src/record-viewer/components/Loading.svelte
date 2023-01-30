@@ -21,7 +21,7 @@
             <div class="spinner" />
             <p>{@html $messageText$}</p>
             {#if usedConstData.accepts.indexOf("jp") > -1}
-                <p style="color:var(--theme-text-dim)">
+                <p class="dim">
                     {@html $t("loading.constData", {
                         name: $t("settings.data.constData." + $usedConstData),
                     })}
@@ -63,7 +63,7 @@
         font-size: small
     .spinner
         margin: 2rem auto
-        border: .5rem solid transparent
+        border: .5rem solid var(--theme-bg-sub)
         border-top-color: var(--theme-label)
         border-radius: 50%
         width: 4rem
@@ -75,6 +75,8 @@
         line-height: 4rem
         font-size: 5rem
         color: var(--theme-label)
+    .dim
+        color: var(--theme-text-dim)
     @keyframes spin
         0%
             transform: rotate(0deg)

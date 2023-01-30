@@ -141,7 +141,7 @@ export const language = stringConfig("language", getInitialLang(), Object.values
     send("saveConfig", { lang: get(language) })
 })
 
-const themes = ["dark", "purple", "bright"]
+const themes = ["dark", "purple"]
 export const theme = stringConfig("theme", "dark", themes)
 
 export const filterConstMin = numberConfig("filterConstMin", 1, 1, 15.4)

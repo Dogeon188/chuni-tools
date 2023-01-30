@@ -1,6 +1,12 @@
 <script lang="ts">
     import { requestFor } from "../request"
-    import { showConfig$, showMessageText$, bestRecord$, messageText$, messageTextLoading$ } from "../store"
+    import {
+        showConfig$,
+        showMessageText$,
+        bestRecord$,
+        messageText$,
+        messageTextLoading$,
+    } from "../store"
     import { t } from "../i18n"
     let from = 1
     let to = 40
@@ -41,6 +47,7 @@
 
 <div class="wrapper">
     <button
+        type="button"
         class="btn"
         class:disabled={$showMessageText$ || invalidPlayCount(from, to)}
         on:click={() => fetchMultiPlayCount(from, to)}>
@@ -64,7 +71,7 @@
         align-items: center
     input[type=number]
         background-color: var(--theme-bg-sub)
-        color: var(--theme-text)
+        color: var(--theme-text-control)
         border: none
         border-radius: .2rem
         width: 4rem
@@ -78,14 +85,8 @@
         width: fit-content
         padding: .5rem 1.5rem
         border-radius: .8rem
-        font-weight: bold
-        cursor: pointer
-        user-select: none
-        opacity: .9
-        transition: .2s
-        background-color: var(--theme-bg-control)
-        &:hover
-            opacity: 1
+        background-color: var(--theme-control)
+        color: var(--theme-text-control)
         &.disabled
             background-color: var(--theme-border)
             cursor: no-drop

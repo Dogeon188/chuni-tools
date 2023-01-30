@@ -7,15 +7,16 @@
     export let high: number
 
     let dist = max - min
-    let _low = low, _high = high
-    $: lowPer = ((_low - min) / dist) * 100
-    $: highPer = ((_high - min) / dist) * 100
+    let _low = low,
+        _high = high
+    $: lowPer$$ = ((_low - min) / dist) * 100
+    $: highPer$$ = ((_high - min) / dist) * 100
 </script>
 
 <div class="wrapper">
     <span>{@html label}</span>
     <div class="indicators">
-        <div class="low" style="left: calc((100% - 3rem) * {lowPer} / 100)">
+        <div class="low" style="left: calc((100% - 3rem) * {lowPer$$} / 100)">
             <input
                 value={_low}
                 type="number"
@@ -28,10 +29,10 @@
                     _low = Math.min(max, Math.max(min, _low))
                     if (_low > _high) _high = _low
                     e.currentTarget.value = _low.toString()
-                    low = _low, high = _high
+                    ;(low = _low), (high = _high)
                 }} />
         </div>
-        <div class="high" style="left: calc((100% - 3rem) * {highPer} / 100)">
+        <div class="high" style="left: calc((100% - 3rem) * {highPer$$} / 100)">
             <input
                 value={_high}
                 type="number"
@@ -44,7 +45,7 @@
                     _high = Math.min(max, Math.max(min, _high))
                     if (_high < _low) _low = _high
                     e.currentTarget.value = _high.toString()
-                    low = _low, high = _high
+                    ;(low = _low), (high = _high)
                 }} />
         </div>
     </div>
@@ -55,10 +56,10 @@
             background: linear-gradient(
                 to right,
                 var(--theme-border) 0%,
-                var(--theme-border) {lowPer - 1}%,
-                var(--theme-bg-control) {lowPer - 1}%,
-                var(--theme-bg-control) {highPer + 1}%,
-                var(--theme-border) {highPer + 1}%,
+                var(--theme-border) {lowPer$$ - 1}%,
+                var(--theme-control) {lowPer$$ - 1}%,
+                var(--theme-control) {highPer$$ + 1}%,
+                var(--theme-border) {highPer$$ + 1}%,
                 var(--theme-border) 100%
             )" />
         <input
@@ -68,7 +69,9 @@
             {max}
             {step}
             bind:value={_low}
-            on:change={() => {low = _low, high = _high}}
+            on:change={() => {
+                ;(low = _low), (high = _high)
+            }}
             on:input={() => {
                 if (_low > _high) _high = _low
             }} />
@@ -79,7 +82,9 @@
             {max}
             {step}
             bind:value={_high}
-            on:change={() => {low = _low, high = _high}}
+            on:change={() => {
+                ;(low = _low), (high = _high)
+            }}
             on:input={() => {
                 if (_high < _low) _low = _high
             }} />
@@ -161,13 +166,19 @@
             border-radius: 0 50% 50% 0
             cursor: pointer
             transition: .2s
+            &:hover
+                background-color: var(--theme-text)
+            &:active
+                box-shadow: 0 0 .5rem var(--theme-text-dim)
+                -webkit-box-shadow: 0 0 .5rem var(--theme-text-dim)
         &::-webkit-slider-thumb
             @include slider-thumb
         &::-moz-range-thumb
             @include slider-thumb
-        &::-webkit-slider-thumb:hover
-            background-color: var(--theme-text)
-        &::-webkit-slider-thumb:active
-            box-shadow: 0 0 .5rem var(--theme-text-dim)
-            -webkit-box-shadow: 0 0 .5rem var(--theme-text-dim)
+        &:focus-visible
+            outline: none
+        &:focus-visible::-webkit-slider-thumb
+            outline: var(--theme-border) auto 1px
+        &:focus-visible::-moz-range-thumb
+            outline: var(--theme-border) auto 1px
 </style>

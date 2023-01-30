@@ -5,24 +5,31 @@
 </script>
 
 <div class="wrapper">
-    <button on:click={saveResultAsPicture}>
+    <button type="button" on:click={saveResultAsPicture}>
         <svg width="18" height="18">
-            <path d="M7 2H11V8H15L9 14 3 8H7V2ZM3 14H15V16H3V14Z" fill="white" />
+            <path
+                d="M7 2H11V8H15L9 14 3 8H7V2ZM3 14H15V16H3V14Z"
+                fill="var(--theme-text)" />
         </svg>
     </button>
     {#if usedConstData.accepts.indexOf("jp") > -1}
         <button
-            class="btn"
-            style="font-weight:bold"
+            type="button"
             on:click={() => {
-                $usedConstData = $usedConstData == "jp" ? "intl" : "jp"
+                $usedConstData =
+                    usedConstData.accepts[
+                        (usedConstData.accepts.indexOf($usedConstData) + 1) %
+                            usedConstData.accepts.length
+                    ]
             }}>
-            {$usedConstData == "jp" ? "JP" : "IN"}
+            {$usedConstData.slice(0, 2).toUpperCase()}
         </button>
     {/if}
-    <button on:click={showConfig$.toggle}>
+    <button type="button" on:click={showConfig$.toggle}>
         <svg width="18" height="18">
-            <path d="M2 4H16V6H2V4ZM2 8H16V10H2V8ZM2 12H16V14H2V12Z" fill="white" />
+            <path
+                d="M2 4H16V6H2V4ZM2 8H16V10H2V8ZM2 12H16V14H2V12Z"
+                fill="var(--theme-text)" />
         </svg>
     </button>
 </div>
@@ -42,5 +49,5 @@
         height: 2.5rem
         background: var(--theme-border)
         border-radius: 40%
-        color: white
+        font-weight: bold
 </style>

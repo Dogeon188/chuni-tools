@@ -26,8 +26,11 @@
         width: 0
         height: 0
         opacity: 0
+        position: absolute
+        &:focus-visible + .wrapper .slider
+            outline: var(--theme-border) auto 1px
         &:checked + .wrapper .slider
-            background-color: var(--theme-bg-control)
+            background-color: var(--theme-control)
             &:before
                 transform: translateX(2.5rem)
             &:after

@@ -6,6 +6,7 @@ import { t } from "@/record-viewer/i18n"
 
 export const recordSorts: Record<string, (a: ParsedRecord, b: ParsedRecord) => number> = {
     default: (a, b) => b.rating - a.rating || b.const - a.const || a.score - b.score,
+    playOrder: (a, b) => b.timestamp - a.timestamp,
     title: (a, b) => {
         if (a.title < b.title) return -1
         if (a.title > b.title) return 1

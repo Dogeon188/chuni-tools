@@ -25,7 +25,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="modal-bg" on:click={showConfig$.toggle} />
     <div class="modal">
-        <button class="close-btn" on:click={showConfig$.toggle}>✕</button>
+        <button type="button" class="close-btn" on:click={showConfig$.toggle}>✕</button>
         <h3 style="margin: 0;">{@html $t("settings.main.title")}</h3>
 
         <h4>{@html $t("settings.filter.title")}</h4>
@@ -40,7 +40,7 @@
         <SettingsFilterGenre />
 
         <hr />
-        
+
         <h4>{@html $t("settings.data.title")}</h4>
         <UiSelect label={$t("settings.data.constData")} bind:value={$usedConstData}>
             {#each usedConstData.accepts as d}
@@ -52,9 +52,9 @@
         {#if $showPlayCount}
             <SettingsFetchPlayCount />
         {/if}
-        
+
         <hr />
-        
+
         <h4>{@html $t("settings.ui.title")}</h4>
         <UiSelect label={$t("settings.ui.locale")} bind:value={$language}>
             {#each language.accepts as l}
@@ -70,6 +70,7 @@
         <hr />
 
         <button
+            type="button"
             class="btn reset-btn"
             on:click={() => {
                 localStorage.clear()

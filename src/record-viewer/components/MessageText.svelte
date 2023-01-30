@@ -20,7 +20,7 @@
         background-color: #0006
         backdrop-filter: blur(2px)
     .spinner
-        border: .2rem solid transparent
+        border: .2rem solid var(--theme-bg-sub)
         border-top-color: var(--theme-label)
         display: inline-block
         box-sizing: border-box

@@ -7,10 +7,12 @@
 
 <tr
     class:best30={song.order <= ($page$ === "recent" || $page$ === "history" ? 10 : 30)}
-    class:best40={song.order <= ($page$ === "recent" ? 10 : $page$ === "history" ? 30 : 40)}
+    class:best40={song.order <=
+        ($page$ === "recent" ? 10 : $page$ === "history" ? 30 : 40)}
     class:ajc={song.score == 1010000}>
-    <td>{song.order}</td>
-    <td data-diff={song.difficulty}>{song.title}</td>
+    <td class="song-order">{song.order}</td>
+    <td data-diff={song.difficulty} colspan={$page$ === "history" ? 2 : 1}
+        >{song.title}</td>
     <td>{song.const == -1 ? "-" : song.const?.toFixed(1) ?? "??.?"}</td>
     {#if $showOverPower}
         <td>
@@ -21,7 +23,7 @@
         </td>
     {:else}
         <td data-rank={song.rank}>{song.rank}</td>
-        <td>{song.score}</td>
+        <td class="song-score">{song.score}</td>
     {/if}
     <td>
         {song.const == -1 ? "-" : song.rating == null ? "??.??" : song.rating.toFixed(2)}
@@ -56,20 +58,20 @@
         border-top: var(--theme-border) 1.5px solid
         text-align: center
     tbody
-        tr.best30 td:first-child
+        tr.best30 td.song-order
             color: var(--theme-rank-b30)
-        tr.best40 td:first-child
+        tr.best40 td.song-order
             font-weight: bold
-        tr:not(.best40) td:first-child
+        tr:not(.best40) td.song-order
             color: var(--theme-text-dim)
-        tr td:nth-child(2)
+        tr td[data-diff]
             font-weight: bold
             text-align: left
             max-width: 300px
             @each $diff in ("WE", "ULT", "MAS", "EXP", "ADV", "BAS")
                 &[data-diff="#{$diff}"]
                     color: var(--theme-song-#{to-lower-case($diff)})
-        tr td:nth-child(4)
+        tr td[data-rank]
             white-space: nowrap
             &[data-rank="MAX"]
                 color: var(--theme-clear_aj)
@@ -94,7 +96,7 @@
             &[data-clear="AJ"]
                 color: var(--theme-clear-aj)
         tr.ajc
-            td:nth-child(4), td:nth-child(5), td[data-clear]
+            td[data-rank], td.song-score, td[data-clear]
                 color: var(--theme-clear_aj)
                 text-shadow: 0 0 10px var(--theme-clear-aj)
     .opmx

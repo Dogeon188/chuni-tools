@@ -8,9 +8,9 @@
 </script>
 
 <script lang="ts">
-    $: bestRating = $bestRecord$.slice(0, 30).map((s) => s.rating)
-    $: recentRating = $recentRecord$.map((s) => s.rating)
-    $: historyRating = $playHistory$.map((s) => s.rating)
+    $: bestRating$$ = $bestRecord$.slice(0, 30).map((s) => s.rating)
+    $: recentRating$$ = $recentRecord$.map((s) => s.rating)
+    $: historyRating$$ = $playHistory$.map((s) => s.rating)
 </script>
 
 <div class="wrapper">
@@ -22,30 +22,30 @@
     <div class="stats-honor" data-honor={$playerStats$.honor.color}>
         {$playerStats$.honor.text}
     </div>
-    <div class="overview-items">
+    <div class="stats-items">
         <PlayerStatsItem
             title={$t("player.generic.generatedAt")}
             content={new Date().toLocaleDateString()} />
         {#if $page$ === "best"}
             <PlayerStatsItem
                 title={$t("player.best.best30")}
-                content={calcBestN(bestRating, 30).toFixed(4)} />
+                content={calcBestN(bestRating$$, 30).toFixed(4)} />
             <PlayerStatsItem
                 title={$t("player.best.maxPossible")}
-                content={floorAndToFixed2(calcMaxPossible(bestRating))} />
+                content={floorAndToFixed2(calcMaxPossible(bestRating$$))} />
             <PlayerStatsItem
                 title={$t("player.best.playCount")}
                 content={$playerStats$.playCount} />
         {:else if $page$ === "recent" || $page$ === "history"}
             <PlayerStatsItem
                 title={$t("player.recent.best10")}
-                content={calcBestN(recentRating, 10).toFixed(4)} />
+                content={calcBestN(recentRating$$, 10).toFixed(4)} />
             <PlayerStatsItem
                 title={$t("player.recent.history10")}
-                content={calcBestN(historyRating, 10).toFixed(4)} />
+                content={calcBestN(historyRating$$, 10).toFixed(4)} />
             <PlayerStatsItem
                 title={$t("player.recent.history30")}
-                content={calcBestN(historyRating, 30).toFixed(4)} />
+                content={calcBestN(historyRating$$, 30).toFixed(4)} />
         {/if}
     </div>
 </div>
@@ -89,7 +89,7 @@
         @each $t in ("normal", "bronze", "silver", "gold", "platina", "rainbow")
             &[data-honor=#{$t}]
                 color: var(--theme-honor-#{$t})
-    .overview-items
+    .stats-items
         width: fit-content
         display: grid
         grid-template-areas: "... ..."
@@ -97,7 +97,7 @@
         gap: 5px
         padding: 5px
     @media only screen and (max-width: 500px) 
-        .overview-items
+        .stats-items
             grid-area: 3/1/4/3
             grid-template-areas: "... ... ... ..."
             justify-self: center
