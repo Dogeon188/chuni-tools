@@ -2,8 +2,9 @@ import { parseRecord } from "./record"
 import { difficulties } from "@/common/song"
 import { derived, get, writable } from "svelte/store"
 import { filterDiff, usedConstData } from "./config"
-import { t } from "./i18n"
 import { CrossPageRequestMap, requestFor } from "./request"
+import { getTranslator } from "@/common/i18n"
+import { language } from "@/common/config"
 
 function toggleable(defaultState = false) {
     const { subscribe, set, update } = writable(defaultState)
@@ -14,6 +15,8 @@ function toggleable(defaultState = false) {
         toggle() { update(b => !b) }
     }
 }
+
+export const { t, translationNames } = getTranslator("record-viewer", language)
 
 export const page$ = writable("best")
 

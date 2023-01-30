@@ -2,7 +2,7 @@ import { constData$ } from "@/record-viewer/store"
 import { get } from "svelte/store"
 import { calcOp, calcOpMax, calcRank, calcRating } from "../common/rating"
 import { difficulties, difficultyWorldsend } from "../common/song"
-import { t } from "@/record-viewer/i18n"
+import { t } from "@/record-viewer/store"
 
 export const recordSorts: Record<string, (a: ParsedRecord, b: ParsedRecord) => number> = {
     default: (a, b) => b.rating - a.rating || b.const - a.const || a.score - b.score,

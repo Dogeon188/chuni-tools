@@ -29,6 +29,6 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "html-to-image": "^1.11.4"
+    "html-to-image": "^1.11.7"
   }
 }

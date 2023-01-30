@@ -1,5 +1,4 @@
 {
-    "locale.name": "English (US)",
     "main.title": "Chunithm Tools",
     "loading.constData": "Used song constant data: {{name}}",
     "loading.error": "Oops! We got some errors when fetching song record.<br/>It might be caused by an outdated token.<br/><em>Reload the page</em>, <em>re-login CHUNITHM-NET</em><br/>or <em>re-run the bookmarklet</em> might help...",

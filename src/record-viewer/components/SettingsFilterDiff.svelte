@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { filterDiff } from "../config"
-    import { t } from "../i18n"
     import { difficulties } from "@/common/song"
+    import { filterDiff } from "../config"
+    import { t } from "../store"
 </script>
 
 <div class="wrapper">

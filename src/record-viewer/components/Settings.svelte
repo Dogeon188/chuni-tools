@@ -1,9 +1,10 @@
 <script lang="ts">
     import { fade } from "svelte/transition"
-    import { showConfig$ } from "../store"
+    import Select from "@/common/components/Select.svelte"
+    import Switch from "@/common/components/Switch.svelte"
+    import DualSlider from "@/common/components/DualSlider.svelte"
+    import { theme, language } from "@/common/config"
     import {
-        language,
-        theme,
         filterConstMax,
         filterConstMin,
         showPlayCount,
@@ -11,11 +12,7 @@
         usedConstData,
         configs,
     } from "../config"
-    import { translationNames } from "../translations"
-    import { t } from "../i18n"
-    import UiSelect from "./UISelect.svelte"
-    import UiSwitch from "./UISwitch.svelte"
-    import UiDualSlider from "./UIDualSlider.svelte"
+    import { t, translationNames, showConfig$ } from "../store"
     import SettingsFilterDiff from "./SettingsFilterDiff.svelte"
     import SettingsFilterGenre from "./SettingsFilterGenre.svelte"
     import SettingsFetchPlayCount from "./SettingsFetchPlayCount.svelte"
@@ -29,7 +26,7 @@
         <h3 style="margin: 0;">{@html $t("settings.main.title")}</h3>
 
         <h4>{@html $t("settings.filter.title")}</h4>
-        <UiDualSlider
+        <DualSlider
             label={$t("settings.filter.const")}
             max={15.4}
             min={1}
@@ -42,13 +39,13 @@
         <hr />
 
         <h4>{@html $t("settings.data.title")}</h4>
-        <UiSelect label={$t("settings.data.constData")} bind:value={$usedConstData}>
+        <Select label={$t("settings.data.constData")} bind:value={$usedConstData}>
             {#each usedConstData.accepts as d}
                 <option value={d}>{$t("settings.data.constData." + d)}</option>
             {/each}
-        </UiSelect>
-        <UiSwitch label={$t("settings.data.overpower")} bind:checked={$showOverPower} />
-        <UiSwitch label={$t("settings.data.playcount")} bind:checked={$showPlayCount} />
+        </Select>
+        <Switch label={$t("settings.data.overpower")} bind:checked={$showOverPower} />
+        <Switch label={$t("settings.data.playcount")} bind:checked={$showPlayCount} />
         {#if $showPlayCount}
             <SettingsFetchPlayCount />
         {/if}
@@ -56,16 +53,16 @@
         <hr />
 
         <h4>{@html $t("settings.ui.title")}</h4>
-        <UiSelect label={$t("settings.ui.locale")} bind:value={$language}>
+        <Select label={$t("settings.ui.locale")} bind:value={$language}>
             {#each language.accepts as l}
                 <option value={l}>{translationNames.get(l)}</option>
             {/each}
-        </UiSelect>
-        <UiSelect label={$t("settings.ui.theme")} bind:value={$theme}>
+        </Select>
+        <Select label={$t("settings.ui.theme")} bind:value={$theme}>
             {#each theme.accepts as t}
                 <option value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>
             {/each}
-        </UiSelect>
+        </Select>
 
         <hr />
 

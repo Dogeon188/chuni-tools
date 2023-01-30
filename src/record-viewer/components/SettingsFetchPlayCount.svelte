@@ -1,13 +1,14 @@
 <script lang="ts">
     import { requestFor } from "../request"
     import {
+        t,
         showConfig$,
         showMessageText$,
         bestRecord$,
         messageText$,
         messageTextLoading$,
     } from "../store"
-    import { t } from "../i18n"
+    
     let from = 1
     let to = 40
 

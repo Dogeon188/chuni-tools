@@ -4,12 +4,10 @@ const { readdirSync } = require("fs")
 const path = require("path")
 const { DefinePlugin } = require("webpack")
 
-const scriptEntryPoints = {}
-readdirSync("./src/scripts")
-    .filter((f) => f.endsWith(".ts"))
-    .forEach((f) => {
-        scriptEntryPoints[path.basename(f, ".ts")] = "./" + path.join("./src/scripts", f)
-    })
+const scriptEntryPoints = {
+    "chuni-tools": "@/scripts/chuni-tools.ts",
+    "fetch-all": "@/scripts/fetch-all.ts",
+}
 const styleEntryPoints = {}
 readdirSync("./src/common/styles")
     .filter((f) => f.endsWith(".sass"))
@@ -24,6 +22,7 @@ module.exports = (env) => {
     return {
         entry: {
             "record-viewer": "@/record-viewer/main.ts",
+            "index-page": "@/index-page/main.ts",
             ...scriptEntryPoints,
             ...styleEntryPoints
         },

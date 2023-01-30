@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { filterGenre } from "../config"
-    import { t } from "../i18n"
     import { genres } from "@/common/song"
+    import { filterGenre } from "../config"
+    import { t } from "../store"
+    
     let allGenre = genres.every((genre) => $filterGenre[genre])
 </script>
 

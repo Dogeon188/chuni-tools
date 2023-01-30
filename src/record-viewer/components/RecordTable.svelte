@@ -1,11 +1,11 @@
 <script lang="ts">
     import { showOverPower, showPlayCount } from "../config"
-    import { page$ } from "../store"
+    import { page$, t } from "../store"
     import RecordItem from "./RecordItem.svelte"
-    import { t } from "../i18n"
     import { recordSorts } from "@/record-viewer/record"
     import RankCounts from "./RankCounts.svelte"
     // import OverpowerStatus from "./OverpowerStatus.svelte"
+    
     export let playRecord: ParsedRecord[]
     export let title: string | undefined = undefined
 

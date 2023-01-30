@@ -1,10 +1,15 @@
 <script context="module">
     import { floorAndToFixed2 } from "@/common/number"
     import { calcBestN, calcMaxPossible } from "@/common/rating"
-    import { bestRecord$, page$, playHistory$, recentRecord$ } from "../store"
+    import {
+        bestRecord$,
+        page$,
+        playHistory$,
+        recentRecord$,
+        playerStats$,
+        t,
+    } from "../store"
     import PlayerStatsItem from "./PlayerStatsItem.svelte"
-    import { t } from "../i18n"
-    import { playerStats$ } from "../store"
 </script>
 
 <script lang="ts">

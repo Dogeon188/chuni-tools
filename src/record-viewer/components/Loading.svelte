@@ -1,7 +1,6 @@
 <script lang="ts">
     import { usedConstData } from "../config"
-    import { messageText$ } from "../store"
-    import { t } from "../i18n"
+    import { messageText$, t } from "../store"
 
     export let error = false
 </script>

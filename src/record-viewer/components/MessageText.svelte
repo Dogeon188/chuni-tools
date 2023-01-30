@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { messageText$, messageTextLoading$ } from "../store"
     import { fly } from "svelte/transition"
+    import { messageText$, messageTextLoading$ } from "../store"
 </script>
 
 <div class="wrapper" transition:fly={{ y: 200, duration: 1000 }}>
