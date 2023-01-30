@@ -59,28 +59,20 @@
         rankCounts={rankCounts$$}
         total={processedRecord$$.length} />
 {/if}
-<table>
-    <thead>
-        {#if title}
-            <td colspan="7" class="title">{title}</td>
-        {/if}
-        <tr class:reversed={sortReverse}>
-            {#each ths$$ as elt}
-                {#if elt.condition ?? true}
-                    <th
-                        tabindex="0"
-                        class:cur-sort={!elt.notcur && elt.sort == sortBy}
-                        on:click={() => {
-                            if (sortBy === elt.sort) {
-                                processedRecord$$ = processedRecord$$.reverse()
-                                sortReverse = !sortReverse
-                            } else {
-                                sortBy = elt.sort
-                                sortReverse = false
-                            }
-                        }}
-                        on:keypress={(e) => {
-                            if (e.code === "Enter" || e.code === "Space") {
+
+<div class="table-wrapper">
+    <table>
+        <thead>
+            {#if title}
+                <td colspan="7" class="title">{title}</td>
+            {/if}
+            <tr class:reversed={sortReverse}>
+                {#each ths$$ as elt}
+                    {#if elt.condition ?? true}
+                        <th
+                            tabindex="0"
+                            class:cur-sort={!elt.notcur && elt.sort == sortBy}
+                            on:click={() => {
                                 if (sortBy === elt.sort) {
                                     processedRecord$$ = processedRecord$$.reverse()
                                     sortReverse = !sortReverse
@@ -88,22 +80,36 @@
                                     sortBy = elt.sort
                                     sortReverse = false
                                 }
-                            }
-                        }}>
-                        {@html $t("record.head." + elt.display)}
-                    </th>
-                {/if}
+                            }}
+                            on:keypress={(e) => {
+                                if (e.code === "Enter" || e.code === "Space") {
+                                    if (sortBy === elt.sort) {
+                                        processedRecord$$ = processedRecord$$.reverse()
+                                        sortReverse = !sortReverse
+                                    } else {
+                                        sortBy = elt.sort
+                                        sortReverse = false
+                                    }
+                                }
+                            }}>
+                            {@html $t("record.head." + elt.display)}
+                        </th>
+                    {/if}
+                {/each}
+            </tr>
+        </thead>
+        <tbody>
+            {#each processedRecord$$ as song}
+                <RecordItem {song} />
             {/each}
-        </tr>
-    </thead>
-    <tbody>
-        {#each processedRecord$$ as song}
-            <RecordItem {song} />
-        {/each}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 <style lang="sass">
+    .table-wrapper
+        width: 100%
+        overflow-x: scroll
     table
         border-spacing: 0
         width: 100%
@@ -116,13 +122,13 @@
         cursor: pointer
         -webkit-user-select: none
         user-select: none
+        white-space: nowrap
     th:not(.cur-sort):hover
         color: inherit
         filter: brightness(.9)
     th.cur-sort
         filter: brightness(1)
         color: inherit
-        white-space: nowrap
     th.cur-sort::before
         color: var(--theme-text-dim)
         content: "▼ "

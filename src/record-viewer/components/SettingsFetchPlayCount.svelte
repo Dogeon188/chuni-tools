@@ -51,7 +51,7 @@
         class="btn"
         class:disabled={$showMessageText$ || invalidPlayCount(from, to)}
         on:click={() => fetchMultiPlayCount(from, to)}>
-        Fetch
+        {@html $t("playcount.fetch.button")}
     </button>
     <input
         type="number"
@@ -59,7 +59,7 @@
         placeholder="from"
         bind:value={from}
         inputmode="numeric" />
-    &#xFF5E;
+    <span> &#xFF5E; </span>
     <input type="number" min="1" placeholder="to" bind:value={to} inputmode="numeric" />
 </div>
 
@@ -77,6 +77,7 @@
         width: 4rem
         padding: .5rem
         -moz-appearance: textfield
+        appearance: textfield
         flex-grow: 1
         &::-webkit-inner-spin-button
             -webkit-appearance: none

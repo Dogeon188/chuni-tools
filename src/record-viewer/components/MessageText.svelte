@@ -17,7 +17,7 @@
         left: .5rem
         padding: .5rem
         border-radius: .5rem
-        background-color: #0006
+        background-color: #0008
         backdrop-filter: blur(2px)
     .spinner
         border: .2rem solid var(--theme-bg-sub)
@@ -30,7 +30,7 @@
         animation: spin 1s cubic-bezier(.5, .2, .5, .8) infinite
     .text
         color: var(--theme-text-dim)
-        font-size: 8px
+        font-size: .8em
     @keyframes spin
         0%
             transform: rotate(0deg)

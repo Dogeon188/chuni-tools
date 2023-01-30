@@ -47,6 +47,7 @@
     "record.fetch.diff.bas": "BASIC",
     "record.fetch.unknown": "Found unknown song(s):\n\n{{songs}}\n\nPlease contact the author at Twitter or Discord.",
     "record.fetch.error": "<span style=\"color:red;\">Some error occured when fetching best record!<br/>You probably need to reload the page now.</span>",
+    "playcount.fetch.button": "Fetch",
     "playcount.fetch.progress": "Fetching play count... ({{progress}}/{{all}})",
     "playcount.fetch.error": "<span style=\"color:red;\">Some error occured when fetching play count!<br/>You probably need to reload the page now.</span>"
 }

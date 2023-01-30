@@ -19,7 +19,7 @@
         height: 3rem
         padding-left: 1rem
         padding-right: 2.5rem
-        font-size: 1rem
+        font-size: 1em
         font-weight: bold
         background: var(--theme-bg-main)
         border: var(--theme-border) 2px solid

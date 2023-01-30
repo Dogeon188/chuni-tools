@@ -62,6 +62,7 @@
     <Buttons />
     <main>
         <PlayerStats />
+
         {#if $page$ === "best"}
             <RecordTable playRecord={filteredBestRecord$$} />
         {:else if $page$ === "recent"}
@@ -85,7 +86,6 @@
 <style lang="sass">
     :global(::-webkit-scrollbar)
         width: .6rem
-        cursor: grab
     :global(::-webkit-scrollbar-thumb)
         width: .2rem
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3)
@@ -112,9 +112,10 @@
         -webkit-user-select: none
         user-select: none
         color: inherit
-        font-size: 1rem
+        font-size: 1em
         font-weight: bold
         font-family: inherit
+        white-space: nowrap
         transition-duration: 0.1s
         filter: brightness(.7)
         &:hover
@@ -123,14 +124,15 @@
         background-color: var(--theme-bg-main)
         color: var(--theme-text)
         margin: 0
-        font-size: 14px
+        font-size: 12px
         min-height: 100%
         font-family: "ヒラギノ角ゴ Pro W3","メイリオ",Meiryo,"ＭＳ Ｐゴシック","MS P Gothic",sans-serif
     :global(*:focus-visible)
         outline-color: var(--theme-border)
         filter: brightness(1) !important
     main
-        width: -moz-fit-content
-        width: fit-content
-        margin: auto
+        width: 100%
+        display: flex
+        flex-direction: column
+        align-items: center
 </style>

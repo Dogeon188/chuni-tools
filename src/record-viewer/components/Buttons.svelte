@@ -40,14 +40,17 @@
         flex-direction: row
         justify-content: space-between
         align-items: center
-        gap: 1rem
+        gap: 1em
         position: fixed
         right: 1rem
         top: 0.6rem
     button
-        width: 2.5rem
-        height: 2.5rem
+        width: 2rem
+        height: 2rem
         background: var(--theme-border)
+        opacity: 0.8
         border-radius: 40%
         font-weight: bold
+    svg
+        overflow: visible
 </style>

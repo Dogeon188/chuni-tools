@@ -33,18 +33,18 @@
     .wrapper   
         display: flex
         flex-direction: column
-        padding: .5rem
+        padding: .5em
         gap: 1rem
     .btns
         display: flex
         flex-direction: row
-        gap: .5rem
+        gap: .5em
     button
         width: 100%
-        padding: .5rem
-        border-radius: .5rem
+        padding: .5em
+        border-radius: .5em
         background-color: var(--theme-bg-sub)
-        border: 4px solid var(--theme-control)
+        border: 3px solid var(--theme-control)
         filter: brightness(.5)
         &:hover
             filter: brightness(.8)

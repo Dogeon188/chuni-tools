@@ -73,7 +73,7 @@
         margin: 4rem auto
         height: 4rem
         line-height: 4rem
-        font-size: 5rem
+        font-size: 5em
         color: var(--theme-label)
     .dim
         color: var(--theme-text-dim)

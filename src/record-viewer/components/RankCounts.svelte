@@ -38,6 +38,7 @@
         border-radius: 0.5rem
         background-color: var(--theme-bg-sub)
         width: fit-content
+        max-width: 600px
         padding: 0.5rem
         margin: 0.5rem
         display: flex
@@ -50,7 +51,7 @@
         div:nth-child(1)
             color: var(--theme-label)
         div:nth-child(2)
-            font-size: 1.2rem
+            font-size: 1.2em
             font-weight: bold
         &.fc div:nth-child(1)
             color: var(--theme-clear-fc)

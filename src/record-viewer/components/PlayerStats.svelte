@@ -56,24 +56,26 @@
         border-radius: 0.5rem
         background-color: var(--theme-bg-sub)
         width: fit-content
+        max-width: 600px
         padding: 0.5rem
         margin: 0.5rem
         display: grid
         align-items: center
+        justify-items: center
         width: calc(100% - 2rem - 6px)
     .stats-name
         grid-column: 1
-        width: max-content
-        justify-self: center
+        width: auto
+        white-space: nowrap
     .stats-rating
         grid-column: 2
-        justify-self: center
         display: flex
         flex-direction: column
         gap: .5rem
         h2
             margin: 0
             text-align: center
+            width: fit-content
         span
             color: var(--theme-text-dim)
     .stats-honor
@@ -84,6 +86,7 @@
         border-radius: 3px
         padding: 5px 2rem
         margin: 0 20px
+        width: -webkit-fill-available
         text-align: center
         white-space: nowrap
         @each $t in ("normal", "bronze", "silver", "gold", "platina", "rainbow")
@@ -96,11 +99,19 @@
         grid-area: 1/3/3/4
         gap: 5px
         padding: 5px
-    @media only screen and (max-width: 500px) 
+    @media only screen and (max-width: 544px) 
+        .stats-name
+            width: 50%
+            margin: auto
+        .stats-rating
+            grid-column: 1
         .stats-items
+            grid-area: 1/2/3/3
+            max-width: fit-content
+        .stats-honor
             grid-area: 3/1/4/3
-            grid-template-areas: "... ... ... ..."
-            justify-self: center
-            width: 100%
-            justify-content: space-evenly
+        //     grid-template-areas: "... ... ... ..."
+        //     justify-self: center
+        //     width: 100%
+        //     justify-content: space-evenly
 </style>

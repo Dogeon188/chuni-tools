@@ -44,7 +44,7 @@
                         song.idx
                     )
                 }}>
-                <span>...</span>
+                <span>　</span>
             </td>
         {:else}
             <td>{song.playCount || "?"}</td>
@@ -54,7 +54,7 @@
 
 <style lang="sass">
     td
-        padding: 0.5rem
+        padding: .5rem
         border-top: var(--theme-border) 1.5px solid
         text-align: center
     tbody
@@ -101,11 +101,11 @@
                 text-shadow: 0 0 10px var(--theme-clear-aj)
     .opmx
         color: var(--theme-text-dim)
-        font-size: .8rem
+        font-size: .8em
     .pc-hidden
         cursor: pointer
         span
-            border-radius: .2rem
+            border-radius: .2em
             background-color: var(--theme-bg-sub)
             color: var(--theme-bg-sub)
 </style>

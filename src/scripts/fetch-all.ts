@@ -14,7 +14,7 @@ const buttonStyleRule = `.chuni-tool-btn {
     width: fit-content;
     text-decoration: none;
     border-radius: .5rem;
-    border: 4px solid #567;
+    border: 3px solid #567;
     background-color: #234;
     text-align: center;
     cursor: pointer;

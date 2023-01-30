@@ -43,7 +43,6 @@ export async function parseRecord(playRecord: PlayRecord[], isBestRecord = false
     const recordList = playRecord as ParsedRecord[]
     const musicData = await get(constData$)
     const cannotFetch = [] as ParsedRecord[]
-    // msgText.set("Calculating data...")
     recordList.map((r) => {
         if (<string>r.difficulty === difficultyWorldsend) {
             r.const = -1

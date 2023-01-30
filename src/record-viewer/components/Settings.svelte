@@ -104,7 +104,7 @@
         max-height: 80%
         overflow-y: auto
         margin: auto
-        padding: 2rem
+        padding: 2em
         position: relative
         box-shadow: 2rem 2rem 10px #0008
         border-radius: 1rem
@@ -122,6 +122,7 @@
         display: block
         margin-left: auto
         background-color: var(--theme-reset)
+        width: -moz-fit-content
         width: fit-content
         padding: .5rem 1.5rem
         border-radius: .8rem

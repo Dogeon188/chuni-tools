@@ -138,6 +138,7 @@
         max-width: 150%
         text-align: center
         -moz-appearance: textfield
+        appearance: textfield
     input::-webkit-inner-spin-button
         -webkit-appearance: none
         margin: 0

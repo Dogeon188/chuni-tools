@@ -48,7 +48,7 @@
         padding: .5rem
         border-radius: .5rem
         background-color: var(--theme-bg-sub)
-        border: 4px solid var(--theme-control)
+        border: 3px solid var(--theme-control)
         color: var(--theme-text-control)
         filter: brightness(.5)
         &:hover
