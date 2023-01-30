@@ -29,7 +29,7 @@ for (let c of usedConstData.accepts) songConstData[c] = undefined
 export const constData$ = derived(usedConstData, async ($usedConstData: string) => {
     if (!songConstData[$usedConstData]) {
         songConstData[$usedConstData] = await fetch(
-            `https://raw.githubusercontent.com/Dogeon188/chuni_new_intl_viewer/data/data/${$usedConstData}.json`
+            `../data/song-const/${$usedConstData}.json`
         ).then(async (d) => await d.json())
     }
     return songConstData[$usedConstData]

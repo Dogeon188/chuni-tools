@@ -4,3 +4,5 @@ node_modules/
 .vscode/
 .exclude/
 build/
+build-data.js
+log.md
