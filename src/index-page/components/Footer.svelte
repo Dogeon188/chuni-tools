@@ -19,6 +19,8 @@
 
 <style lang="sass">
     footer
+        max-width: 600px
+        margin: auto
         padding: 2em
         gap: .5em
         display: flex
