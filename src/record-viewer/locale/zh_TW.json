@@ -1,6 +1,7 @@
 {
     "main.title": "CHUNITHM 查分器",
     "loading.constData": "使用來自 {{name}} 的定數資料",
+    "loading.error.serviceDown": "CHUNITHM-NET 目前正在停服維修。<br/>請在其可以使用的時段執行本程式。",
     "loading.error.rejected": "哇，看來你的CHUNITHM-NET死掉了，<br/>這可能是因為您在別處也開啟了CHUNITHM-NET。<br/>可以考慮 <em>重新整理</em>、<em>重新登入 CHUNITHM-NET</em><br/>或者是 <em>重新執行一次書籤小工具</em> 再試試。",
     "loading.error.timeout": "糟了，我們和休士頓失去了聯繫！<br/>這可能是因為您關掉了原本CHUNITHM-NET的分頁，<br/>或是將其重新整理，或跳轉至其他頁面所導致的。<br/>請<em>重新開啟CHUNITHM-NET</em>並<em>重新執行本程式</em>。<br/>這次別把原本的分頁關掉或重整了啊！",
     "loading.error.noopener": "看來您走錯路了！<br/>要使用本查分器，請<em>開啟CHUNITHM-NET</em>並<em>執行書籤小工具</em>，<br/>然後<em>確實地點下按鈕</em>，而非使用滑鼠中鍵等方式另開新分頁。",

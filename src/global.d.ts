@@ -2,18 +2,21 @@
 
 declare let __APP_VERSION__: string
 
-type PostMessageFunc = (action: string, payload: any) => void
+type CrossPageRequestMessagePayload = {
+    uuid: string,
+    target?: string,
+    error?: Error,
+    data?: any
+    // for playcount & best record
+    difficulty?: import("@/common/song").Difficulty,
+    idx?: string
+}
+
+type PostMessageFunc = (action: string, payload: CrossPageRequestMessagePayload) => void
 
 type CrossPageRequestMessageEvent = MessageEvent<{
     action: string,
-    payload: {
-        uuid: string,
-        target: string,
-        error?: any,
-        data?: unknown
-        difficulty?: import("@/common/song").Difficulty,
-        idx?: string
-    }
+    payload: CrossPageRequestMessagePayload
 }>
 
 type PlayRecord = {

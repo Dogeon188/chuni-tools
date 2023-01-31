@@ -9,6 +9,9 @@ async function fetchChuniPage(url: string, fd?: FormData) {
         method: fd ? "POST" : "GET",
         body: fd
     })
+    if (res.status === 503 || res.status === 405) {
+        throw new Error("Service temporarily unavailable")
+    }
     if (res.url.indexOf("/error") != -1) {
         throw new Error("Request failed: rejected by server")
     }

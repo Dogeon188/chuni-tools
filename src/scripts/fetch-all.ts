@@ -62,10 +62,11 @@ const buttonHoverStyleRule = `
         d.getElementById("inner")?.insertAdjacentElement("beforebegin", b)
     }
 
-    function handleMessageRequest(e: CrossPageRequestMessageEvent, send: PostMessageFunc) {
+    function handleMessageRequest(e: CrossPageRequestMessageEvent) {
         console.log("%cReceived request for: %c" + e.data.payload.target,
             "color: gray",
             "color: white")
+        const send = getPostMessageFunc(<WindowProxy>e.source, e.origin)
         let res
         switch (e.data.payload.target) {
             case "bestRecord":
@@ -80,14 +81,14 @@ const buttonHoverStyleRule = `
             case "playerStats": res = fetchPlayerStats(); break
             case "songPlayCount":
                 console.log(
-                    "%c    Target song id: %c" + e.data.payload.idx,
+                    "%c    Target song id: %c" + e.data.payload.data.idx,
                     "color: gray",
                     "color: white")
                 console.log(
-                    "%c    Target difficulty: %c" + e.data.payload.difficulty,
+                    "%c    Target difficulty: %c" + e.data.payload.data.difficulty,
                     "color: gray",
                     "color: white")
-                res = fetchSongPlayCount(e.data.payload.idx!, e.data.payload.difficulty!)
+                res = fetchSongPlayCount(e.data.payload.data.idx!, e.data.payload.data.difficulty!)
                 break;
         }
         send("preflight", {
@@ -100,7 +101,7 @@ const buttonHoverStyleRule = `
                 uuid: e.data.payload.uuid,
                 data: r
             })
-        }).catch((er: any) => {
+        }).catch((er: Error) => {
             console.error(er)
             send("respond", {
                 target: e.data.payload.target,
@@ -110,15 +111,17 @@ const buttonHoverStyleRule = `
         })
     }
 
-    function messageHandler(e: MessageEvent) {
-        const send = getPostMessageFunc(<WindowProxy>e.source, e.origin)
+    function messageHandler(e: CrossPageRequestMessageEvent) {
         switch (e.data.action) {
-            case "request": handleMessageRequest(e, send); break
+            case "request": handleMessageRequest(e); break
             case "saveConfig":
-                if (e.data.payload.lang) saveLanguage(e.data.payload.lang)
-                console.log("%cChange language preferences to: %c" + e.data.payload.lang,
-                    "color: gray",
-                    "color: white")
+                const l = e.data.payload.data?.lang
+                if (l) {
+                    saveLanguage(l)
+                    console.log("%cChange language preferences to: %c" + l,
+                        "color: gray",
+                        "color: white")
+                }
             default:
                 break
         }

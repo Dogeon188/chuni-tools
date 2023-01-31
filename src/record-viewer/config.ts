@@ -9,7 +9,7 @@ import { subscribe } from "svelte/internal"
 
 subscribe(language, () => {
     const send = getPostMessageFunc(window.opener, chuniNet)
-    send("saveConfig", { lang: get(language) })
+    send("saveConfig", { data: { lang: get(language) }, uuid: "changeLang" })
 })
 
 export const filterConstMin = numberConfig("filterConstMin", 1, 1, 15.4)

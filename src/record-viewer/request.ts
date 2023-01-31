@@ -87,9 +87,7 @@ export async function requestFor<K extends keyof CrossPageRequestMap>(
     idx?: string
 ): Promise<CrossPageRequestMap[K]> {
     const uuid = crypto.randomUUID()
-    const payload: any = { target, uuid }
-    if (difficulty) payload.difficulty = difficulty
-    if (idx) payload.idx = idx
+    const payload: any = { target, uuid, data: { difficulty, idx } }
     const p = new CrossPageRequest<CrossPageRequestMap[K]>(uuid, payload)
     requestList.set(uuid, p)
     return p.promise

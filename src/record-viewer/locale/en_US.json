@@ -1,7 +1,7 @@
 {
     "main.title": "CHUNITHM Record Viewer",
     "loading.constData": "Used song constant data: {{name}}",
-    "loading.error": "Oops! We got some errors when fetching song record.<br/>It might be caused by an outdated token.<br/><em>Reload the page</em>, <em>re-login CHUNITHM-NET</em><br/>or <em>re-run the bookmarklet</em> might help...",
+    "loading.error.serviceDown": "CHUNITHM-NET service is currently unavailable.<br/>Please come back later.",
     "loading.error.rejected": "Oops! It seems that your CHUNITHM-NET just went dead.<br/>It's probably because you opened it somewhere else.<br/><em>Reload the page</em>, <em>re-login CHUNITHM-NET</em><br/>or <em>re-run the bookmarklet</em> might help...",
     "loading.error.timeout": "Oh no! Looks like we've lost connection with Houston.<br/>You probably have accidentally closed the CHUNITHM-NET page,<br/>or navigated it to somewhere else.<br/>Please <em>re-open CHUNITHM-NET</em> and <em>run the bookmarklet again</em>.<br/>Remember not to throw away the original page again!",
     "loading.error.noopener": "Looks like you are at the wrong place!<br/>To use the record viewer, please properly <em>open CHUNITHM-NET</em> and <em>run the bookmarklet</em>.<br/>Last but not least, <em>make sure you clicked the button</em>,<br/>rather than opening a new tab via mid-click, etc.",
