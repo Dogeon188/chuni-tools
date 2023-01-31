@@ -1,9 +1,15 @@
 <script lang="ts">
-    import { theme } from "@/common/config"
+    import { onMount } from "svelte"
+    import { language, theme } from "@/common/config"
     import { t } from "../store"
     import Intro from "./Intro.svelte"
     import HowToUse from "./HowToUse.svelte"
     import Footer from "./Footer.svelte"
+    import { saveLanguage } from "@/common/lang"
+
+    onMount(() => {
+        saveLanguage($language)
+    })
 </script>
 
 <svelte:head>
