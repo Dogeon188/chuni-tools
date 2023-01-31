@@ -1,26 +1,22 @@
 <script lang="ts">
-    import { theme, language } from "@/common/config"
-    import { t, translationNames } from "../store"
+    import { theme } from "@/common/config"
+    import { t } from "../store"
     import Intro from "./Intro.svelte"
     import HowToUse from "./HowToUse.svelte"
-    import Select from "@/common/components/Select.svelte"
+    import Footer from "./Footer.svelte"
 </script>
 
 <svelte:head>
-    <link rel="stylesheet" href="../common/styles/common.css" />
-    <link rel="stylesheet" href="../common/styles/theme-{$theme}.css" />
+    <link rel="stylesheet" href="./common/styles/common.css" />
+    <link rel="stylesheet" href="./common/styles/theme-{$theme}.css" />
     <title>{$t("main.title")}</title>
 </svelte:head>
 
 <main>
-    <Select bind:value={$language} label={$t("main.chooseLang")}>
-        {#each language.accepts as l}
-            <option value={l}>{translationNames.get(l)}</option>
-        {/each}
-    </Select>
     <p><Intro /></p>
     <p><HowToUse /></p>
 </main>
+<Footer />
 
 <style lang="sass">
     :global(img)
