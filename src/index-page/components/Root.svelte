@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { t } from "../store"
     import { theme, language } from "@/common/config"
-    import Select from "@/common/components/Select.svelte"
+    import { t, translationNames } from "../store"
     import Intro from "./Intro.svelte"
-
+    import HowToUse from "./HowToUse.svelte"
+    import Select from "@/common/components/Select.svelte"
 </script>
 
 <svelte:head>
@@ -12,15 +12,25 @@
     <title>{$t("main.title")}</title>
 </svelte:head>
 
-<select bind:value={$language}>
-    <option value="en_US">en_US</option>
-    <option value="zh_TW">zh_TW</option>
-</select>
 <main>
-    <Intro />
+    <Select bind:value={$language} label={$t("main.chooseLang")}>
+        {#each language.accepts as l}
+            <option value={l}>{translationNames.get(l)}</option>
+        {/each}
+    </Select>
+    <p><Intro /></p>
+    <p><HowToUse /></p>
 </main>
 
 <style lang="sass">
+    :global(img)
+        max-width: 100%
+        max-height: 50vh
+        display: block
+        margin: 1em auto
+        border-radius: 1em
     main
-        padding: 1em
+        padding: 2em
+        max-width: 600px
+        margin: auto
 </style>

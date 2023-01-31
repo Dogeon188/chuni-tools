@@ -6,7 +6,7 @@ import type { Language } from "./lang"
 export function getTranslator(base: string, languageConfig: StringConfig<Language>) {
     const { translations, translationNames } = getTranslations(base)
 
-    function translate(locale: string, key: string, vars: {[key: string]: string}) {
+    function translate(locale: string, key: string, vars: { [key: string]: string }) {
         if (!key) throw new Error("No key specified")
         let text = translations.get(locale)?.get(key)
         if (text === undefined) {
@@ -24,7 +24,7 @@ export function getTranslator(base: string, languageConfig: StringConfig<Languag
     const t = derived(
         languageConfig,
         ($language) => (
-            (key: string, vars = {}) => translate($language, key, vars)))
+            (key: string, vars: { [replaceKey: string]: string } = {}) => translate($language, key, vars)))
 
     return { t, translationNames }
 }

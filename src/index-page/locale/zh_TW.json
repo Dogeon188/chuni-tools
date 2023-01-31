@@ -1,4 +1,17 @@
 {
-    "main.title": "CHUNITHM 書籤小工具",
-    "intro.title": "關於 CHUNITHM 書籤小工具"
+    "main.title": "關於 CHUNITHM 書籤小工具",
+    "main.chooseLang": "選擇語言",
+    "intro.title": "關於 CHUNITHM 書籤小工具",
+    "intro.about": "透過這個書籤小工具，您可以查詢自己在中二節奏的各式遊玩記錄，包括歌曲的<em>最佳記錄彙整</em>、<em>最近遊玩的歌曲記錄</em>等，結合定數資料算出您在遊戲中的<em>評價（Rating）</em>。",
+    "intro.contact": "我們預計會在未來新增更多的功能，並且持續改進本工具，敬請期待！若是有任何改進的建議，或是什麼新的點子，也都歡迎私訊告訴本工具的作者 <a href=\"https://twitter.com/dogeon188\">Dogeon</a>，他會非常感激的。<del>如果能夠幫忙奉獻肝臟的話那就更好了</del>",
+    "howto.title": "如何使用 CHUNITHM 書籤小工具",
+    "howto.step.copyLink": "複製以下的連結：",
+    "howto.step.copyLink.button": "點我直接複製",
+    "howto.step.bookmarkAdd": "將本頁面新增至書籤，命名為<em>CHUNI TOOLS</em>。",
+    "howto.step.bookmarkEdit": "打開書籤列表，找到您剛剛新增的書籤，點選<em>編輯書籤</em>，將原本的連結清除，<em>貼上稍早複製的連結</em>，然後按下<em>儲存</em>。",
+    "howto.step.gotoNet": "前往<a href=\"https://chunithm-net-eng.com/mobile/\" target=\"_blank\" rel=\"noreferrer noopener\">CHUNITHM-NET</a>。如果您在此前沒有登入並使用過 CHUNITHM-NET，此時您需要先依照網頁的指示登入。<a href=\"https://chunithm.fandom.com/zh/wiki/CHUNITHM-NET?variant=zh-tw#Aime_%E5%B8%B3%E8%99%9F%E7%B6%81%E5%AE%9A\" target=\"_blank\" rel=\"noreferrer noopener\">如何登入CHUNITHM-NET？</a>",
+    "howto.step.run": "確定成功登入之後，<em>在 CHUNITHM-NET 的分頁</em>打開書籤列表，找到您剛剛新增的<em>CHUNI TOOLS</em>書籤，並且按下它。",
+    "howto.step.done": "此時最上方應該會出現一個深色的按鈕（如下圖），勇敢的<em>按下去</em>，它就會在新分頁開啟查分器，接下來您就可以盡情使用本工具了。",
+    "howto.step.done.imgAlt": "會有按鈕在上面，按下去",
+    "howto.afterward": "照著上述的步驟操作完之後，將來再次使用就只需要操作<em>第4步至第6步</em>即可，不需要再複製那一長串的連結了。若是在操作的過程中遇到任何問題，也都隨時歡迎透過推特或Discord聯繫作者。"
 }

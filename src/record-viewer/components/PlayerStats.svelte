@@ -60,8 +60,8 @@
         border: var(--theme-border) 3px solid
         border-radius: 0.5rem
         background-color: var(--theme-bg-sub)
-        width: -moz-fit-content
-        width: fit-content
+        box-sizing: border-box
+        width: 100%
         max-width: 600px
         padding: 0.5rem
         margin: 0.5rem
@@ -69,7 +69,9 @@
         display: grid
         align-items: center
         justify-items: center
-        width: calc(100% - 2rem - 6px)
+        overflow-x: scroll
+        &::-webkit-scrollbar
+            display: none
     .stats-name
         grid-column: 1
         width: auto
@@ -94,7 +96,6 @@
         margin: 0 20px
         width: -webkit-fill-available
         text-align: center
-        white-space: nowrap
         @each $t in ("normal", "bronze", "silver", "gold", "platina", "rainbow")
             &[data-honor=#{$t}]
                 color: var(--theme-honor-#{$t})

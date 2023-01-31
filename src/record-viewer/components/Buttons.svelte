@@ -2,10 +2,11 @@
     import { showSettings$ } from "../store"
     import { usedConstData } from "../config"
     import { saveResultAsPicture } from "../share"
+    import { t } from "../store"
 </script>
 
 <div class="wrapper">
-    <button type="button" title="download best 40" on:click={saveResultAsPicture}>
+    <button type="button" title={$t("header.title.dl")} on:click={saveResultAsPicture}>
         <svg width="18" height="18">
             <path
                 d="M7 2H11V8H15L9 14 3 8H7V2ZM3 14H15V16H3V14Z"
@@ -15,6 +16,7 @@
     {#if usedConstData.accepts.indexOf("jp") > -1}
         <button
             type="button"
+            title="{$t("header.title.constData")}"
             on:click={() => {
                 $usedConstData =
                     usedConstData.accepts[
@@ -25,7 +27,7 @@
             {$usedConstData.slice(0, 2).toUpperCase()}
         </button>
     {/if}
-    <button type="button" title="settings" on:click={showSettings$.toggle}>
+    <button type="button" title={$t("header.title.settings")} on:click={showSettings$.toggle}>
         <svg width="18" height="18">
             <path
                 d="M2 4H16V6H2V4ZM2 8H16V10H2V8ZM2 12H16V14H2V12Z"

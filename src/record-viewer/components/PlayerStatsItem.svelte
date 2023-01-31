@@ -14,4 +14,5 @@
         white-space: nowrap
     .content
         justify-self: start
+        white-space: nowrap
 </style>

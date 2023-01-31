@@ -19,10 +19,10 @@ function loadLanguage() {
 }
 
 export function getInitialLang() {
-    const queryParams = new URLSearchParams(location.search);
+    const queryParams = new URLSearchParams(location.search)
     // URL query parameter
     if (queryParams.get("lang")) {
-        return queryParams.get("lang")?.startsWith("zh") ? Language.zh_TW : Language.en_US;
+        return queryParams.get("lang")!.startsWith("zh") ? Language.zh_TW : Language.en_US
     }
 
     const langPrefrence = loadLanguage()

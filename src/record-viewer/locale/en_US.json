@@ -1,7 +1,10 @@
 {
-    "main.title": "Chunithm Tools",
+    "main.title": "CHUNITHM Record Viewer",
     "loading.constData": "Used song constant data: {{name}}",
     "loading.error": "Oops! We got some errors when fetching song record.<br/>It might be caused by an outdated token.<br/><em>Reload the page</em>, <em>re-login CHUNITHM-NET</em><br/>or <em>re-run the bookmarklet</em> might help...",
+    "header.title.dl": "Save or share B40 as image",
+    "header.title.constData": "Change song constant data",
+    "header.title.settings": "Open settings",
     "settings.main.title": "Settings",
     "settings.main.reset": "Reset Settings",
     "settings.filter.title": "Filter",

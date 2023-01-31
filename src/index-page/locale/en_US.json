@@ -1,4 +1,17 @@
 {
-    "main.title": "CHUNITHM Tools",
-    "intro.title": "About CHUNITHM Tools"
+    "main.title": "About CHUNITHM Tools",
+    "main.chooseLang": "Choose Language",
+    "intro.title": "About CHUNITHM Tools",
+    "intro.about": "With the bookmarklet, you can look for a variety of play records on CHUNITHM, including your <em>best record</em>, <em>recent play history</em>, etc. Combining with the song constant data, you can even view details of your in-game <em>rating</em>.",
+    "intro.contact": "More functionalities are expected, and we will keep updating the bookmarklet tool for your best experience. If you have any idea, or if you see something needed improvements, feel free to DM the author <a href=\"https://twitter.com/dogeon188\">Dogeon</a>.",
+    "howto.title": "How To Use CHUNITHM Bookmarklet",
+    "howto.step.copyLink": "Copy the following link.",
+    "howto.step.copyLink.button": "Click me to COPY",
+    "howto.step.bookmarkAdd": "Add this page to your bookmarks, and rename it to <em>CHUNI TOOLS</em>.",
+    "howto.step.bookmarkEdit": "Open your bookmark list, found the added bookmark, then <em>Edit</em> the bookmark, clear the original link, paste the link you just copied, and finally click <em>Save</em>.",
+    "howto.step.gotoNet": "Navigate to <a href=\"https://chunithm-net-eng.com/mobile/\" target=\"_blank\" rel=\"noreferrer noopener\">CHUNITHM-NET</a>. If you haven't logged-in to CHUNITHM-NET before, you will have to first log-in to CHUNITHM-NET. <a href=\"https://chunithm.fandom.com/zh/wiki/CHUNITHM-NET?variant=zh-tw#Aime_%E5%B8%B3%E8%99%9F%E7%B6%81%E5%AE%9A\" target=\"_blank\" rel=\"noreferrer noopener\">How to log-in to CHUNITHM-NET？ (Chinese)</a>",
+    "howto.step.run": "After you successfully logged-in, open your bookmark list <em>on the CHUNITHM-NET page</em>, found the <em>CHUNI TOOLS</em> bookmark you just added, then click it.",
+    "howto.step.done": "Now there should be a button at the top of the page, as shown in the picture below. <em>Click the button</em>, it will automatically navigate you to a new tab, where all the magic happens.",
+    "howto.step.done.imgAlt": "Just click the new button.",
+    "howto.afterward": "After you follow all the steps and successfully open the record vieer for the first time, you'll just have to repeat <em>step 4 to step 6</em>. If you face any problem when using the bookmarklet, just DM the author via Twitter or Discord."
 }
