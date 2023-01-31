@@ -11,6 +11,7 @@
 <style lang="sass">
     label
         display: flex
+        -ms-flex-direction: column
         flex-direction: column
         padding: .5rem
         gap: .5rem

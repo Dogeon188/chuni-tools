@@ -36,10 +36,12 @@
 <style lang="sass">
     .wrapper   
         display: flex
+        -ms-flex-direction: column
         flex-direction: column
         padding: .5rem
         gap: 1rem
     .btns
+        display: -ms-grid
         display: grid
         grid-template-areas: "... ... ..."
         gap: .5rem

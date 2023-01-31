@@ -2,7 +2,7 @@
     import { requestFor } from "../request"
     import {
         t,
-        showConfig$,
+        showSettings$,
         showMessageText$,
         bestRecord$,
         messageText$,
@@ -20,7 +20,7 @@
         if ($showMessageText$ || invalidPlayCount(from, to)) return
         $messageTextLoading$ = true
         $showMessageText$ = true
-        $showConfig$ = false
+        $showSettings$ = false
 
         try {
             const l = $bestRecord$.slice(from - 1, to).length
@@ -84,6 +84,7 @@
             -webkit-appearance: none
             margin: 0
     .btn
+        width: -moz-fit-content
         width: fit-content
         padding: .5rem 1.5rem
         border-radius: .8rem

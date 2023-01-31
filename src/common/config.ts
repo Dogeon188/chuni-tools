@@ -7,16 +7,16 @@ export interface Config<T> extends Writable<T> {
 export interface BooleanConfig extends Config<boolean> {
     toggle(): void
 }
-export interface StringConfig extends Config<string> {
-    accepts: string[]
+export interface StringConfig<K extends string> extends Config<K> {
+    accepts: K[]
 }
 
-export function stringConfig(
+export function stringConfig<K extends string>(
     key: string,
-    defaultValue: string,
-    accepts: string[],
-    onWrite: (value: string) => void = (() => { })
-): StringConfig {
+    defaultValue: K,
+    accepts: K[],
+    onWrite: (value: K) => void = (() => { })
+): StringConfig<K> {
     let local = localStorage[key]
 
     if (local === undefined || !accepts.includes(local)) {
@@ -28,7 +28,7 @@ export function stringConfig(
 
     return {
         subscribe,
-        set(value) {
+        set(value: K) {
             set(value)
             localStorage[key] = value
             onWrite(value)
@@ -96,11 +96,11 @@ export function booleanConfig(
     }
 }
 
-export function flagsConfig(
+export function flagsConfig<K extends string>(
     key: string,
-    defaultValue: Record<string, boolean>,
-    onWrite: (value: Record<string, boolean>) => void = (() => { })
-): Config<Record<string, boolean>> {
+    defaultValue: Record<K, boolean>,
+    onWrite: (value: Record<K, boolean>) => void = (() => { })
+): Config<Record<K, boolean>> {
     let local = localStorage[key]
     if (local == undefined) {
         localStorage[key] = JSON.stringify(defaultValue)
@@ -122,7 +122,7 @@ export function flagsConfig(
 
     return {
         subscribe,
-        set(value: Record<string, boolean>) {
+        set(value: Record<K, boolean>) {
             set(value)
             localStorage[key] = JSON.stringify(value)
             onWrite(value)

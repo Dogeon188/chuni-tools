@@ -37,6 +37,7 @@
         border: var(--theme-border) 3px solid
         border-radius: 0.5rem
         background-color: var(--theme-bg-sub)
+        width: -moz-fit-content
         width: fit-content
         max-width: 600px
         padding: 0.5rem
@@ -47,6 +48,7 @@
         width: calc(100% - 2rem - 6px)
     .item
         display: flex
+        -ms-flex-direction: column
         flex-direction: column
         div:nth-child(1)
             color: var(--theme-label)

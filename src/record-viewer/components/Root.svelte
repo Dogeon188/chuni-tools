@@ -9,11 +9,17 @@
         playerStats$,
         playHistory$,
         recentRecord$,
-        showConfig$,
+        showSettings$,
         showMessageText$,
         t,
     } from "../store"
-    import { filterDiff, filterConstMax, filterConstMin, filterGenre } from "../config"
+    import {
+        filterDiff,
+        filterConstMax,
+        filterConstMin,
+        filterGenre,
+        showOverPower,
+    } from "../config"
     import Buttons from "./Buttons.svelte"
     import Settings from "./Settings.svelte"
     import PlayerStats from "./PlayerStats.svelte"
@@ -21,6 +27,7 @@
     import Loading from "./Loading.svelte"
     import MessageText from "./MessageText.svelte"
     import Header from "./Header.svelte"
+    import RankCounts from "./RankCounts.svelte"
 
     $page$ = window.location.hash.slice(1)
 
@@ -41,6 +48,17 @@
             v.const >= $filterConstMin
         )
     })
+
+    $: rankCounts$$ = (() => {
+        let rs = {} as Record<string, number>
+        ;["MAX", "SSS+", "SSS", "SS+", "SS", "S+", "S"].forEach((e) => (rs[e] = 0))
+        ;["AAA", "AA", "A", "BBB", "BB", "B", "C", "D"].forEach((e) => (rs[e] = 0))
+        for (const r of filteredBestRecord$$) rs[r.rank]++
+        Object.keys(rs).reduce((pre, cur) => ((rs[cur] += rs[pre]), cur))
+        return rs
+    })()
+    $: ajCount$$ = filteredBestRecord$$.filter((v) => v.clear == "AJ").length
+    $: fcCount$$ = ajCount$$ + filteredBestRecord$$.filter((v) => v.clear == "FC").length
 </script>
 
 <svelte:window on:hashchange={routeChange} on:load|once={sendReady} />
@@ -59,6 +77,18 @@
         <PlayerStats />
 
         {#if $page$ === "best"}
+            {#if $showOverPower}
+                <!-- <OverpowerStatus /> -->
+            {:else}
+                <RankCounts
+                    ajCount={ajCount$$}
+                    fcCount={fcCount$$}
+                    rankCounts={rankCounts$$}
+                    total={filteredBestRecord$$.length} />
+            {/if}
+        {/if}
+
+        {#if $page$ === "best"}
             <RecordTable playRecord={filteredBestRecord$$} />
         {:else if $page$ === "recent"}
             <RecordTable playRecord={$recentRecord$} />
@@ -74,7 +104,7 @@
     <Loading error />
 {/await}
 
-{#if $showConfig$}
+{#if $showSettings$}
     <Settings />
 {/if}
 
@@ -82,6 +112,7 @@
     main
         width: 100%
         display: flex
+        -ms-flex-direction: column
         flex-direction: column
         align-items: center
 </style>

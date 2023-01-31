@@ -12,7 +12,7 @@
         usedConstData,
         configs,
     } from "../config"
-    import { t, translationNames, showConfig$ } from "../store"
+    import { t, translationNames, showSettings$ } from "../store"
     import SettingsFilterDiff from "./SettingsFilterDiff.svelte"
     import SettingsFilterGenre from "./SettingsFilterGenre.svelte"
     import SettingsFetchPlayCount from "./SettingsFetchPlayCount.svelte"
@@ -20,9 +20,9 @@
 
 <div class="wrapper" transition:fade={{ duration: 100 }}>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class="modal-bg" on:click={showConfig$.toggle} />
+    <div class="modal-bg" on:click={showSettings$.toggle} />
     <div class="modal">
-        <button type="button" class="close-btn" on:click={showConfig$.toggle}>✕</button>
+        <button type="button" class="close-btn" on:click={showSettings$.toggle}>✕</button>
         <h3 style="margin: 0;">{@html $t("settings.main.title")}</h3>
 
         <h4>{@html $t("settings.filter.title")}</h4>

@@ -32,11 +32,13 @@
 <style lang="sass">
     .wrapper   
         display: flex
+        -ms-flex-direction: column
         flex-direction: column
         padding: .5em
         gap: 1rem
     .btns
         display: flex
+        -ms-flex-direction: row
         flex-direction: row
         gap: .5em
     button

@@ -3,27 +3,14 @@
     import { page$, t } from "../store"
     import RecordItem from "./RecordItem.svelte"
     import { recordSorts } from "@/record-viewer/record"
-    import RankCounts from "./RankCounts.svelte"
-    // import OverpowerStatus from "./OverpowerStatus.svelte"
     
     export let playRecord: ParsedRecord[]
     export let title: string | undefined = undefined
 
-    let sortBy = "rating"
+    let sortBy: keyof typeof recordSorts = "rating"
     let sortReverse = false
 
     $: processedRecord$$ = playRecord.sort(recordSorts[sortBy])
-
-    $: rankCounts$$ = (() => {
-        let rs = {} as Record<string, number>
-        ;["MAX", "SSS+", "SSS", "SS+", "SS", "S+", "S"].forEach((e) => (rs[e] = 0))
-        ;["AAA", "AA", "A", "BBB", "BB", "B", "C", "D"].forEach((e) => (rs[e] = 0))
-        for (const r of processedRecord$$) rs[r.rank]++
-        Object.keys(rs).reduce((pre, cur) => ((rs[cur] += rs[pre]), cur))
-        return rs
-    })()
-    $: ajCount$$ = processedRecord$$.filter((v) => v.clear == "AJ").length
-    $: fcCount$$ = ajCount$$ + processedRecord$$.filter((v) => v.clear == "FC").length
 
     $: ths$$ = [
         { display: "order", sort: "rating", notcur: true },
@@ -48,17 +35,7 @@
     ]
 </script>
 
-{#if $showOverPower}
-    {#if $page$ === "best"}
-        <!-- <OverpowerStatus /> -->
-    {/if}
-{:else}
-    <RankCounts
-        ajCount={ajCount$$}
-        fcCount={fcCount$$}
-        rankCounts={rankCounts$$}
-        total={processedRecord$$.length} />
-{/if}
+
 
 <div class="table-wrapper">
     <table>
@@ -121,6 +98,7 @@
         color: var(--theme-text-dim)
         cursor: pointer
         -webkit-user-select: none
+        -ms-user-select: none
         user-select: none
         white-space: nowrap
     th:not(.cur-sort):hover

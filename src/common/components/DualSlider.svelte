@@ -94,6 +94,7 @@
 <style lang="sass">
     .wrapper
         display: flex
+        -ms-flex-direction: column
         flex-direction: column
         padding: .5rem
         gap: .5rem
@@ -118,6 +119,7 @@
                 transform: translateX(1.6rem)
     .slider
         display: flex
+        -ms-flex-direction: column
         flex-direction: column
         justify-content: center
         width: 100%
@@ -170,8 +172,8 @@
             &:hover
                 background-color: var(--theme-text)
             &:active
-                box-shadow: 0 0 .5rem var(--theme-text-dim)
                 -webkit-box-shadow: 0 0 .5rem var(--theme-text-dim)
+                box-shadow: 0 0 .5rem var(--theme-text-dim)
         &::-webkit-slider-thumb
             @include slider-thumb
         &::-moz-range-thumb

@@ -11,6 +11,7 @@ const buttonStyleRule = `.chuni-tool-btn {
     padding: 1.5rem;
     margin: 2rem auto;
     display: block;
+    width: -moz-fit-content;
     width: fit-content;
     text-decoration: none;
     border-radius: .5rem;
@@ -18,6 +19,8 @@ const buttonStyleRule = `.chuni-tool-btn {
     background-color: #234;
     text-align: center;
     cursor: pointer;
+    -webkit-user-select: none;
+    -ms-user-select: none;
     user-select: none;
     filter: brightness(.7);
     transition: 0.2s;

@@ -60,10 +60,12 @@
         border: var(--theme-border) 3px solid
         border-radius: 0.5rem
         background-color: var(--theme-bg-sub)
+        width: -moz-fit-content
         width: fit-content
         max-width: 600px
         padding: 0.5rem
         margin: 0.5rem
+        display: -ms-grid
         display: grid
         align-items: center
         justify-items: center
@@ -75,12 +77,11 @@
     .stats-rating
         grid-column: 2
         display: flex
+        -ms-flex-direction: column
         flex-direction: column
         gap: .5rem
         h2
-            margin: 0
-            text-align: center
-            width: fit-content
+            margin: auto
         span
             color: var(--theme-text-dim)
     .stats-honor
@@ -98,7 +99,9 @@
             &[data-honor=#{$t}]
                 color: var(--theme-honor-#{$t})
     .stats-items
+        width: -moz-fit-content
         width: fit-content
+        display: -ms-grid
         display: grid
         grid-template-areas: "... ..."
         grid-area: 1/3/3/4
@@ -106,17 +109,13 @@
         padding: 5px
     @media only screen and (max-width: 544px) 
         .stats-name
-            width: 50%
             margin: auto
         .stats-rating
             grid-column: 1
         .stats-items
             grid-area: 1/2/3/3
+            max-width: -moz-fit-content
             max-width: fit-content
         .stats-honor
             grid-area: 3/1/4/3
-        //     grid-template-areas: "... ... ... ..."
-        //     justify-self: center
-        //     width: 100%
-        //     justify-content: space-evenly
 </style>

@@ -1,11 +1,12 @@
 import { derived } from "svelte/store"
 import { getTranslations } from "@/common/translations"
 import type { StringConfig } from "@/common/config"
+import type { Language } from "./lang"
 
-export function getTranslator(base: string, languageConfig: StringConfig) {
+export function getTranslator(base: string, languageConfig: StringConfig<Language>) {
     const { translations, translationNames } = getTranslations(base)
 
-    function translate(locale: string, key: string, vars: Record<string, string>) {
+    function translate(locale: string, key: string, vars: {[key: string]: string}) {
         if (!key) throw new Error("No key specified")
         let text = translations.get(locale)?.get(key)
         if (text === undefined) {

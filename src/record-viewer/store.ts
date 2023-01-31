@@ -20,7 +20,7 @@ export const { t, translationNames } = getTranslator("record-viewer", language)
 
 export const page$ = writable("best")
 
-export const showConfig$ = toggleable(false)
+export const showSettings$ = toggleable(false)
 
 export const messageText$ = writable("")
 export const showMessageText$ = toggleable(false)
