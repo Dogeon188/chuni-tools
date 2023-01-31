@@ -2,7 +2,7 @@
     import { usedConstData } from "../config"
     import { messageText$, t } from "../store"
 
-    export let error = false
+    export let error: Error | undefined = undefined
 </script>
 
 <div class="modal-wrapper">
@@ -15,7 +15,16 @@
         </h3>
         {#if error}
             <div class="error">:(</div>
-            <p>{@html $t("loading.error")}</p>
+            {#if error.message.indexOf("Request failed: rejected by server") != -1}
+                <p>{@html $t("loading.error.rejected")}</p>
+            {:else if error.message.indexOf("Request timed out") !== -1}
+                <p>{@html $t("loading.error.timeout")}</p>
+            {:else if error.message.indexOf("No opener found") !== -1}
+                <p>{@html $t("loading.error.noopener")}</p>
+            {:else}
+                <p>{@html $t("loading.error.unknown")}</p>
+                <pre class="error-text">{error.stack}</pre>
+            {/if}
         {:else}
             <div class="spinner" />
             <p>{@html $messageText$}</p>
@@ -74,6 +83,16 @@
         line-height: 4rem
         font-size: 5em
         color: var(--theme-label)
+    .error-text
+        color: #ff0000
+        white-space: pre-line
+        font-size: .8em
+        text-align: left
+        background-color: var(--theme-bg-sub)
+        border-radius: .5em
+        max-height: 15em
+        overflow-y: scroll
+        padding: 1em
     .dim
         color: var(--theme-text-dim)
     @keyframes spin

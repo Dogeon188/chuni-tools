@@ -2,8 +2,8 @@ import { getPostMessageFunc } from "@/common/web"
 import { chuniNet } from "@/common/const"
 import type { Difficulty } from "@/common/song"
 
-const requestTimeoutMs = 2000
-const maxRetryTime = 5
+const requestTimeoutMs = 300
+const maxRetryTime = 10
 
 class CrossPageRequest<T> {
     payload: any
@@ -14,14 +14,16 @@ class CrossPageRequest<T> {
     handled = false
     timeout: NodeJS.Timeout
     retryTime = 0
-    constructor(uuid: string, payload: any, send: PostMessageFunc) {
+    constructor(uuid: string, payload: any) {
         let self = this
-        this.uuid = uuid
-        this.payload = payload
         this.promise = new Promise((resolve, reject) => {
             self.resolve = resolve
             self.reject = reject
         })
+        if (!window.opener) this.reject(new Error("No opener found."))
+        const send = getPostMessageFunc(window.opener, chuniNet)
+        this.uuid = uuid
+        this.payload = payload
         const timeoutFunc = () => {
             if (!this.handled) {
                 if (this.retryTime < maxRetryTime) {
@@ -29,7 +31,7 @@ class CrossPageRequest<T> {
                     send("request", payload)
                     this.timeout = setTimeout(timeoutFunc, requestTimeoutMs)
                 } else {
-                    this.reject(`Request timed out: ${requestTimeoutMs} ms`)
+                    this.reject(new Error(`Request timed out: ${requestTimeoutMs * maxRetryTime} ms`))
                 }
             }
         }
@@ -84,12 +86,11 @@ export async function requestFor<K extends keyof CrossPageRequestMap>(
     difficulty?: Difficulty,
     idx?: string
 ): Promise<CrossPageRequestMap[K]> {
-    const send = getPostMessageFunc(window.opener, chuniNet)
     const uuid = crypto.randomUUID()
     const payload: any = { target, uuid }
     if (difficulty) payload.difficulty = difficulty
     if (idx) payload.idx = idx
-    const p = new CrossPageRequest<CrossPageRequestMap[K]>(uuid, payload, send)
+    const p = new CrossPageRequest<CrossPageRequestMap[K]>(uuid, payload)
     requestList.set(uuid, p)
     return p.promise
 }

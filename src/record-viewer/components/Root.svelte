@@ -100,8 +100,8 @@
             <MessageText />
         {/if}
     </main>
-{:catch}
-    <Loading error />
+{:catch error}
+    <Loading {error} />
 {/await}
 
 {#if $showSettings$}

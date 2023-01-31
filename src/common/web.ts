@@ -14,7 +14,7 @@ export function getScriptHost(scriptName: string) {
 export function getPostMessageFunc(w: WindowProxy, origin: string): PostMessageFunc {
     return (action, payload) => {
         const obj = { action, payload }
-        w.postMessage(obj, origin)
+        w?.postMessage(obj, origin)
     }
 }
 
