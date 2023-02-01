@@ -35,7 +35,7 @@
         $page$ = window.location.hash.slice(1)
     }
 
-    async function sendReady() {
+    async function sendSaveLang() {
         const send = getPostMessageFunc(window.opener, chuniNet)
         send("saveConfig", { data: { lang: $language }, uuid: "changeLang" })
     }
@@ -61,14 +61,14 @@
     $: fcCount$$ = ajCount$$ + filteredBestRecord$$.filter((v) => v.clear == "FC").length
 </script>
 
-<svelte:window on:hashchange={routeChange} on:load|once={sendReady} />
+<svelte:window on:hashchange={routeChange}/>
 <svelte:head>
     <link rel="stylesheet" href="../common/styles/common.css" />
     <link rel="stylesheet" href="../common/styles/theme-{$theme}.css" />
     <title>{$t("main.title")}</title>
 </svelte:head>
 
-{#await Promise.all( [playerStats$.init(), recentRecord$.init(), playHistory$.init(), bestRecord$.init()] )}
+{#await Promise.all( [playerStats$.init(), recentRecord$.init(), playHistory$.init(), bestRecord$.init(), sendSaveLang()] )}
     <Loading />
 {:then}
     <Header />

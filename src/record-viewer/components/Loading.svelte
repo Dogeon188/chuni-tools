@@ -21,7 +21,7 @@
                 <p>{@html $t("loading.error.rejected")}</p>
             {:else if error.message.indexOf("Request timed out") !== -1}
                 <p>{@html $t("loading.error.timeout")}</p>
-            {:else if error.message.indexOf("No opener found") !== -1}
+            {:else if error.message.indexOf("Target window does not exist") !== -1}
                 <p>{@html $t("loading.error.noopener")}</p>
             {:else}
                 <p>{@html $t("loading.error.unknown")}</p>

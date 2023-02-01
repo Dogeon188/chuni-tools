@@ -7,9 +7,6 @@ type CrossPageRequestMessagePayload = {
     target?: string,
     error?: Error,
     data?: any
-    // for playcount & best record
-    difficulty?: import("@/common/song").Difficulty,
-    idx?: string
 }
 
 type PostMessageFunc = (action: string, payload: CrossPageRequestMessagePayload) => void

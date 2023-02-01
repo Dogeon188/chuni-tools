@@ -12,31 +12,34 @@ class CrossPageRequest<T> {
     reject: (reason: any) => void = () => { }
     uuid: string
     handled = false
-    timeout: NodeJS.Timeout
+    timeout?: NodeJS.Timeout
     retryTime = 0
     constructor(uuid: string, payload: any) {
+        this.uuid = uuid
+        this.payload = payload
         let self = this
         this.promise = new Promise((resolve, reject) => {
             self.resolve = resolve
             self.reject = reject
         })
-        if (!window.opener) this.reject(new Error("No opener found."))
-        const send = getPostMessageFunc(window.opener, chuniNet)
-        this.uuid = uuid
-        this.payload = payload
-        const timeoutFunc = () => {
-            if (!this.handled) {
-                if (this.retryTime < maxRetryTime) {
-                    this.retryTime += 1
-                    send("request", payload)
-                    this.timeout = setTimeout(timeoutFunc, requestTimeoutMs)
-                } else {
-                    this.reject(new Error(`Request timed out: ${requestTimeoutMs * maxRetryTime} ms`))
+        try {
+            const send = getPostMessageFunc(window.opener, chuniNet)
+            const timeoutFunc = () => {
+                if (!this.handled) {
+                    if (this.retryTime < maxRetryTime) {
+                        this.retryTime += 1
+                        send("request", payload)
+                        this.timeout = setTimeout(timeoutFunc, requestTimeoutMs)
+                    } else {
+                        this.reject(new Error(`Request timed out: ${requestTimeoutMs * maxRetryTime} ms`))
+                    }
                 }
             }
+            this.timeout = setTimeout(timeoutFunc, requestTimeoutMs)
+            send("request", payload)
+        } catch (err) {
+            this.reject(err)
         }
-        this.timeout = setTimeout(timeoutFunc, requestTimeoutMs)
-        send("request", payload)
     }
 }
 

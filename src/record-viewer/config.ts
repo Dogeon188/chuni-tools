@@ -8,8 +8,10 @@ import { bestRecord$, playHistory$, recentRecord$ } from "./store"
 import { subscribe } from "svelte/internal"
 
 subscribe(language, () => {
-    const send = getPostMessageFunc(window.opener, chuniNet)
-    send("saveConfig", { data: { lang: get(language) }, uuid: "changeLang" })
+    try {
+        const send = getPostMessageFunc(window.opener, chuniNet)
+        send("saveConfig", { data: { lang: get(language) }, uuid: "changeLang" })
+    } catch (err) { console.error(err) }
 })
 
 export const filterConstMin = numberConfig("filterConstMin", 1, 1, 15.4)

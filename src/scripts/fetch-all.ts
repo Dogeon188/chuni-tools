@@ -71,10 +71,10 @@ const buttonHoverStyleRule = `
         switch (e.data.payload.target) {
             case "bestRecord":
                 console.log(
-                    "%c    Target difficulty: %c" + e.data.payload.difficulty,
+                    "%c    Target difficulty: %c" + e.data.payload.data.difficulty,
                     "color: gray",
                     "color: white")
-                res = fetchBestRecord(e.data.payload.difficulty)
+                res = fetchBestRecord(e.data.payload.data.difficulty)
                 break
             case "playHistory": res = fetchPlayHistory(); break
             case "recentRecord": res = fetchRecentRecord(); break
