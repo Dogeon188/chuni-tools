@@ -10,7 +10,7 @@ import { subscribe } from "svelte/internal"
 subscribe(language, () => {
     try {
         const send = getPostMessageFunc(window.opener, chuniNet)
-        send("saveConfig", { data: { lang: get(language) }, uuid: "changeLang" })
+        send("saveConfig", { data: { lang: get(language) } })
     } catch (err) { console.error(err) }
 })
 

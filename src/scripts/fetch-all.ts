@@ -62,52 +62,50 @@ const buttonHoverStyleRule = `
         d.getElementById("inner")?.insertAdjacentElement("beforebegin", b)
     }
 
-    function handleMessageRequest(e: CrossPageRequestMessageEvent) {
-        console.log("%cReceived request for: %c" + e.data.payload.target,
+    function handleMessageRequest(event: CrossPageRequestMessageEvent) {
+        const { payload, uuid } = event.data
+        console.log("%cReceived request for: %c" + payload.target,
             "color: gray",
             "color: white")
-        const send = getPostMessageFunc(<WindowProxy>e.source, e.origin)
+        const send = getPostMessageFunc(<WindowProxy>event.source, event.origin)
         let res
-        switch (e.data.payload.target) {
+        switch (payload.target) {
             case "bestRecord":
                 console.log(
-                    "%c    Target difficulty: %c" + e.data.payload.data.difficulty,
+                    "%c    Target difficulty: %c" + payload.data.difficulty,
                     "color: gray",
                     "color: white")
-                res = fetchBestRecord(e.data.payload.data.difficulty)
+                res = fetchBestRecord(payload.data.difficulty)
                 break
             case "playHistory": res = fetchPlayHistory(); break
             case "recentRecord": res = fetchRecentRecord(); break
             case "playerStats": res = fetchPlayerStats(); break
             case "songPlayCount":
                 console.log(
-                    "%c    Target song id: %c" + e.data.payload.data.idx,
+                    "%c    Target song id: %c" + payload.data.idx,
                     "color: gray",
                     "color: white")
                 console.log(
-                    "%c    Target difficulty: %c" + e.data.payload.data.difficulty,
+                    "%c    Target difficulty: %c" + payload.data.difficulty,
                     "color: gray",
                     "color: white")
-                res = fetchSongPlayCount(e.data.payload.data.idx!, e.data.payload.data.difficulty!)
+                res = fetchSongPlayCount(payload.data.idx!, payload.data.difficulty!)
                 break;
         }
-        send("preflight", {
-            target: e.data.payload.target,
-            uuid: e.data.payload.uuid,
-        })
+        send("ping", {
+            target: payload.target,
+        }, uuid)
         res?.then((r) => {
             send("respond", {
-                target: e.data.payload.target,
-                uuid: e.data.payload.uuid,
+                target: payload.target,
                 data: r
-            })
+            }, uuid)
         }).catch((er: Error) => {
             console.error(er)
             send("respond", {
-                target: e.data.payload.target,
-                uuid: e.data.payload.uuid,
+                target: payload.target,
                 error: er
-            })
+            }, uuid)
         })
     }
 

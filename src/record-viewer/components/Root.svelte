@@ -37,7 +37,7 @@
 
     async function sendSaveLang() {
         const send = getPostMessageFunc(window.opener, chuniNet)
-        send("saveConfig", { data: { lang: $language }, uuid: "changeLang" })
+        send("saveConfig", { data: { lang: $language } })
     }
 
     $: filteredBestRecord$$ = $bestRecord$.filter((v) => {

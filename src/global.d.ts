@@ -3,15 +3,15 @@
 declare let __APP_VERSION__: string
 
 type CrossPageRequestMessagePayload = {
-    uuid: string,
     target?: string,
     error?: Error,
     data?: any
 }
 
-type PostMessageFunc = (action: string, payload: CrossPageRequestMessagePayload) => void
+type PostMessageFunc = (action: string, payload: CrossPageRequestMessagePayload, uuid?: string) => void
 
 type CrossPageRequestMessageEvent = MessageEvent<{
+    uuid: string,
     action: string,
     payload: CrossPageRequestMessagePayload
 }>

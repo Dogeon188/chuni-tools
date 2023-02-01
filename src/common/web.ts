@@ -1,3 +1,5 @@
+import { v4 } from "uuid"
+
 export function getScriptHost(scriptName: string) {
     const scripts = Array.from(document.querySelectorAll("script"))
     while (scripts.length) {
@@ -13,8 +15,9 @@ export function getScriptHost(scriptName: string) {
 
 export function getPostMessageFunc(w: WindowProxy, origin: string): PostMessageFunc {
     if (!w) throw new Error("Target window does not exist")
-    return (action, payload) => {
-        const obj = { action, payload }
+    return (action, payload, uuid?: string) => {
+        const obj = <CrossPageRequestMessageEvent["data"]>{ action, payload }
+        if (uuid) obj.uuid = uuid
         w.postMessage(obj, origin)
     }
 }

@@ -1,9 +1,10 @@
 import { getPostMessageFunc } from "@/common/web"
 import { chuniNet } from "@/common/const"
 import type { Difficulty } from "@/common/song"
+import { v4 } from "uuid"
 
-const requestTimeoutMs = 300
-const maxRetryTime = 10
+const requestTimeoutMs = 1000
+const maxRetryTime = 5
 
 class CrossPageRequest<T> {
     payload: any
@@ -14,8 +15,8 @@ class CrossPageRequest<T> {
     handled = false
     timeout?: NodeJS.Timeout
     retryTime = 0
-    constructor(uuid: string, payload: any) {
-        this.uuid = uuid
+    constructor(payload: any) {
+        this.uuid = v4()
         this.payload = payload
         let self = this
         this.promise = new Promise((resolve, reject) => {
@@ -36,7 +37,7 @@ class CrossPageRequest<T> {
                 }
             }
             this.timeout = setTimeout(timeoutFunc, requestTimeoutMs)
-            send("request", payload)
+            send("request", payload, this.uuid)
         } catch (err) {
             this.reject(err)
         }
@@ -46,27 +47,28 @@ class CrossPageRequest<T> {
 const requestList = new Map<string, CrossPageRequest<any>>()
 
 function handleMessageEvent(event: CrossPageRequestMessageEvent) {
-    if (event.data.action === "preflight") {
-        if (!requestList.has(event.data.payload.uuid)) {
-            console.error("Unexpected response: " + event.data.payload.uuid)
+    const { action, payload, uuid } = event.data
+    if (action === "ping") {
+        if (!requestList.has(uuid)) {
+            console.error("Unexpected response: " + uuid)
         }
-        requestList.get(event.data.payload.uuid)!.handled = true
-        clearTimeout(requestList.get(event.data.payload.uuid)?.timeout)
+        requestList.get(uuid)!.handled = true
+        clearTimeout(requestList.get(uuid)?.timeout)
     }
-    if (event.data.action !== "respond") return
-    if (!requestList.has(event.data.payload.uuid)) {
-        console.error("Unexpected response: " + event.data.payload.uuid)
+    if (action !== "respond") return
+    if (!requestList.has(uuid)) {
+        console.error("Unexpected response: " + uuid)
     }
-    if (event.data.payload.error) {
+    if (payload.error) {
         console.error(
-            "Error on handling request: " + event.data.payload.target + "\n",
-            event.data.payload.error
+            "Error on handling request: " + payload.target + "\n",
+            payload.error
         )
-        requestList.get(event.data.payload.uuid)?.reject(event.data.payload.error)
+        requestList.get(uuid)?.reject(payload.error)
     } else {
-        requestList.get(event.data.payload.uuid)?.resolve(event.data.payload.data)
+        requestList.get(uuid)?.resolve(payload.data)
     }
-    requestList.delete(event.data.payload.uuid)
+    requestList.delete(uuid)
 }
 
 window.addEventListener("message", handleMessageEvent, false)
@@ -89,9 +91,8 @@ export async function requestFor<K extends keyof CrossPageRequestMap>(
     difficulty?: Difficulty,
     idx?: string
 ): Promise<CrossPageRequestMap[K]> {
-    const uuid = crypto.randomUUID()
-    const payload: any = { target, uuid, data: { difficulty, idx } }
-    const p = new CrossPageRequest<CrossPageRequestMap[K]>(uuid, payload)
-    requestList.set(uuid, p)
+    const payload: CrossPageRequestMessagePayload = { target, data: { difficulty, idx } }
+    const p = new CrossPageRequest<CrossPageRequestMap[K]>(payload)
+    requestList.set(p.uuid, p)
     return p.promise
 }
