@@ -3,8 +3,8 @@ import { chuniNet } from "@/common/const"
 import type { Difficulty } from "@/common/song"
 import { v4 } from "uuid"
 
-const requestTimeoutMs = 1000
-const maxRetryTime = 5
+const requestTimeoutMs = 2000
+const maxRetryTime = 3
 
 class CrossPageRequest<T> {
     payload: any

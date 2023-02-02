@@ -24,8 +24,8 @@
         <h2>{$playerStats$.rating}</h2>
         <span>MAX {$playerStats$.ratingMax}</span>
     </div>
-    <div class="stats-honor" data-honor={$playerStats$.honor.color}>
-        {$playerStats$.honor.text}
+    <div class="stats-honor" data-honor={$playerStats$.honor.color} class:marquee={true}>
+        <span>{$playerStats$.honor.text}</span>
     </div>
     <div class="stats-items">
         <PlayerStatsItem

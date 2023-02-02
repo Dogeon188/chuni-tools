@@ -55,5 +55,6 @@
     "record.fetch.error": "<span style=\"color:red;\">Some error occured when fetching best record!<br/>You probably need to reload the page now.</span>",
     "playcount.fetch.button": "Fetch",
     "playcount.fetch.progress": "Fetching play count... ({{progress}}/{{all}})",
-    "playcount.fetch.error": "<span style=\"color:red;\">Some error occured when fetching play count!<br/>You probably need to reload the page now.</span>"
+    "playcount.fetch.error": "<span style=\"color:red;\">Some error occured when fetching play count!<br/>You probably need to reload the page now.</span>",
+    "share.error": "Something went wrong when converting your scores to PNG. Please ask the author to fix it."
 }

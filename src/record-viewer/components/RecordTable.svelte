@@ -37,7 +37,7 @@
 
 
 
-<div class="table-wrapper">
+<div class="wrapper">
     <table>
         <thead>
             {#if title}
@@ -84,7 +84,7 @@
 </div>
 
 <style lang="sass">
-    .table-wrapper
+    .wrapper
         width: 100%
         overflow-x: scroll
     table

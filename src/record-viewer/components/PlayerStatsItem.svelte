@@ -7,12 +7,13 @@
 <span class="content">{content}</span>
 
 <style lang="sass">
+    span
+        line-height: 1em
+        margin: .4em 0
     .title
         color: var(--theme-label)
-        font-size: small
-        justify-self: end
+        text-align: right
         white-space: nowrap
     .content
-        justify-self: start
         white-space: nowrap
 </style>

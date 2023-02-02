@@ -17,7 +17,7 @@
             <div class="error">:(</div>
             {#if error.message.indexOf("Service temporarily unavailable") != -1}
                 <p>{@html $t("loading.error.serviceDown")}</p>
-            {:else if error.message.indexOf("Request failed: rejected by server") != -1}
+            {:else if error.message.indexOf("Request failed: rejected by server") != -1 || error.message.indexOf("Failed to fetch") != -1}
                 <p>{@html $t("loading.error.rejected")}</p>
             {:else if error.message.indexOf("Request timed out") !== -1}
                 <p>{@html $t("loading.error.timeout")}</p>
