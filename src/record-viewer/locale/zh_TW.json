@@ -23,6 +23,7 @@
     "settings.data.constData.intl": "國際版 (NEW+)",
     "settings.data.constData.jp": "日版 (SUN)",
     "settings.data.overpower": "顯示OVER POWER",
+    "settings.data.overpower.notify": "*開啟時，未遊玩的歌曲也會一併顯示<br/>*若是有尚未解鎖的歌曲，OVER POWER的總和可能會與官方記錄有差別",
     "settings.data.playcount": "顯示個別歌曲遊玩次數",
     "settings.ui.title": "使用者介面",
     "settings.ui.locale": "語言",

@@ -45,6 +45,9 @@
             {/each}
         </Select>
         <Switch label={$t("settings.data.overpower")} bind:checked={$showOverPower} />
+        <div style="color: var(--theme-text-dim); margin: .5em auto">
+            {@html $t("settings.data.overpower.notify")}
+        </div>
         <Switch label={$t("settings.data.playcount")} bind:checked={$showPlayCount} />
         {#if $showPlayCount}
             <SettingsFetchPlayCount />
