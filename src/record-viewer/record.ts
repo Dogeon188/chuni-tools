@@ -64,6 +64,7 @@ export async function parseRecord(playRecord: PlayRecord[], isBestRecord = false
         r.rating = calcRating(r)
         r.op = calcOp(r)
         r.opmax = calcOpMax(r)
+        r.oppercent = (100 * r.op) / r.opmax
         r.rank = calcRank(r.score)
         r.genre = songInfo.genre
     })

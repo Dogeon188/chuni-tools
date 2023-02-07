@@ -28,6 +28,7 @@
     import MessageText from "./MessageText.svelte"
     import Header from "./Header.svelte"
     import RankCounts from "./RankCounts.svelte"
+    import OverpowerStatus from "./OverpowerStatus.svelte"
 
     $page$ = window.location.hash.slice(1)
 
@@ -42,6 +43,7 @@
 
     $: filteredBestRecord$$ = $bestRecord$.filter((v) => {
         return (
+            ($showOverPower || v.score >= 0) &&
             $filterDiff[v.difficulty] &&
             $filterGenre[genres.find((g) => Genre[g] == v.genre)!] &&
             $filterConstMax >= v.const &&
@@ -61,7 +63,7 @@
     $: fcCount$$ = ajCount$$ + filteredBestRecord$$.filter((v) => v.clear == "FC").length
 </script>
 
-<svelte:window on:hashchange={routeChange}/>
+<svelte:window on:hashchange={routeChange} />
 <svelte:head>
     <link rel="stylesheet" href="../common/styles/common.css" />
     <link rel="stylesheet" href="../common/styles/theme-{$theme}.css" />
@@ -78,7 +80,7 @@
 
         {#if $page$ === "best"}
             {#if $showOverPower}
-                <!-- <OverpowerStatus /> -->
+                <OverpowerStatus records={filteredBestRecord$$} />
             {:else}
                 <RankCounts
                     ajCount={ajCount$$}
@@ -88,13 +90,9 @@
             {/if}
         {/if}
 
-        {#if $page$ === "best"}
-            <RecordTable playRecord={filteredBestRecord$$} />
-        {:else if $page$ === "recent"}
-            <RecordTable playRecord={$recentRecord$} />
-        {:else if $page$ === "history"}
-            <RecordTable playRecord={$playHistory$} />
-        {/if}
+        <RecordTable playRecord={filteredBestRecord$$} shown={$page$ === "best"} />
+        <RecordTable playRecord={$recentRecord$} shown={$page$ === "recent"} />
+        <RecordTable playRecord={$playHistory$} shown={$page$ === "history"} />
 
         {#if $showMessageText$}
             <MessageText />

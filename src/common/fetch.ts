@@ -38,13 +38,13 @@ export async function fetchBestRecord(diff: Difficulty = Difficulty.master) {
         const scoreText = f.querySelector(".text_b")?.innerHTML
         return {
             title: f.querySelector(".music_title")?.innerHTML,
-            score: scoreText ? parseNumber(scoreText) : undefined,
+            score: scoreText ? parseNumber(scoreText) : -1,
             difficulty: diff,
             clear: icons?.querySelector(`img[src*="alljustice"]`) ? "AJ" :
                 icons?.querySelector(`img[src*="fullcombo"]`) ? "FC" : "",
             idx: (<HTMLInputElement>f.querySelector(`input[name="idx"]`)).value
         }
-    }).filter((s) => s.title !== null && s.score && s.score > 0)
+    }).filter((s) => s.title && s.score /* && s.score > 0 */)
     return recordList
 }
 

@@ -22,6 +22,7 @@ export function calcRank(score: number) {
 }
 
 export function calcRating(song: ParsedRecord) {
+    if (song.score < 0) return 0
     let c = song.const * 100
     const points = [
         [1010000, c + 215],

@@ -3,14 +3,16 @@
     import { page$, t } from "../store"
     import RecordItem from "./RecordItem.svelte"
     import { recordSorts } from "@/record-viewer/record"
-    
+
     export let playRecord: ParsedRecord[]
-    export let title: string | undefined = undefined
+    export let shown = false
 
     let sortBy: keyof typeof recordSorts = "rating"
     let sortReverse = false
 
-    $: processedRecord$$ = playRecord.sort(recordSorts[sortBy])
+    $: processedRecord$$ = playRecord.sort(
+        sortReverse ? (a, b) => -recordSorts[sortBy](a, b) : recordSorts[sortBy]
+    )
 
     $: ths$$ = [
         { display: "order", sort: "rating", notcur: true },
@@ -35,14 +37,9 @@
     ]
 </script>
 
-
-
-<div class="wrapper">
+<div class="wrapper" hidden={!shown}>
     <table>
         <thead>
-            {#if title}
-                <td colspan="7" class="title">{title}</td>
-            {/if}
             <tr class:reversed={sortReverse}>
                 {#each ths$$ as elt}
                     {#if elt.condition ?? true}
@@ -51,7 +48,6 @@
                             class:cur-sort={!elt.notcur && elt.sort == sortBy}
                             on:click={() => {
                                 if (sortBy === elt.sort) {
-                                    processedRecord$$ = processedRecord$$.reverse()
                                     sortReverse = !sortReverse
                                 } else {
                                     sortBy = elt.sort
@@ -61,7 +57,6 @@
                             on:keypress={(e) => {
                                 if (e.code === "Enter" || e.code === "Space") {
                                     if (sortBy === elt.sort) {
-                                        processedRecord$$ = processedRecord$$.reverse()
                                         sortReverse = !sortReverse
                                     } else {
                                         sortBy = elt.sort
@@ -112,8 +107,4 @@
         content: "▼ "
     .reversed th.cur-sort::before
         content: "▲ "
-    td.title
-        font-weight: bold
-        color: var(--theme-label)
-        text-align: center
 </style>
