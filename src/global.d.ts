@@ -52,5 +52,5 @@ type SongConstData = {
     EXP: number,
     MAS: number,
     ULT?: number,
-
+    genre: number
 }

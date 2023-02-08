@@ -1,7 +1,7 @@
 import { constData$ } from "@/record-viewer/store"
 import { get } from "svelte/store"
 import { calcOp, calcOpMax, calcRank, calcRating } from "../common/rating"
-import { difficulties, difficultyWorldsend } from "../common/song"
+import { difficulties } from "../common/song"
 import { t } from "@/record-viewer/store"
 
 export const recordSorts: Record<string, (a: ParsedRecord, b: ParsedRecord) => number> = {
@@ -36,37 +36,40 @@ function unescapeHtmlString(str: string) {
         .replace(/&lt;/g, "<")
         .replace(/&gt;/g, ">")
         .replace(/&quot;/g, '"')
-        .replace(/&#039;/g, "'");
+        .replace(/&#039;/g, "'")
 }
 
 export async function parseRecord(playRecord: PlayRecord[], isBestRecord = false) {
     const recordList = playRecord as ParsedRecord[]
-    const musicData = await get(constData$)
+    const musicData = await get(constData$) as {[songName: string]: SongConstData}
     const cannotFetch = [] as ParsedRecord[]
     recordList.map((r) => {
-        if (<string>r.difficulty === difficultyWorldsend) {
+        if (<string>r.difficulty === "WE") {
             r.const = -1
             r.rating = 0
+            r.op = -1
+            r.opmax = -1
+            r.oppercent = -1
+            r.rank = calcRank(r.score)
             return
+        }
+        if (musicData[r.title] === undefined) {
+            r.title = unescapeHtmlString(r.title)
         }
         let songInfo = musicData[r.title]
         if (songInfo === undefined) {
-            r.title = unescapeHtmlString(r.title)
-            songInfo = musicData[r.title]
-        }
-        if (songInfo === undefined) {
             cannotFetch.push(r)
-            r.const = 0
+            r.const = -1
             r.rating = 0
-            return
+        } else {
+            r.const = songInfo[r.difficulty]!
+            r.rating = calcRating(r)
+            r.genre = `${songInfo.genre}`
         }
-        r.const = songInfo[r.difficulty]
-        r.rating = calcRating(r)
         r.op = calcOp(r)
         r.opmax = calcOpMax(r)
         r.oppercent = (100 * r.op) / r.opmax
         r.rank = calcRank(r.score)
-        r.genre = songInfo.genre
     })
 
     if (isBestRecord && cannotFetch.length) {

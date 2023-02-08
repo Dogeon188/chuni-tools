@@ -10,7 +10,7 @@
         playHistory$,
         recentRecord$,
         showSettings$,
-        showMessageText$,
+        fetchingSomething$,
         t,
     } from "../store"
     import {
@@ -94,7 +94,7 @@
         <RecordTable playRecord={$recentRecord$} shown={$page$ === "recent"} />
         <RecordTable playRecord={$playHistory$} shown={$page$ === "history"} />
 
-        {#if $showMessageText$}
+        {#if $fetchingSomething$}
             <MessageText />
         {/if}
     </main>

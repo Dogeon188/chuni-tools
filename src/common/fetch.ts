@@ -61,7 +61,7 @@ export async function fetchPlayHistory() {
         return {
             title: d.querySelector(".play_musicdata_title")?.innerHTML,
             score: parseNumber(scoreStr!),
-            difficulty: diffStr == "ultimate" ? "ULT" : Difficulty[<keyof typeof Difficulty>diffStr],
+            difficulty: diffStr == "ultimate" ? "ULT" : diffStr == "worldsend" ? "WE" : Difficulty[<keyof typeof Difficulty>diffStr],
             clear: icons.some((di) => di.querySelector(`img[src*="alljustice"]`)) ? "AJ" :
                 icons.some((di) => di.querySelector(`img[src*="fullcombo"]`)) ? "FC" : "",
             timestamp: Date.parse(d.querySelector(".play_datalist_date")?.innerHTML!)

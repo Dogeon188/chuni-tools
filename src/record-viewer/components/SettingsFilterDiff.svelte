@@ -1,7 +1,7 @@
 <script lang="ts">
     import { difficulties } from "@/common/song"
     import { filterDiff } from "../config"
-    import { t } from "../store"
+    import { fetchingSomething$, t } from "../store"
 </script>
 
 <div class="wrapper">
@@ -18,6 +18,7 @@
             <button
                 type="button"
                 class:activated={$filterDiff[diff]}
+                disabled={$fetchingSomething$}
                 data-diff={diff}
                 on:click={() => {
                     $filterDiff[diff] = !$filterDiff[diff]
@@ -48,6 +49,9 @@
         background-color: var(--theme-bg-sub)
         border: 3px solid var(--theme-control)
         filter: brightness(.5)
+        &[disabled]
+            cursor: no-drop
+            border: 3px solid var(--theme-bg-sub)
         &:hover
             filter: brightness(.8)
         &.activated

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { page$, showMessageText$ } from "../store"
+    import { page$, fetchingSomething$ } from "../store"
     import { showOverPower, showPlayCount } from "../config"
     import { requestFor } from "../request"
     export let song: ParsedRecord
@@ -13,20 +13,23 @@
     <td class="song-order">{song.order}</td>
     <td data-diff={song.difficulty} colspan={$page$ === "history" ? 2 : 1}
         >{song.title}</td>
-    <td>{song.const == -1 ? "-" : song.const?.toFixed(1) ?? "??.?"}</td>
+    <td>{song.const < 0 ? "-" : song.const?.toFixed(1) ?? "??.?"}</td>
     {#if $showOverPower}
         <td class="song-op">
-            {song.op.toFixed(2)}<span class="opmx">&#xFF0F;{song.opmax.toFixed(1)}</span>
+            {song.const < 0 ? "-" : song.op.toFixed(2)}<span class="opmx">
+                &#xFF0F;{song.const < 0 ? "-" : song.opmax.toFixed(1)}
+            </span>
         </td>
         <td>
-            {song.oppercent.toPrecision(5)}<span class="opmx">%</span>
+            {song.const < 0 ? "-" : song.oppercent.toPrecision(5)}<span class="opmx"
+                >%</span>
         </td>
     {:else}
         <td data-rank={song.rank}>{song.rank}</td>
         <td class="song-score">{song.score}</td>
     {/if}
     <td>
-        {song.const == -1 ? "-" : song.rating == null ? "??.??" : song.rating.toFixed(2)}
+        {song.const < 0 ? "-" : song.rating == null ? "??.??" : song.rating.toFixed(2)}
     </td>
     {#if $page$ === "history" || $page$ === "best"}
         <td data-clear={song.clear}>{song.clear}</td>
@@ -36,13 +39,16 @@
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <td
                 class="pc-hidden"
+                class:disabled={$fetchingSomething$}
                 on:click={() => {
-                    if ($showMessageText$) return
-                    requestFor("songPlayCount", song.difficulty, song.idx).then((pc) => {
-                        song.playCount = pc
-                    }).catch(() => {
-                        song.playCount = null
-                    })
+                    if ($fetchingSomething$) return
+                    requestFor("songPlayCount", song.difficulty, song.idx)
+                        .then((pc) => {
+                            song.playCount = pc
+                        })
+                        .catch(() => {
+                            song.playCount = null
+                        })
                 }}>
                 <span>&emsp;</span>
             </td>
@@ -109,4 +115,9 @@
             border-radius: .2em
             background-color: var(--theme-bg-sub)
             color: var(--theme-bg-sub)
+        &.disabled
+            cursor: no-drop
+            span
+                filter: brightness(.8)
+
 </style>

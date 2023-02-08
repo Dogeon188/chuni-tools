@@ -23,7 +23,7 @@ export const page$ = writable("best")
 export const showSettings$ = toggleable(false)
 
 export const messageText$ = writable("")
-export const showMessageText$ = toggleable(false)
+export const fetchingSomething$ = toggleable(false)
 export const messageTextLoading$ = toggleable(false)
 
 const songConstData: Record<string, any> = {}
@@ -104,7 +104,7 @@ export const bestRecord$ = (() => {
         async updateDiffFilter() {
             if (!inited) return
             messageTextLoading$.set(true)
-            showMessageText$.set(true)
+            fetchingSomething$.set(true)
             let fetchedAdditional = false
 
             try {
@@ -120,12 +120,12 @@ export const bestRecord$ = (() => {
                     }
                 }
                 if (fetchedAdditional) set(await parseRecord(raw, true))
-                showMessageText$.set(false)
+                fetchingSomething$.set(false)
                 messageTextLoading$.set(false)
             } catch {
                 messageTextLoading$.set(false)
                 messageText$.set(get(t)("record.fetch.error"))
-                setTimeout(() => { showMessageText$.set(false) }, 6000)
+                setTimeout(() => { fetchingSomething$.set(false) }, 6000)
             }
         }
     }

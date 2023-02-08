@@ -1,5 +1,3 @@
-import { v4 } from "uuid"
-
 export function getScriptHost(scriptName: string) {
     const scripts = Array.from(document.querySelectorAll("script"))
     while (scripts.length) {

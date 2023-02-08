@@ -1,46 +1,52 @@
+const rankPoints: [number, string][] = [
+    [1010000, "MAX"],
+    [1009000, "SSS+"],
+    [1007500, "SSS"],
+    [1005000, "SS+"],
+    [1000000, "SS"],
+    [990000, "S+"],
+    [975000, "S"],
+    [950000, "AAA"],
+    [925000, "AA"],
+    [900000, "A"],
+    [800000, "BBB"],
+    [700000, "BB"],
+    [600000, "B"],
+    [500000, "C"],
+    [0, "D"]
+]
+
 export function calcRank(score: number) {
-    const points = [
-        [1010000, "MAX"],
-        [1009000, "SSS+"],
-        [1007500, "SSS"],
-        [1005000, "SS+"],
-        [1000000, "SS"],
-        [990000, "S+"],
-        [975000, "S"],
-        [950000, "AAA"],
-        [925000, "AA"],
-        [900000, "A"],
-        [800000, "BBB"],
-        [700000, "BB"],
-        [600000, "B"],
-        [500000, "C"],
-        [0, "D"]
-    ]
     let r = 0
-    points.some((v, i) => (r = i, score >= v[0]))
-    return points[r][1] as string
+    rankPoints.some((v, i) => (r = i, score >= v[0]))
+    return rankPoints[r][1]
 }
 
+const ratingPoints = [
+    [1010000, 215],
+    [1009000, 215],
+    [1007500, 200],
+    [1005000, 150],
+    [1000000, 100],
+    [975000, 0],
+    [925000, -300],
+    [900000, -500],
+]
+
 export function calcRating(song: ParsedRecord) {
-    if (song.score < 0) return 0
+    if (song.score <= 500000) return 0
     let c = song.const * 100
-    const points = [
-        [1010000, c + 215],
-        [1009000, c + 215],
-        [1007500, c + 200],
-        [1005000, c + 150],
-        [1000000, c + 100],
-        [975000, c],
-        [925000, c - 300],
-        [900000, c - 500],
-        [800000, (c - 500) / 2],
-        [500000, 0],
-        [0, 0]
-    ]
-    let p = 1
-    points.some((v, i) => (p = i, song.score > v[0]))
-    const prev = points[p - 1], cur = points[p]
-    const ret = cur[1] + (prev[1] - cur[1]) / (prev[0] - cur[0]) * (song.score - cur[0])
+    let ret
+    if (song.score <= 800000) {
+        ret = (song.score - 500000) / 300000 * ((c - 500) / 2)
+    } else if (song.score <= 900000) {
+        ret = (song.score - 800000) / 100000 * ((c - 500) / 2) + ((c - 500) / 2)
+    } else {
+        let p = 1
+        ratingPoints.some((v, i) => (p = i, song.score > v[0]))
+        const prev = ratingPoints[p - 1], cur = ratingPoints[p]
+        ret = c + cur[1] + (prev[1] - cur[1]) * (song.score - cur[0]) / (prev[0] - cur[0])
+    }
     return Math.floor(Math.max(0, ret)) / 100
 }
 

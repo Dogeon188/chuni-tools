@@ -7,7 +7,6 @@ export enum Difficulty {
 }
 
 export const difficulties = Object.values(Difficulty)
-export const difficultyWorldsend = "WE"
 
 export enum Genre {
     "P & A" = "0",
