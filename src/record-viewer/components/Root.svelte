@@ -4,13 +4,6 @@
     import { Genre, genres } from "@/common/song"
     import { getPostMessageFunc } from "@/common/web"
     import {
-        filterDiff,
-        filterConstMax,
-        filterConstMin,
-        filterGenre,
-        showOverPower,
-    } from "../config"
-    import {
         bestRecord$,
         page$,
         playerStats$,
@@ -20,6 +13,13 @@
         fetchingSomething$,
         t,
     } from "../store"
+    import {
+        filterDiff,
+        filterConstMax,
+        filterConstMin,
+        filterGenre,
+        showOverPower,
+    } from "../config"
     import Buttons from "./Buttons.svelte"
     import Settings from "./Settings.svelte"
     import PlayerStats from "./PlayerStats.svelte"
