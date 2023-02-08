@@ -1,6 +1,6 @@
 import { toBlob } from "html-to-image"
-import { isMobile } from "@/common/web"
 import { get } from "svelte/store"
+import { isMobile } from "@/common/web"
 import { t } from "./store"
 
 const filename = "chunithm_b40.png"

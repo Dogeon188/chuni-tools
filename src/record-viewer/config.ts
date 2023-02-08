@@ -1,11 +1,10 @@
+import { subscribe } from "svelte/internal"
 import { get } from "svelte/store"
+import { stringConfig, numberConfig, flagsConfig, booleanConfig, language, theme } from "@/common/config"
+import { chuniNet } from "@/common/const"
 import { Genre, genres } from "@/common/song"
 import { getPostMessageFunc } from "@/common/web"
-import { chuniNet } from "@/common/const"
-import { stringConfig, numberConfig, flagsConfig, booleanConfig } from "@/common/config"
-import { language, theme } from "@/common/config"
 import { bestRecord$, playHistory$, recentRecord$ } from "./store"
-import { subscribe } from "svelte/internal"
 
 subscribe(language, () => {
     try {

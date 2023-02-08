@@ -1,9 +1,9 @@
 <script lang="ts">
     import { fade } from "svelte/transition"
+    import { theme, language } from "@/common/config"
     import Select from "@/common/components/Select.svelte"
     import Switch from "@/common/components/Switch.svelte"
     import DualSlider from "@/common/components/DualSlider.svelte"
-    import { theme, language } from "@/common/config"
     import {
         filterConstMax,
         filterConstMin,

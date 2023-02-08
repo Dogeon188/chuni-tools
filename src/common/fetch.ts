@@ -1,7 +1,7 @@
-import { getCookie } from "./web"
+import { chuniNet } from "./const"
 import { parseNumber } from "./number"
 import { genreAll, Difficulty, difficulties } from "./song"
-import { chuniNet } from "./const"
+import { getCookie } from "./web"
 
 async function fetchChuniPage(url: string, fd?: FormData) {
     const res = await fetch(chuniNet + url, {

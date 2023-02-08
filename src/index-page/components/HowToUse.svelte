@@ -1,5 +1,6 @@
 <script context="module">
     import { t } from "../store"
+    
     const bookmarkletScript = `javascript:(function(d,s){s=d.createElement('script');s.src='https://dogeon188.github.io/chuni-tools/scripts/chuni-tools.js?t='+Math.floor(Date.now()/60000);d.body.append(s);})(document);`
 </script>
 

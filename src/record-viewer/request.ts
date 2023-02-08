@@ -1,7 +1,7 @@
-import { getPostMessageFunc } from "@/common/web"
+import { v4 } from "uuid"
 import { chuniNet } from "@/common/const"
 import type { Difficulty } from "@/common/song"
-import { v4 } from "uuid"
+import { getPostMessageFunc } from "@/common/web"
 
 const requestTimeoutMs = 2000
 const maxRetryTime = 3

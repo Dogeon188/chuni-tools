@@ -1,8 +1,15 @@
 <script lang="ts">
-    import { getPostMessageFunc } from "@/common/web"
+    import { theme, language } from "@/common/config"
     import { chuniNet } from "@/common/const"
     import { Genre, genres } from "@/common/song"
-    import { theme, language } from "@/common/config"
+    import { getPostMessageFunc } from "@/common/web"
+    import {
+        filterDiff,
+        filterConstMax,
+        filterConstMin,
+        filterGenre,
+        showOverPower,
+    } from "../config"
     import {
         bestRecord$,
         page$,
@@ -13,13 +20,6 @@
         fetchingSomething$,
         t,
     } from "../store"
-    import {
-        filterDiff,
-        filterConstMax,
-        filterConstMin,
-        filterGenre,
-        showOverPower,
-    } from "../config"
     import Buttons from "./Buttons.svelte"
     import Settings from "./Settings.svelte"
     import PlayerStats from "./PlayerStats.svelte"

@@ -1,6 +1,6 @@
 import { derived } from "svelte/store"
-import { getTranslations } from "@/common/translations"
 import type { StringConfig } from "@/common/config"
+import { getTranslations } from "@/common/translations"
 import type { Language } from "./lang"
 
 export function getTranslator(base: string, languageConfig: StringConfig<Language>) {

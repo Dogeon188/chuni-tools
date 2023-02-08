@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { showSettings$ } from "../store"
     import { usedConstData } from "../config"
     import { saveResultAsPicture } from "../share"
-    import { t } from "../store"
+    import { showSettings$, t } from "../store"
 </script>
 
 <div class="wrapper">

@@ -1,8 +1,8 @@
 <script lang="ts">
     import { showOverPower, showPlayCount } from "../config"
+    import { recordSorts } from "../record"
     import { page$, t } from "../store"
     import RecordItem from "./RecordItem.svelte"
-    import { recordSorts } from "@/record-viewer/record"
 
     export let playRecord: ParsedRecord[]
     export let shown = false

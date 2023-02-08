@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { page$, fetchingSomething$ } from "../store"
     import { showOverPower, showPlayCount } from "../config"
     import { requestFor } from "../request"
+    import { page$, fetchingSomething$ } from "../store"
+    
     export let song: ParsedRecord
 </script>
 

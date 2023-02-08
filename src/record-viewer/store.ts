@@ -1,10 +1,10 @@
-import { parseRecord } from "./record"
-import { difficulties } from "@/common/song"
 import { derived, get, writable } from "svelte/store"
-import { filterDiff, usedConstData } from "./config"
-import { CrossPageRequestMap, requestFor } from "./request"
-import { getTranslator } from "@/common/i18n"
 import { language } from "@/common/config"
+import { getTranslator } from "@/common/i18n"
+import { difficulties } from "@/common/song"
+import { filterDiff, usedConstData } from "./config"
+import { parseRecord } from "./record"
+import { CrossPageRequestMap, requestFor } from "./request"
 
 function toggleable(defaultState = false) {
     const { subscribe, set, update } = writable(defaultState)
