@@ -71,16 +71,21 @@
             color: var(--theme-clear_aj)
             text-shadow: 0 0 10px var(--theme-clear-aj)
     td
-        padding: .5rem
+        padding: .5em
         border-top: var(--theme-border) 1.5px solid
         text-align: center
     td[data-diff]
         font-weight: bold
         text-align: left
-        max-width: 300px
+        max-width: 30em
         @each $diff in ("WE", "ULT", "MAS", "EXP", "ADV", "BAS")
             &[data-diff="#{$diff}"]
                 color: var(--theme-song-#{to-lower-case($diff)})
+    @media only screen and (max-width: 544px)
+        td
+            padding: .5em .1em
+        td[data-diff]
+            max-width: 20em
     td[data-rank]
         white-space: nowrap
         &[data-rank="MAX"]

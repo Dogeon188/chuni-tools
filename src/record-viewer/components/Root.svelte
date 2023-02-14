@@ -108,8 +108,9 @@
 
 <style lang="sass">
     main
-        width: 100%
+        width: fit-content
         display: flex
+        margin: auto
         -ms-flex-direction: column
         flex-direction: column
         align-items: center

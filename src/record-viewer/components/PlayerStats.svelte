@@ -108,7 +108,7 @@
         grid-area: 1/3/3/4
         gap: 5px
         padding: 5px
-    @media only screen and (max-width: 544px) 
+    @media only screen and (max-width: 544px)
         .stats-name
             margin: auto
         .stats-rating

@@ -17,7 +17,7 @@
     }
 
     async function fetchMultiPlayCount(from: number, to: number) {
-        if ($fetchingSomething$ || invalidPlayCount(from, to)) return
+        if (invalidPlayCount(from, to)) return
         $messageTextLoading$ = true
         $fetchingSomething$ = true
         $showSettings$ = false

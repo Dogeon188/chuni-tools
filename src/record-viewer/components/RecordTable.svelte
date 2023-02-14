@@ -79,9 +79,6 @@
 </div>
 
 <style lang="sass">
-    .wrapper
-        width: 100%
-        overflow-x: scroll
     table
         border-spacing: 0
         width: 100%
@@ -104,7 +101,7 @@
         color: inherit
     th.cur-sort::before
         color: var(--theme-text-dim)
-        content: "▼ "
+        content: "▼"
     .reversed th.cur-sort::before
-        content: "▲ "
+        content: "▲"
 </style>
