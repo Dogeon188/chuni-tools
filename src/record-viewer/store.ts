@@ -5,6 +5,7 @@ import { difficulties } from "@/common/song"
 import { filterDiff, usedConstData } from "./config"
 import { parseRecord } from "./record"
 import { CrossPageRequestMap, requestFor } from "./request"
+import { processRecord } from "./history"
 
 function toggleable(defaultState = false) {
     const { subscribe, set, update } = writable(defaultState)
@@ -76,11 +77,18 @@ export const playHistory$ = createPlayRecord("playHistory")
 
 export const playerStats$ = (() => {
     const { subscribe, set } = writable({} as PlayerStats)
+
+    let inited = false
+
     return {
         set,
         subscribe,
         async init() {
+            if (inited) return
             set(await requestFor("playerStats"))
+            inited = true
+
+            await bestRecord$.init()
         }
     }
 })()
@@ -96,6 +104,8 @@ export const bestRecord$ = (() => {
         set,
         subscribe,
         async init() {
+            if (inited) return
+
             diffFetched = JSON.parse(JSON.stringify(get(filterDiff)))
             for (let d of difficulties) {
                 if (diffFetched[d]) {
@@ -106,7 +116,10 @@ export const bestRecord$ = (() => {
                     Array.prototype.push.apply(raw, await requestFor("bestRecord", d))
                 }
             }
-            set(await parseRecord(raw, true))
+            const parsed = await parseRecord(raw, true)
+            set(parsed)
+            processRecord(parsed)
+            
             inited = true
         },
         async updateConstData() {

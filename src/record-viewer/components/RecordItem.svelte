@@ -1,8 +1,16 @@
+<script context="module" lang="ts">
+    let showScoreDiff = false
+
+    function toggleShowScoreDiff() {
+        showScoreDiff = !showScoreDiff
+    }
+</script>
+
 <script lang="ts">
     import { showOverPower, showPlayCount } from "../config"
     import { requestFor } from "../request"
     import { page$, fetchingSomething$ } from "../store"
-    
+
     export let song: ParsedRecord
 </script>
 
@@ -27,7 +35,8 @@
         </td>
     {:else}
         <td data-rank={song.rank}>{song.rank}</td>
-        <td class="song-score">{song.score}</td>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <td class="song-score" on:click={toggleShowScoreDiff}>{song.score}</td>
     {/if}
     <td>
         {song.const < 0 ? "-" : song.rating == null ? "??.??" : song.rating.toFixed(2)}

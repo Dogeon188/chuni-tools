@@ -36,6 +36,7 @@ type ParsedRecord = (BestRecord & RecentRecord ) & {
     oppercent: number
     playCount?: number | null
     genre: string
+    scoreDiff: number // score difference
 }
 
 type PlayerStats = {
