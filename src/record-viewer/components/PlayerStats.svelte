@@ -81,7 +81,6 @@
         display: flex
         -ms-flex-direction: column
         flex-direction: column
-        gap: .5rem
         h2
             margin: auto
         span

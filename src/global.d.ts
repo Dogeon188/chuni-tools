@@ -32,8 +32,8 @@ type ParsedRecord = (BestRecord & RecentRecord ) & {
     rating: number
     order: number
     op: number
-    opmax: number
-    oppercent: number
+    opMax: number
+    opPercent: number
     playCount?: number | null
     genre: string
 }

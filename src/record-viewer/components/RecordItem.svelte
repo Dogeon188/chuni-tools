@@ -18,11 +18,11 @@
     {#if $showOverPower}
         <td class="song-op">
             {song.const < 0 ? "-" : song.op.toFixed(2)}<span class="opmx">
-                &#xFF0F;{song.const < 0 ? "-" : song.opmax.toFixed(1)}
+                &#xFF0F;{song.const < 0 ? "-" : song.opMax.toFixed(1)}
             </span>
         </td>
         <td>
-            {song.const < 0 ? "-" : song.oppercent.toPrecision(5)}<span class="opmx"
+            {song.const < 0 ? "-" : song.opPercent.toPrecision(5)}<span class="opmx"
                 >%</span>
         </td>
     {:else}

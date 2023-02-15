@@ -4,7 +4,11 @@ import { difficulties } from "@/common/song"
 import { constData$, t } from "./store"
 
 export const recordSorts: Record<string, (a: ParsedRecord, b: ParsedRecord) => number> = {
-    default: (a, b) => b.rating - a.rating || b.const - a.const || a.score - b.score,
+    default: (a, b) => {
+        if (a.score < 0) return 1
+        if (b.score < 0) return -1
+        return b.rating - a.rating || b.const - a.const || a.score - b.score
+    },
     playOrder: (a, b) => b.timestamp - a.timestamp,
     title: (a, b) => {
         if (a.title < b.title) return -1
@@ -13,7 +17,7 @@ export const recordSorts: Record<string, (a: ParsedRecord, b: ParsedRecord) => n
     },
     const: (a, b) => b.const - a.const,
     op: (a, b) => b.op - a.op,
-    opp: (a, b) => b.op / b.opmax - a.op / a.opmax,
+    opp: (a, b) => b.op / b.opMax - a.op / a.opMax,
     score: (a, b) => b.score - a.score,
     rating: (a, b) => a.order - b.order,
     aj: (a, b) => {
@@ -47,8 +51,8 @@ export async function parseRecord(playRecord: PlayRecord[], isBestRecord = false
             r.const = -1
             r.rating = 0
             r.op = -1
-            r.opmax = -1
-            r.oppercent = -1
+            r.opMax = -1
+            r.opPercent = -1
             r.rank = calcRank(r.score)
             return
         }
@@ -66,8 +70,8 @@ export async function parseRecord(playRecord: PlayRecord[], isBestRecord = false
             r.genre = `${songInfo.genre}`
         }
         r.op = calcOp(r)
-        r.opmax = calcOpMax(r)
-        r.oppercent = (100 * r.op) / r.opmax
+        r.opMax = calcOpMax(r)
+        r.opPercent = (100 * r.op) / r.opMax
         r.rank = calcRank(r.score)
     })
 

@@ -2,7 +2,7 @@
     export let records: ParsedRecord[]
 
     $: totalOverpower = records.reduce((pre, record) => pre + record.op, 0)
-    $: maxOverpower = records.reduce((pre, record) => pre + record.opmax, 0)
+    $: maxOverpower = records.reduce((pre, record) => pre + record.opMax, 0)
     $: progress = (totalOverpower / maxOverpower) * 100
 </script>
 
