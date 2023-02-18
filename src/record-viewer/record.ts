@@ -15,10 +15,11 @@ export const recordSorts: Record<string, (a: ParsedRecord, b: ParsedRecord) => n
         if (a.title > b.title) return 1
         return difficulties.indexOf(b.difficulty) - difficulties.indexOf(a.difficulty)
     },
-    const: (a, b) => b.const - a.const,
-    op: (a, b) => b.op - a.op,
-    opp: (a, b) => b.op / b.opMax - a.op / a.opMax,
-    score: (a, b) => b.score - a.score,
+    const: (a, b) => b.const - a.const || a.order - b.order,
+    op: (a, b) => b.op - a.op || a.order - b.order,
+    opp: (a, b) => b.op / b.opMax - a.op / a.opMax || a.order - b.order,
+    score: (a, b) => b.score - a.score || a.order - b.order,
+    scoreDiff: (a, b) => b.scoreDiff - a.scoreDiff || a.order - b.order,
     rating: (a, b) => a.order - b.order,
     aj: (a, b) => {
         if (a.clear == b.clear) return a.order - b.order

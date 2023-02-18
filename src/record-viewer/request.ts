@@ -76,7 +76,7 @@ window.addEventListener("message", handleMessageEvent, false)
 export interface CrossPageRequestMap {
     "playerStats": PlayerStats,
     "playHistory": PlayRecord[],
-    "recentRecord": RecentRecord[],
+    "recentRecord": HistoryRecord[],
     "bestRecord": BestRecord[],
     "songPlayCount": number
 }

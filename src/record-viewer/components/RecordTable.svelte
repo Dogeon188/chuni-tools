@@ -1,7 +1,7 @@
 <script lang="ts">
     import { showOverPower, showPlayCount } from "../config"
     import { recordSorts } from "../record"
-    import { page$, t } from "../store"
+    import { page$, t, showScoreDiff$ } from "../store"
     import RecordItem from "./RecordItem.svelte"
 
     export let playRecord: ParsedRecord[]
@@ -11,18 +11,22 @@
     let sortReverse = false
 
     $: processedRecord$$ = playRecord.sort(
-        sortReverse ? (a, b) => -recordSorts[sortBy](a, b) : recordSorts[sortBy]
+        sortReverse ? ((a, b) => -recordSorts[sortBy](a, b)) : recordSorts[sortBy]
     )
 
     $: ths$$ = [
-        { display: "order", sort: "rating", notcur: true },
+        { display: "order", sort: "rating", nocur: true },
         { display: "playOrder", sort: "playOrder", condition: $page$ === "history" },
         { display: "title", sort: "title" },
         { display: "const", sort: "const" },
         { display: "overpower", sort: "op", condition: $showOverPower },
         { display: "overpowerPercent", sort: "opp", condition: $showOverPower },
-        { display: "rank", sort: "score", condition: !$showOverPower, notcur: true },
-        { display: "score", sort: "score", condition: !$showOverPower },
+        { display: "rank", sort: "score", condition: !$showOverPower, nocur: !$showScoreDiff$ },
+        {
+            display: $showScoreDiff$ ? "scoreDiff" : "score",
+            sort: $showScoreDiff$ ? "scoreDiff" : "score",
+            condition: !$showOverPower,
+        },
         { display: "rating", sort: "rating" },
         {
             display: "ajfc",
@@ -45,7 +49,7 @@
                     {#if elt.condition ?? true}
                         <th
                             tabindex="0"
-                            class:cur-sort={!elt.notcur && elt.sort == sortBy}
+                            class:cur-sort={!elt.nocur && elt.sort == sortBy}
                             on:click={() => {
                                 if (sortBy === elt.sort) {
                                     sortReverse = !sortReverse

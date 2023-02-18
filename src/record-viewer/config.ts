@@ -37,4 +37,14 @@ export const showOverPower = booleanConfig("showOverPower", false)
 
 export const showPlayCount = booleanConfig("showPlaycount", false)
 
+export const scoreDiffUpdateIntervals: {[i: string]: number} = {
+    "1d": 86400000,
+    "3d": 259200000,
+    "7d": 604800000,
+    "14d": 1209600000,
+    "30d": 2592000000,
+    "manual": Number.POSITIVE_INFINITY
+}
+export const diffUpdateInterval = stringConfig("diffUpdateInterval", "manual", Object.keys(scoreDiffUpdateIntervals))
+
 export const configs = [theme, language, filterConstMax, filterConstMin, filterDiff, filterGenre, usedConstData, showOverPower, showPlayCount,]
