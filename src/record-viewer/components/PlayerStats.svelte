@@ -1,4 +1,4 @@
-<script context="module">
+<script lang="ts">
     import { floorAndToFixed2 } from "@/common/number"
     import { calcBestN, calcMaxPossible } from "@/common/rating"
     import {
@@ -10,9 +10,6 @@
         t,
     } from "../store"
     import PlayerStatsItem from "./PlayerStatsItem.svelte"
-</script>
-
-<script lang="ts">
     $: bestRating$$ = $bestRecord$.slice(0, 30).map((s) => s.rating)
     $: recentRating$$ = $recentRecord$.map((s) => s.rating)
     $: historyRating$$ = $playHistory$.map((s) => s.rating)

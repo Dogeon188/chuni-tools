@@ -18,7 +18,7 @@ async function fetchChuniPage(url: string, fd?: FormData) {
     return new DOMParser().parseFromString(await res.text(), "text/html")
 }
 
-export async function fetchBestRecord(diff: Difficulty = Difficulty.master) {
+export async function fetchBestRecord(diff: Difficulty = Difficulty.master): Promise<BestRecord[]> {
     const fd = new FormData()
     fd.append("genre", genreAll)
     fd.append("token", getCookie("_t"))
@@ -45,13 +45,13 @@ export async function fetchBestRecord(diff: Difficulty = Difficulty.master) {
             idx: (<HTMLInputElement>f.querySelector(`input[name="idx"]`)).value
         }
     }).filter((s) => s.title && s.score /* && s.score > 0 */)
-    return recordList
+    return recordList as BestRecord[]
 }
 
-export async function fetchPlayHistory() {
+export async function fetchPlayHistory(): Promise<HistoryRecord[]> {
     const dom = await fetchChuniPage("/mobile/record/playlog")
 
-    const recentRecord = (Array.from(
+    const historyRecord = (Array.from(
         dom.querySelectorAll(".mt_10 .frame02.w400")
     )).map((d) => {
         const scoreStr = d.querySelector(".play_musicdata_score_text")?.innerHTML
@@ -59,23 +59,23 @@ export async function fetchPlayHistory() {
         const diffStr = /musiclevel_.*(?=\.png)/.exec(diffSrc)![0].slice(11)
         const icons = <Array<HTMLDivElement>>Array.from(d.querySelectorAll(".play_musicdata_icon"))
         return {
-            title: d.querySelector(".play_musicdata_title")?.innerHTML,
+            title: d.querySelector(".play_musicdata_title")!.innerHTML,
             score: parseNumber(scoreStr!),
             difficulty: diffStr == "ultimate" ? "ULT" : diffStr == "worldsend" ? "WE" : Difficulty[<keyof typeof Difficulty>diffStr],
             clear: icons.some((di) => di.querySelector(`img[src*="alljustice"]`)) ? "AJ" :
                 icons.some((di) => di.querySelector(`img[src*="fullcombo"]`)) ? "FC" : "",
-            timestamp: Date.parse(d.querySelector(".play_datalist_date")?.innerHTML!)
+            timestamp: Date.parse(d.querySelector(".play_datalist_date")!.innerHTML),
         }
     })
-    return recentRecord
+    return historyRecord as HistoryRecord[]
 }
 
-export async function fetchRecentRecord() {
+export async function fetchRecentRecord(): Promise<PlayRecord[]> {
     const dom = await fetchChuniPage("/mobile/home/playerData/ratingDetailRecent")
     return Array.from(dom.querySelectorAll("form")).map((f) => {
         const diffIdxStr = (<HTMLInputElement>f.querySelector("input[name=diff]"))?.value
         return {
-            title: f.querySelector(".music_title")?.innerHTML,
+            title: f.querySelector(".music_title")!.innerHTML,
             score: parseNumber(f.querySelector(".text_b")?.innerHTML!),
             difficulty: Object.values(Difficulty)[parseInt(diffIdxStr!)],
             clear: ""
@@ -83,7 +83,7 @@ export async function fetchRecentRecord() {
     })
 }
 
-export async function fetchPlayerStats() {
+export async function fetchPlayerStats(): Promise<PlayerStats> {
     const dom = await fetchChuniPage("/mobile/home/playerData")
 
     const honorBg = <HTMLDivElement>dom.querySelector(".player_honor_short")
@@ -95,15 +95,17 @@ export async function fetchPlayerStats() {
         const imgSrc = /rating_.*_[0-9]*(?=\.png)/.exec(i.src)
         return imgSrc![0].slice(-1)
     }).join("")
+
     return {
-        name: dom.querySelector(".player_name_in")?.innerHTML,
+        name: dom.querySelector(".player_name_in")!.innerHTML,
         honor: {
-            text: dom.querySelector(".player_honor_text_view span")?.innerHTML,
+            text: dom.querySelector(".player_honor_text_view span")!.innerHTML,
             color: honorColor ? honorColor[0].slice(9) : "normal"
         },
         rating,
-        ratingMax: dom.querySelector(".player_rating_max")?.innerHTML,
-        playCount: dom.querySelector(".user_data_play_count .user_data_text")?.innerHTML
+        ratingMax: dom.querySelector(".player_rating_max")!.innerHTML,
+        playCount: dom.querySelector(".user_data_play_count .user_data_text")!.innerHTML,
+        lastPlayed: Date.parse(dom.querySelector(".player_lastplaydate_text")!.innerHTML)
     }
 }
 

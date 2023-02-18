@@ -1,3 +1,8 @@
+<script context="module" lang="ts">
+    import { writable } from "svelte/store"
+    let scoreDiffDirty = writable(false)
+</script>
+
 <script lang="ts">
     import { fade } from "svelte/transition"
     import { theme, language } from "@/common/config"
@@ -10,6 +15,7 @@
         showPlayCount,
         showOverPower,
         usedConstData,
+        diffUpdateInterval,
         configs,
     } from "../config"
     import { t, translationNames, showSettings$ } from "../store"
@@ -44,6 +50,34 @@
                 <option value={d}>{$t("settings.data.constData." + d)}</option>
             {/each}
         </Select>
+        <Select
+            label={$t("settings.data.diffUpdate", {
+                date: new Date(
+                    Number(localStorage.getItem("prevLastPlayed"))
+                ).toLocaleDateString(),
+            })}
+            bind:value={$diffUpdateInterval}>
+            {#each diffUpdateInterval.accepts as d}
+                <option value={d}>{$t("settings.data.diffUpdate." + d)}</option>
+            {/each}
+        </Select>
+        {#if $diffUpdateInterval === "manual"}
+            <button
+                type="button"
+                class="update-scorediff-btn"
+                disabled={$scoreDiffDirty}
+                on:click={() => {
+                    localStorage.setItem("prevPlayRecord", "{}")
+                    $scoreDiffDirty = true
+                }}>
+                {$t(
+                    "settings.data.diffUpdate." + ($scoreDiffDirty ? "reload" : "update")
+                )}
+            </button>
+        {/if}
+        <div style="color: var(--theme-text-dim); margin: .5em auto">
+            {@html $t("settings.data.diffUpdate.notify")}
+        </div>
         <Switch label={$t("settings.data.overpower")} bind:checked={$showOverPower} />
         <div style="color: var(--theme-text-dim); margin: .5em auto">
             {@html $t("settings.data.overpower.notify")}
@@ -71,9 +105,8 @@
 
         <button
             type="button"
-            class="btn reset-btn"
+            class="reset-btn"
             on:click={() => {
-                localStorage.clear()
                 for (const config of configs) config.reset()
             }}>
             {@html $t("settings.main.reset")}
@@ -109,6 +142,15 @@
         box-shadow: 2rem 2rem 10px #0008
         border-radius: 1rem
         text-align: left
+    .update-scorediff-btn
+        background-color: var(--theme-control)
+        padding: .5rem 1.5rem
+        margin: .5rem .5rem
+        border-radius: .8rem
+        float: right
+        &:disabled
+            background-color: var(--theme-bg-sub)
+            cursor: no-drop
     .close-btn
         position: absolute
         top: .5rem
@@ -116,7 +158,6 @@
         width: 2rem
         height: 2rem
         background-color: var(--theme-border)
-        color: var(--theme-text)
         border-radius: 40%
     .reset-btn
         display: block
@@ -126,8 +167,6 @@
         width: fit-content
         padding: .5rem 1.5rem
         border-radius: .8rem
-        font-weight: bold
-        color: var(--theme-text)
     h4
         margin: .5rem 0
         color: var(--theme-text-dim)

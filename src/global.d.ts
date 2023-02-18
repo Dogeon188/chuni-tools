@@ -24,9 +24,9 @@ type PlayRecord = {
 }
 
 type BestRecord = PlayRecord & { idx: string }
-type RecentRecord = PlayRecord & { timestamp: number }
+type HistoryRecord = PlayRecord & { timestamp: number }
 
-type ParsedRecord = (BestRecord & RecentRecord ) & {
+type ParsedRecord = (BestRecord & HistoryRecord ) & {
     const: number
     rank: string
     rating: number
@@ -44,7 +44,8 @@ type PlayerStats = {
     honor: { text: string, color: string },
     rating: string,
     ratingMax: string,
-    playCount: string
+    playCount: string,
+    lastPlayed: number,
 }
 
 type SongConstData = {

@@ -2,7 +2,7 @@ import { derived, get, writable } from "svelte/store"
 import { language } from "@/common/config"
 import { getTranslator } from "@/common/i18n"
 import { difficulties } from "@/common/song"
-import { filterDiff, usedConstData } from "./config"
+import { diffUpdateInterval, filterDiff, scoreDiffUpdateIntervals, usedConstData } from "./config"
 import { parseRecord } from "./record"
 import { CrossPageRequestMap, requestFor } from "./request"
 import { processRecord } from "./history"
@@ -38,6 +38,8 @@ export const showSettings$ = toggleable(false)
 export const messageText$ = writable("")
 export const fetchingSomething$ = toggleable(false)
 export const messageTextLoading$ = toggleable(false)
+
+export const showScoreDiff$ = toggleable(false)
 
 const songConstData: Record<string, any> = {}
 for (let c of usedConstData.accepts) songConstData[c] = undefined
@@ -88,7 +90,11 @@ export const playerStats$ = (() => {
             set(await requestFor("playerStats"))
             inited = true
 
-            await bestRecord$.init()
+            const curLastPlayed = get(playerStats$).lastPlayed
+            const prevLastPlayed = Number(localStorage.getItem("prevLastPlayed") ?? Number.NEGATIVE_INFINITY)
+            await bestRecord$.init(
+                curLastPlayed - prevLastPlayed > scoreDiffUpdateIntervals[get(diffUpdateInterval)] || localStorage.getItem("prevPlayRecord") === "{}"
+            )
         }
     }
 })()
@@ -103,12 +109,12 @@ export const bestRecord$ = (() => {
     return {
         set,
         subscribe,
-        async init() {
+        async init(loadAll: boolean = false) {
             if (inited) return
 
             diffFetched = JSON.parse(JSON.stringify(get(filterDiff)))
             for (let d of difficulties) {
-                if (diffFetched[d]) {
+                if (loadAll || diffFetched[d]) {
                     messageText$.set(get(t)("record.fetch.fetching", {
                         diff: d.toLowerCase(),
                         diffStr: get(t)("record.fetch.diff." + d.toLowerCase())
@@ -118,8 +124,8 @@ export const bestRecord$ = (() => {
             }
             const parsed = await parseRecord(raw, true)
             set(parsed)
-            processRecord(parsed)
-            
+            processRecord(parsed, loadAll)
+
             inited = true
         },
         async updateConstData() {

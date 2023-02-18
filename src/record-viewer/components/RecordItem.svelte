@@ -1,17 +1,13 @@
-<script context="module" lang="ts">
-    let showScoreDiff = false
-
-    function toggleShowScoreDiff() {
-        showScoreDiff = !showScoreDiff
-    }
-</script>
-
 <script lang="ts">
     import { showOverPower, showPlayCount } from "../config"
     import { requestFor } from "../request"
-    import { page$, fetchingSomething$ } from "../store"
+    import { page$, fetchingSomething$, showScoreDiff$ } from "../store"
 
     export let song: ParsedRecord
+
+    function toggleShowScoreDiff() {
+        showScoreDiff$.toggle()
+    }
 </script>
 
 <tr
@@ -36,7 +32,9 @@
     {:else}
         <td data-rank={song.rank}>{song.rank}</td>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <td class="song-score" on:click={toggleShowScoreDiff}>{song.score}</td>
+        <td class="song-score" on:click={toggleShowScoreDiff}>
+            {$showScoreDiff$ ? (song.scoreDiff <= 0 ? "" : "+") + song.scoreDiff : song.score}
+        </td>
     {/if}
     <td>
         {song.const < 0 ? "-" : song.rating == null ? "??.??" : song.rating.toFixed(2)}
@@ -77,7 +75,6 @@
         color: var(--theme-text-dim)
     tr.ajc
         td[data-rank], td.song-score, td[data-clear]
-            color: var(--theme-clear_aj)
             text-shadow: 0 0 10px var(--theme-clear-aj)
     td
         padding: .5em
@@ -121,6 +118,8 @@
             color: var(--theme-clear-aj)
     td.song-op
         white-space: nowrap
+    td.song-score
+        cursor: pointer
     .opmx
         color: var(--theme-text-dim)
         font-size: .8em
