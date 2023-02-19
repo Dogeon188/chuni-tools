@@ -7,21 +7,21 @@ export interface Config<T> extends Writable<T> {
 export interface BooleanConfig extends Config<boolean> {
     toggle(): void
 }
-export interface StringConfig<K extends string> extends Config<K> {
-    accepts: K[]
+export interface StringConfig<A extends readonly string[]> extends Config<A[number]> {
+    accepts: A
 }
 
-export function stringConfig<K extends string>(
+export function stringConfig<A extends readonly string[], K extends A[number]>(
     key: string,
     defaultValue: K,
-    accepts: K[],
+    accepts: A,
     onWrite: (value: K) => void = (() => { })
-): StringConfig<K> {
-    let local = localStorage[key]
+): StringConfig<A> {
+    let local = <K | null>localStorage.getItem(key)
 
-    if (local === undefined || !accepts.includes(local)) {
-        localStorage[key] = defaultValue
-        local = localStorage[key]
+    if (local === null || !accepts.includes(local)) {
+        local = defaultValue
+        localStorage.setItem(key, local)
     }
 
     const { subscribe, set, update } = writable(local)
@@ -30,7 +30,7 @@ export function stringConfig<K extends string>(
         subscribe,
         set(value: K) {
             set(value)
-            localStorage[key] = value
+            localStorage.setItem(key, value)
             onWrite(value)
         },
         update,
@@ -46,13 +46,12 @@ export function numberConfig(
     acceptMax: number,
     onWrite: (value: number) => void = (() => { })
 ): Config<number> {
-    let local = localStorage[key]
-    let value = parseFloat(local)
+    let local = localStorage.getItem(key)
+    let value = parseFloat(local ?? "NaN")
 
-    if (local === undefined || value > acceptMax || value < acceptMin) {
-        localStorage[key] = defaultValue
-        local = localStorage[key]
-        value = parseFloat(local)
+    if (local === null || value > acceptMax || value < acceptMin) {
+        value = defaultValue
+        localStorage.setItem(key, value.toString())
     }
 
     const { subscribe, set, update } = writable(value)
@@ -61,7 +60,7 @@ export function numberConfig(
         subscribe,
         set(value) {
             set(value)
-            localStorage[key] = value
+            localStorage.setItem(key, value.toString())
             onWrite(value)
         },
         update,
@@ -74,10 +73,10 @@ export function booleanConfig(
     defaultValue: boolean,
     onWrite: (value: boolean) => void = (() => { })
 ): BooleanConfig {
-    let local = localStorage[key]
-    if (local === undefined || (local !== "true" && local !== "false")) {
-        localStorage[key] = defaultValue
-        local = localStorage[key]
+    let local = localStorage.getItem(key)
+    if (local === null || (local !== "true" && local !== "false")) {
+        local = JSON.stringify(defaultValue)
+        localStorage.setItem(key, local)
     }
     let value = JSON.parse(local)
 
@@ -87,7 +86,7 @@ export function booleanConfig(
         subscribe,
         set(value) {
             set(value)
-            localStorage[key] = value
+            localStorage.setItem(key, JSON.stringify(value))
             onWrite(value)
         },
         update,
@@ -101,10 +100,10 @@ export function flagsConfig<K extends string>(
     defaultValue: Record<K, boolean>,
     onWrite: (value: Record<K, boolean>) => void = (() => { })
 ): Config<Record<K, boolean>> {
-    let local = localStorage[key]
-    if (local == undefined) {
-        localStorage[key] = JSON.stringify(defaultValue)
-        local = localStorage[key]
+    let local = localStorage.getItem(key)
+    if (local === null) {
+        local = JSON.stringify(defaultValue)
+        localStorage.setItem(key, local)
     }
     let value = JSON.parse(local)
 
@@ -112,11 +111,10 @@ export function flagsConfig<K extends string>(
     let isValidValue = Object.keys(value).every((k) => (
         defaultKeys.includes(k) && typeof value[k] === "boolean"))
     if (!isValidValue) {
-        localStorage[key] = JSON.stringify(defaultValue)
-        local = localStorage[key]
+        local = JSON.stringify(defaultValue)
+        localStorage.setItem(key, local)
+        value = JSON.parse(local)
     }
-
-    value = JSON.parse(local)
 
     const { subscribe, set, update } = writable(value)
 
@@ -124,7 +122,7 @@ export function flagsConfig<K extends string>(
         subscribe,
         set(value: Record<K, boolean>) {
             set(value)
-            localStorage[key] = JSON.stringify(value)
+            localStorage.setItem(key, JSON.stringify(value))
             onWrite(value)
         },
         update,
@@ -132,6 +130,6 @@ export function flagsConfig<K extends string>(
     }
 }
 
-const themes = ["dark", "purple"]
+const themes = ["dark", "purple"] as const
 export const theme = stringConfig("theme", "dark", themes)
 export const language = stringConfig("language", getInitialLang(), Object.values(Language))

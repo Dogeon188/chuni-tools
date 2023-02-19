@@ -1,10 +1,8 @@
 import type { Difficulty } from "@/common/song"
 
-type PrevRecords = {
-    [idx: string]: {
-        [key in Difficulty]?: number // score
-    }
-}
+type PrevRecords = Record<string, {
+    [key in Difficulty]?: number // score
+}>
 
 export function compareRecord(record: ParsedRecord[]) {
     const prevRecords = JSON.parse(localStorage.getItem("prevPlayRecord") ?? "{}") as PrevRecords

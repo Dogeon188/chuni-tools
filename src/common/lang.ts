@@ -4,18 +4,18 @@ export enum Language {
 }
 
 export function saveLanguage(l: Language) {
-    localStorage.language = l
+    localStorage.setItem("language", l)
 }
 
 function loadLanguage() {
-    const raw = localStorage.language;
+    const raw = localStorage.getItem("language")
     switch (raw) {
         case Language.en_US:
-            return Language.en_US;
+            return Language.en_US
         case Language.zh_TW:
-            return Language.zh_TW;
+            return Language.zh_TW
     }
-    return null;
+    return null
 }
 
 export function getInitialLang() {
@@ -29,7 +29,7 @@ export function getInitialLang() {
     if (langPrefrence) return langPrefrence
 
     if (navigator.language.startsWith("zh")) {
-        return Language.zh_TW;
+        return Language.zh_TW
     }
-    return Language.en_US;
+    return Language.en_US
 }

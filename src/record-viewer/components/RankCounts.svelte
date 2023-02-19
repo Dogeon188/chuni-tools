@@ -21,11 +21,11 @@
             <div>{rankCounts["MAX"] ?? 0}</div>
         </div>
     {/if}
-    <div class="item fc" class:zero={fcCount == 0}>
+    <div class="item fc" class:zero={fcCount == 0} class:full={fcCount == total}>
         <div>FC</div>
         <div>{fcCount}</div>
     </div>
-    <div class="item aj" class:zero={ajCount == 0}>
+    <div class="item aj" class:zero={ajCount == 0}  class:full={ajCount == total}>
         <div>AJ</div>
         <div>{ajCount}</div>
     </div>

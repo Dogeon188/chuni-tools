@@ -2,10 +2,11 @@ import { derived, get, writable } from "svelte/store"
 import { language } from "@/common/config"
 import { getTranslator } from "@/common/i18n"
 import { difficulties } from "@/common/song"
+import type { Language } from "@/common/lang"
 import { diffUpdateInterval, filterDiff, scoreDiffUpdateIntervals, usedConstData } from "./config"
 import { parseRecord } from "./record"
 import { CrossPageRequestMap, requestFor } from "./request"
-import { saveRecord } from "./history"
+import { compareRecord, saveRecord } from "./history"
 
 function toggleable(defaultState = false) {
     const { subscribe, set, update } = writable(defaultState)
@@ -18,13 +19,13 @@ function toggleable(defaultState = false) {
 }
 
 // separated to avoid unnecessary locale imports
-const translations = new Map<string, Map<string, string>>()
-const translationNames = new Map<string, string>()
+const translations = new Map<Language, Map<string, string>>()
+const translationNames = new Map<Language, string>()
 
 for (let l of language.accepts) {
     const commonTranslation = Object.entries(require(`@/common/locale/${l}.json`))
     const partialTranslation = Object.entries(require(`@/record-viewer/locale/${l}.json`))
-    translations.set(l, <Map<string, string>>new Map(commonTranslation.concat(partialTranslation)))
+    translations.set(l, <Map<Language, string>>new Map(commonTranslation.concat(partialTranslation)))
     translationNames.set(l, translations.get(l)?.get("locale.name") || "Undefined locale name")
 }
 
@@ -122,6 +123,7 @@ export const bestRecord$ = (() => {
                 }
             }
             const parsed = await parseRecord(raw, true)
+            compareRecord(parsed)
             set(parsed)
             if (loadAllAndSave) saveRecord(parsed)
 

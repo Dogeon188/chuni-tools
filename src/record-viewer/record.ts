@@ -2,7 +2,6 @@ import { get } from "svelte/store"
 import { calcOp, calcOpMax, calcRank, calcRating } from "@/common/rating"
 import { difficulties } from "@/common/song"
 import { constData$, t } from "./store"
-import { compareRecord } from "./history"
 
 export const recordSorts: Record<string, (a: ParsedRecord, b: ParsedRecord) => number> = {
     default: (a, b) => {
@@ -82,8 +81,6 @@ export async function parseRecord(playRecord: PlayRecord[], isBestRecord = false
             songs: cannotFetch.map(r => `    ${r.title} ${r.difficulty}`).join("\n")
         }))
     }
-
-    compareRecord(recordList)
 
     recordList.sort(recordSorts.default)
     recordList.map((r, i) => { r.order = i + 1 })

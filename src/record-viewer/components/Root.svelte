@@ -12,6 +12,7 @@
         showSettings$,
         fetchingSomething$,
         t,
+        showScoreDiff$,
     } from "../store"
     import {
         filterDiff,
@@ -34,6 +35,7 @@
 
     function routeChange() {
         $page$ = window.location.hash.slice(1)
+        if ($page$ !== "best") $showScoreDiff$ = false
     }
 
     async function sendSaveLang() {

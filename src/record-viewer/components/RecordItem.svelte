@@ -6,7 +6,7 @@
     export let song: ParsedRecord
 
     function toggleShowScoreDiff() {
-        showScoreDiff$.toggle()
+        if ($page$ === "best") showScoreDiff$.toggle()
     }
 </script>
 
@@ -32,8 +32,13 @@
     {:else}
         <td data-rank={song.rank}>{song.rank}</td>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <td class="song-score" on:click={toggleShowScoreDiff}>
-            {$showScoreDiff$ ? (song.scoreDiff <= 0 ? "" : "+") + song.scoreDiff : song.score}
+        <td
+            class="song-score"
+            class:score-diff={$page$ === "best"}
+            on:click={toggleShowScoreDiff}>
+            {$showScoreDiff$
+                ? (song.scoreDiff <= 0 ? "" : "+") + song.scoreDiff
+                : song.score}
         </td>
     {/if}
     <td>
@@ -118,8 +123,10 @@
             color: var(--theme-clear-aj)
     td.song-op
         white-space: nowrap
-    td.song-score
+    td.song-score.score-diff
         cursor: pointer
+        &:hover
+            text-shadow: 0 0 10px var(--theme-text)
     .opmx
         color: var(--theme-text-dim)
         font-size: .8em

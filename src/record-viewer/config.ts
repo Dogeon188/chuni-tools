@@ -26,7 +26,7 @@ let filterGenreConfig = {} as Record<keyof typeof Genre, boolean>
 for (let g of genres) { filterGenreConfig[g] = true }
 export const filterGenre = flagsConfig("filterGenre", filterGenreConfig)
 
-const availableConstData = ["intl", "jp"]
+const availableConstData = ["intl", "jp"] as const
 export const usedConstData = stringConfig("usedConstData", "intl", availableConstData, () => {
     recentRecord$.updateConstData()
     playHistory$.updateConstData()
@@ -37,7 +37,7 @@ export const showOverPower = booleanConfig("showOverPower", false)
 
 export const showPlayCount = booleanConfig("showPlaycount", false)
 
-export const scoreDiffUpdateIntervals: {[i: string]: number} = {
+export const scoreDiffUpdateIntervals: Record<string, number> = {
     "1d": 86400000,
     "3d": 259200000,
     "7d": 604800000,
