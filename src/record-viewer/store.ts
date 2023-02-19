@@ -103,7 +103,7 @@ export const bestRecord$ = (() => {
     const { subscribe, set } = writable([] as ParsedRecord[])
 
     let inited = false
-    let diffFetched: Record<string, boolean>
+    let diffFetched: Record<string, boolean> = {}
     let raw = [] as BestRecord[]
 
     return {
@@ -112,14 +112,15 @@ export const bestRecord$ = (() => {
         async init(loadAll: boolean = false) {
             if (inited) return
 
-            diffFetched = JSON.parse(JSON.stringify(get(filterDiff)))
+            const diffToFetch = JSON.parse(JSON.stringify(get(filterDiff)))
             for (let d of difficulties) {
-                if (loadAll || diffFetched[d]) {
+                if (loadAll || diffToFetch[d]) {
                     messageText$.set(get(t)("record.fetch.fetching", {
                         diff: d.toLowerCase(),
                         diffStr: get(t)("record.fetch.diff." + d.toLowerCase())
                     }))
                     Array.prototype.push.apply(raw, await requestFor("bestRecord", d))
+                    diffFetched[d] = true
                 }
             }
             const parsed = await parseRecord(raw, true)
