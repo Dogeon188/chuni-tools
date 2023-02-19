@@ -93,7 +93,7 @@ export const playerStats$ = (() => {
             const curLastPlayed = get(playerStats$).lastPlayed
             const prevLastPlayed = Number(localStorage.getItem("prevLastPlayed") ?? Number.NEGATIVE_INFINITY)
             await bestRecord$.init(
-                curLastPlayed - prevLastPlayed > scoreDiffUpdateIntervals[get(diffUpdateInterval)] || localStorage.getItem("prevPlayRecord") === "{}"
+                curLastPlayed - prevLastPlayed > scoreDiffUpdateIntervals[get(diffUpdateInterval)] || localStorage.getItem("prevPlayRecord") === null
             )
         }
     }

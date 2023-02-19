@@ -67,7 +67,7 @@
                 class="update-scorediff-btn"
                 disabled={$scoreDiffDirty}
                 on:click={() => {
-                    localStorage.setItem("prevPlayRecord", "{}")
+                    localStorage.removeItem("prevPlayRecord")
                     $scoreDiffDirty = true
                 }}>
                 {$t(
