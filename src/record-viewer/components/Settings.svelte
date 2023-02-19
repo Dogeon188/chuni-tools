@@ -53,7 +53,7 @@
         <Select
             label={$t("settings.data.diffUpdate", {
                 date: new Date(
-                    Number(localStorage.getItem("prevLastPlayed"))
+                    Number(localStorage.getItem("prevUpdateTime"))
                 ).toLocaleDateString(),
             })}
             bind:value={$diffUpdateInterval}>

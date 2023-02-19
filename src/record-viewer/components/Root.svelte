@@ -70,7 +70,7 @@
     <title>{$t("main.title")}</title>
 </svelte:head>
 
-{#await Promise.all( [playerStats$.init(), recentRecord$.init(), playHistory$.init(), /* bestRecord$.init(), */ sendSaveLang()] )}
+{#await Promise.all( [playerStats$.init(), recentRecord$.init(), playHistory$.init(), bestRecord$.init(), sendSaveLang()] )}
     <Loading />
 {:then}
     <Header />

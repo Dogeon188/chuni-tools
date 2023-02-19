@@ -5,7 +5,7 @@ import { difficulties } from "@/common/song"
 import { diffUpdateInterval, filterDiff, scoreDiffUpdateIntervals, usedConstData } from "./config"
 import { parseRecord } from "./record"
 import { CrossPageRequestMap, requestFor } from "./request"
-import { processRecord } from "./history"
+import { saveRecord } from "./history"
 
 function toggleable(defaultState = false) {
     const { subscribe, set, update } = writable(defaultState)
@@ -89,12 +89,6 @@ export const playerStats$ = (() => {
             if (inited) return
             set(await requestFor("playerStats"))
             inited = true
-
-            const curLastPlayed = get(playerStats$).lastPlayed
-            const prevLastPlayed = Number(localStorage.getItem("prevLastPlayed") ?? Number.NEGATIVE_INFINITY)
-            await bestRecord$.init(
-                curLastPlayed - prevLastPlayed > scoreDiffUpdateIntervals[get(diffUpdateInterval)] || localStorage.getItem("prevPlayRecord") === null
-            )
         }
     }
 })()
@@ -109,12 +103,16 @@ export const bestRecord$ = (() => {
     return {
         set,
         subscribe,
-        async init(loadAll: boolean = false) {
+        async init() {
+            const curTime = Date.now()
+            const prevTime = Number(localStorage.getItem("prevUpdateTime") ?? Number.NEGATIVE_INFINITY)
+            const loadAllAndSave = prevTime == Number.NEGATIVE_INFINITY || curTime - prevTime > scoreDiffUpdateIntervals[get(diffUpdateInterval)]
+
             if (inited) return
 
             const diffToFetch = JSON.parse(JSON.stringify(get(filterDiff)))
             for (let d of difficulties) {
-                if (loadAll || diffToFetch[d]) {
+                if (loadAllAndSave || diffToFetch[d]) {
                     messageText$.set(get(t)("record.fetch.fetching", {
                         diff: d.toLowerCase(),
                         diffStr: get(t)("record.fetch.diff." + d.toLowerCase())
@@ -125,7 +123,7 @@ export const bestRecord$ = (() => {
             }
             const parsed = await parseRecord(raw, true)
             set(parsed)
-            processRecord(parsed, loadAll)
+            if (loadAllAndSave) saveRecord(parsed)
 
             inited = true
         },
@@ -151,7 +149,10 @@ export const bestRecord$ = (() => {
                         fetchedAdditional = true
                     }
                 }
-                if (fetchedAdditional) set(await parseRecord(raw, true))
+                if (fetchedAdditional) {
+                    const parsed = await parseRecord(raw, true)
+                    set(parsed)
+                }
                 fetchingSomething$.set(false)
                 messageTextLoading$.set(false)
             } catch {
