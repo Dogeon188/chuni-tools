@@ -68,6 +68,7 @@
                 disabled={$scoreDiffDirty}
                 on:click={() => {
                     localStorage.removeItem("prevPlayRecord")
+                    localStorage.removeItem("prevUpdateTime")
                     $scoreDiffDirty = true
                 }}>
                 {$t(

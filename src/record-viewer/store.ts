@@ -123,9 +123,9 @@ export const bestRecord$ = (() => {
                 }
             }
             const parsed = await parseRecord(raw, true)
+            if (loadAllAndSave) saveRecord(parsed)
             compareRecord(parsed)
             set(parsed)
-            if (loadAllAndSave) saveRecord(parsed)
 
             inited = true
         },
