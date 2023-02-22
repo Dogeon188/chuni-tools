@@ -12,7 +12,7 @@ export async function saveResultAsPicture() {
 
     n.style.width = "max-content"
     n.style.margin = "initial"
-    n.querySelectorAll("tbody tr:not(.best40)").forEach((tr) => { tr.remove() })
+    n.querySelectorAll("tbody tr:nth-child(n+41)").forEach((tr) => { tr.remove() })
     n.querySelectorAll(".pc-hidden span").forEach((div) => { div.remove() })
     n.querySelectorAll(".wrapper").forEach(
         (wr) => (<HTMLDivElement>wr).style.overflow = "hidden")
