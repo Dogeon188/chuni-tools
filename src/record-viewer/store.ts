@@ -154,6 +154,7 @@ export const bestRecord$ = (() => {
                 if (fetchedAdditional) {
                     const parsed = await parseRecord(raw, true)
                     set(parsed)
+                    compareRecord(parsed)
                 }
                 fetchingSomething$.set(false)
                 messageTextLoading$.set(false)
