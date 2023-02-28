@@ -33,7 +33,7 @@ const ratingPoints = [
     [900000, -500],
 ]
 
-export function calcRating(song: ParsedRecord) {
+export function calcRawRating(song: ParsedRecord) {
     if (song.score <= 500000) return 0
     let c = song.const * 100
     let ret
@@ -47,14 +47,14 @@ export function calcRating(song: ParsedRecord) {
         const prev = ratingPoints[p - 1], cur = ratingPoints[p]
         ret = c + cur[1] + (prev[1] - cur[1]) * (song.score - cur[0]) / (prev[0] - cur[0])
     }
-    return Math.floor(Math.max(0, ret)) / 100
+    return Math.max(0, ret) / 100
 }
 
 export function calcOp(song: ParsedRecord) {
     let e1 = { "AJ": 1, "FC": 0.5, "": 0 }[song.clear]
     if (song.score == 1010000) return (song.const + 3) * 5
     if (song.score > 1007500) return (song.const + 2) * 5 + e1 + (song.score - 1007500) * 0.0015
-    return song.rating * 5 + e1
+    return song.rawRating * 5 + e1
 }
 
 export function calcOpMax(song: ParsedRecord) {

@@ -33,7 +33,8 @@ export const usedConstData = stringConfig("usedConstData", "intl", availableCons
     bestRecord$.updateConstData()
 })
 
-export const showOverPower = booleanConfig("showOverPower", false)
+const showOverPowerChoice = ["hide", "value", "percentage"] as const
+export const showOverPower = stringConfig("showOverPower", "hide", showOverPowerChoice)
 
 export const showPlayCount = booleanConfig("showPlaycount", false)
 

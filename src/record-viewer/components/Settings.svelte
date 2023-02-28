@@ -1,8 +1,3 @@
-<script context="module" lang="ts">
-    import { writable } from "svelte/store"
-    let scoreDiffDirty = writable(false)
-</script>
-
 <script lang="ts">
     import { fade } from "svelte/transition"
     import { theme, language } from "@/common/config"
@@ -15,13 +10,13 @@
         showPlayCount,
         showOverPower,
         usedConstData,
-        diffUpdateInterval,
         configs,
     } from "../config"
-    import { t, translationNames, showSettings$ } from "../store"
+    import { t, translationNames, showSettings$, showScoreDiff$ } from "../store"
     import SettingsFilterDiff from "./SettingsFilterDiff.svelte"
     import SettingsFilterGenre from "./SettingsFilterGenre.svelte"
     import SettingsFetchPlayCount from "./SettingsFetchPlayCount.svelte"
+    import SettingsScoreDiffUpdate from "./SettingsScoreDiffUpdate.svelte"
 </script>
 
 <div class="wrapper" transition:fade={{ duration: 100 }}>
@@ -39,63 +34,54 @@
             step={0.1}
             bind:high={$filterConstMax}
             bind:low={$filterConstMin} />
+
         <SettingsFilterDiff />
+
         <SettingsFilterGenre />
 
         <hr />
 
         <h4>{@html $t("settings.data.title")}</h4>
+
         <Select label={$t("settings.data.constData")} bind:value={$usedConstData}>
             {#each usedConstData.accepts as d}
                 <option value={d}>{$t("settings.data.constData." + d)}</option>
             {/each}
         </Select>
-        <Select
-            label={$t("settings.data.diffUpdate", {
-                date: new Date(
-                    Number(localStorage.getItem("prevUpdateTime"))
-                ).toLocaleDateString(),
-            })}
-            bind:value={$diffUpdateInterval}>
-            {#each diffUpdateInterval.accepts as d}
-                <option value={d}>{$t("settings.data.diffUpdate." + d)}</option>
+
+        <Select label={$t("settings.data.overpower")} bind:value={$showOverPower}>
+            {#each showOverPower.accepts as d}
+                <option value={d}>{$t("settings.data.overpower." + d)}</option>
             {/each}
         </Select>
-        {#if $diffUpdateInterval === "manual"}
-            <button
-                type="button"
-                class="update-scorediff-btn"
-                disabled={$scoreDiffDirty}
-                on:click={() => {
-                    localStorage.removeItem("prevPlayRecord")
-                    localStorage.removeItem("prevUpdateTime")
-                    $scoreDiffDirty = true
-                }}>
-                {$t(
-                    "settings.data.diffUpdate." + ($scoreDiffDirty ? "reload" : "update")
-                )}
-            </button>
-        {/if}
-        <div style="color: var(--theme-text-dim); margin: .5em auto">
-            {@html $t("settings.data.diffUpdate.notify")}
-        </div>
-        <Switch label={$t("settings.data.overpower")} bind:checked={$showOverPower} />
         <div style="color: var(--theme-text-dim); margin: .5em auto">
             {@html $t("settings.data.overpower.notify")}
         </div>
+
         <Switch label={$t("settings.data.playcount")} bind:checked={$showPlayCount} />
         {#if $showPlayCount}
             <SettingsFetchPlayCount />
+            <div style="color: var(--theme-text-dim); margin: .5em auto">
+                {@html $t("settings.data.playcount.notify")}
+            </div>
         {/if}
+
+        <Switch
+            label={$t("settings.data.showScoreDiff")}
+            bind:checked={$showScoreDiff$} />
+
+        <SettingsScoreDiffUpdate />
 
         <hr />
 
         <h4>{@html $t("settings.ui.title")}</h4>
+
         <Select label={$t("settings.ui.locale")} bind:value={$language}>
             {#each language.accepts as l}
                 <option value={l}>{translationNames.get(l)}</option>
             {/each}
         </Select>
+
         <Select label={$t("settings.ui.theme")} bind:value={$theme}>
             {#each theme.accepts as t}
                 <option value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>
@@ -143,15 +129,6 @@
         box-shadow: 2rem 2rem 10px #0008
         border-radius: 1rem
         text-align: left
-    .update-scorediff-btn
-        background-color: var(--theme-control)
-        padding: .5rem 1.5rem
-        margin: .5rem .5rem
-        border-radius: .8rem
-        float: right
-        &:disabled
-            background-color: var(--theme-bg-sub)
-            cursor: no-drop
     .close-btn
         position: absolute
         top: .5rem

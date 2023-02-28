@@ -17,7 +17,7 @@
         -ms-flex-direction: column
         flex-direction: column
         padding: .5rem
-        gap: .2rem
+        gap: .5rem
     .wrapper
         position: relative
         width: 4.5rem

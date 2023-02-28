@@ -8,14 +8,11 @@ const filename = "chunithm_b40.png"
 export async function saveResultAsPicture() {
     const resultNode = document.querySelector("main")
 
+    if (resultNode == null) return alert(get(t)("share.error") + "\nresultNode is null")
     let n = <HTMLElement>resultNode?.cloneNode(true)
 
-    n.style.width = "max-content"
-    n.style.margin = "initial"
+    n.id = "copied-main"
     n.querySelectorAll("tbody tr:nth-child(n+41)").forEach((tr) => { tr.remove() })
-    n.querySelectorAll(".pc-hidden span").forEach((div) => { div.remove() })
-    n.querySelectorAll(".wrapper").forEach(
-        (wr) => (<HTMLDivElement>wr).style.overflow = "hidden")
 
     resultNode?.parentElement?.appendChild(n)
     toBlob(n, {
@@ -34,5 +31,8 @@ export async function saveResultAsPicture() {
             a.download = filename
             a.click()
         }
+    }).catch((err) => {
+        console.error(err)
+        alert(get(t)("share.error"))
     })
 }

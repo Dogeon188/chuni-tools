@@ -45,7 +45,7 @@
 
     $: filteredBestRecord$$ = $bestRecord$.filter((v) => {
         return (
-            ($showOverPower || v.score >= 0) &&
+            ($showOverPower != "hide" || v.score >= 0) &&
             $filterDiff[v.difficulty] &&
             $filterGenre[genres.find((g) => Genre[g] == v.genre)!] &&
             $filterConstMax >= v.const &&
@@ -81,14 +81,13 @@
         <PlayerStats />
 
         {#if $page$ === "best"}
-            {#if $showOverPower}
+            <RankCounts
+                ajCount={ajCount$$}
+                fcCount={fcCount$$}
+                rankCounts={rankCounts$$}
+                total={filteredBestRecord$$.length} />
+            {#if $showOverPower != "hide"}
                 <OverpowerStatus records={filteredBestRecord$$} />
-            {:else}
-                <RankCounts
-                    ajCount={ajCount$$}
-                    fcCount={fcCount$$}
-                    rankCounts={rankCounts$$}
-                    total={filteredBestRecord$$.length} />
             {/if}
         {/if}
 
@@ -116,4 +115,18 @@
         -ms-flex-direction: column
         flex-direction: column
         align-items: center
+    :global(#copied-main)
+        width: 600px
+        margin: initial
+        :global(.wrapper)
+            overflow: hidden
+            max-width: 100%
+        :global(tbody td[data-diff])
+            overflow: hidden
+            text-overflow: ellipsis
+            white-space: nowrap
+            display: inline-block
+            width: 230px
+        :global(.pc-hidden span)
+            display: none
 </style>

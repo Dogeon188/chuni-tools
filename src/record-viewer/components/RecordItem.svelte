@@ -8,6 +8,12 @@
     function toggleShowScoreDiff() {
         if ($page$ === "best") showScoreDiff$.toggle()
     }
+
+    function toggleOpDisplay() {
+        if ($page$ == "best") {
+            $showOverPower = $showOverPower == "percentage" ? "value" : "percentage"
+        }
+    }
 </script>
 
 <tr
@@ -19,30 +25,38 @@
     <td data-diff={song.difficulty} colspan={$page$ === "history" ? 2 : 1}
         >{song.title}</td>
     <td>{song.const < 0 ? "-" : song.const?.toFixed(1) ?? "??.?"}</td>
-    {#if $showOverPower}
-        <td class="song-op">
-            {song.const < 0 ? "-" : song.op.toFixed(2)}<span class="opmx">
-                &#xFF0F;{song.const < 0 ? "-" : song.opMax.toFixed(1)}
-            </span>
-        </td>
-        <td>
-            {song.const < 0 ? "-" : song.opPercent.toPrecision(5)}<span class="opmx"
-                >%</span>
+    {#if $showOverPower != "hide"}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <td class="song-op" class:clickable={$page$ == "best"} on:click={toggleOpDisplay}>
+            {#if $showOverPower == "percentage"}
+                {song.const < 0 ? "-" : song.opPercent.toPrecision(5)}<span class="opmx"
+                    >%</span>
+            {:else}
+                {song.const < 0 ? "-" : song.op.toFixed(2)}<span class="opmx">
+                    &#xFF0F;{song.const < 0 ? "-" : song.opMax.toFixed(1)}
+                </span>
+            {/if}
         </td>
     {:else}
         <td data-rank={song.rank}>{song.rank}</td>
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <td
-            class="song-score"
-            class:score-diff={$page$ === "best"}
-            on:click={toggleShowScoreDiff}>
-            {$showScoreDiff$
-                ? (song.scoreDiff <= 0 ? "" : "+") + song.scoreDiff
-                : song.score}
-        </td>
     {/if}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <td
+        class="song-score"
+        class:clickable={$page$ === "best"}
+        on:click={toggleShowScoreDiff}>
+        {#if $showScoreDiff$}
+            {(song.scoreDiff <= 0 ? "" : "+") + song.scoreDiff}
+        {:else}
+            {song.score == -1 ? "-" : song.score}
+        {/if}
+    </td>
     <td>
-        {song.const < 0 ? "-" : song.rating == null ? "??.??" : song.rating.toFixed(2)}
+        {song.const < 0 || song.score == -1
+            ? "-"
+            : song.rating == null
+            ? "??.??"
+            : song.rating.toFixed(2)}
     </td>
     {#if $page$ === "history" || $page$ === "best"}
         <td data-clear={song.clear}>{song.clear}</td>
@@ -100,8 +114,8 @@
     td[data-rank]
         white-space: nowrap
         &[data-rank="MAX"]
-            color: var(--theme-clear_aj)
-            text-shadow: 0 0 10px var(--theme-clear_aj)
+            color: var(--theme-clear-aj)
+            text-shadow: 0 0 10px var(--theme-clear-aj)
         @each $rank, $p in (("SSS+", 0), ("SSS", 2), ("SS+", 4), ("SS", 6), ("S+", 2), ("S", 4))
             &[data-rank="#{$rank}"]
                 color: adjust-color(#fc1, $whiteness: ($p * 10%))
@@ -123,7 +137,7 @@
             color: var(--theme-clear-aj)
     td.song-op
         white-space: nowrap
-    td.song-score.score-diff
+    td.clickable
         cursor: pointer
         &:hover
             text-shadow: 0 0 10px var(--theme-text)

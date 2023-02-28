@@ -29,6 +29,7 @@ type HistoryRecord = PlayRecord & { timestamp: number }
 type ParsedRecord = (BestRecord & HistoryRecord ) & {
     const: number
     rank: string
+    rawRating: number
     rating: number
     order: number
     op: number

@@ -1,5 +1,5 @@
 import { get } from "svelte/store"
-import { calcOp, calcOpMax, calcRank, calcRating } from "@/common/rating"
+import { calcOp, calcOpMax, calcRank, calcRawRating } from "@/common/rating"
 import { difficulties } from "@/common/song"
 import { constData$, t } from "./store"
 
@@ -67,8 +67,9 @@ export async function parseRecord(playRecord: PlayRecord[], isBestRecord = false
             r.rating = 0
         } else {
             r.const = songInfo[r.difficulty]!
-            r.rating = calcRating(r)
+            r.rawRating = calcRawRating(r)
             r.genre = `${songInfo.genre}`
+            r.rating = Math.floor(r.rawRating * 100) / 100
         }
         r.op = calcOp(r)
         r.opMax = calcOpMax(r)
