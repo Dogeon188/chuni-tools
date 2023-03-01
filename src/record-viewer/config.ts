@@ -26,7 +26,7 @@ let filterGenreConfig = {} as Record<keyof typeof Genre, boolean>
 for (let g of genres) { filterGenreConfig[g] = true }
 export const filterGenre = flagsConfig("filterGenre", filterGenreConfig)
 
-const availableConstData = ["intl", "newplus", /* "jp" */] as const
+const availableConstData = ["intl", /* "jp" */] as const
 export const usedConstData = stringConfig("usedConstData", "intl", availableConstData, () => {
     recentRecord$.updateConstData()
     playHistory$.updateConstData()
