@@ -30,7 +30,7 @@
         {:else}
             <div class="spinner" />
             <p>{@html $messageText$}</p>
-            {#if usedConstData.accepts.indexOf("jp") > -1}
+            {#if usedConstData.accepts.length >= 2}
                 <p class="dim">
                     {@html $t("loading.constData", {
                         name: $t("settings.data.constData." + $usedConstData),

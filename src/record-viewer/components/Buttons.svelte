@@ -12,10 +12,12 @@
                 fill="var(--theme-text)" />
         </svg>
     </button>
-    {#if usedConstData.accepts.indexOf("jp") > -1}
+    {#if usedConstData.accepts.length >= 2}
         <button
             type="button"
-            title="{$t("header.title.constData")}"
+            title={$t("header.title.constData", {
+                name: $t("settings.data.constData." + $usedConstData),
+            })}
             on:click={() => {
                 $usedConstData =
                     usedConstData.accepts[
@@ -26,7 +28,10 @@
             {$usedConstData.slice(0, 2).toUpperCase()}
         </button>
     {/if}
-    <button type="button" title={$t("header.title.settings")} on:click={showSettings$.toggle}>
+    <button
+        type="button"
+        title={$t("header.title.settings")}
+        on:click={showSettings$.toggle}>
         <svg width="18" height="18">
             <path
                 d="M2 4H16V6H2V4ZM2 8H16V10H2V8ZM2 12H16V14H2V12Z"

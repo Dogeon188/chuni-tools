@@ -43,11 +43,13 @@
 
         <h4>{@html $t("settings.data.title")}</h4>
 
-        <Select label={$t("settings.data.constData")} bind:value={$usedConstData}>
-            {#each usedConstData.accepts as d}
-                <option value={d}>{$t("settings.data.constData." + d)}</option>
-            {/each}
-        </Select>
+        {#if usedConstData.accepts.length >= 2}
+            <Select label={$t("settings.data.constData")} bind:value={$usedConstData}>
+                {#each usedConstData.accepts as d}
+                    <option value={d}>{$t("settings.data.constData." + d)}</option>
+                {/each}
+            </Select>
+        {/if}
 
         <Select label={$t("settings.data.overpower")} bind:value={$showOverPower}>
             {#each showOverPower.accepts as d}

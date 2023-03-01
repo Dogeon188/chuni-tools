@@ -47,14 +47,14 @@ export function calcRawRating(song: ParsedRecord) {
         const prev = ratingPoints[p - 1], cur = ratingPoints[p]
         ret = c + cur[1] + (prev[1] - cur[1]) * (song.score - cur[0]) / (prev[0] - cur[0])
     }
-    return Math.max(0, ret) / 100
+    return Math.max(0, ret)
 }
 
 export function calcOp(song: ParsedRecord) {
     let e1 = { "AJ": 1, "FC": 0.5, "": 0 }[song.clear]
     if (song.score == 1010000) return (song.const + 3) * 5
     if (song.score > 1007500) return (song.const + 2) * 5 + e1 + (song.score - 1007500) * 0.0015
-    return song.rawRating * 5 + e1
+    return (song.rawRating / 100) * 5 + e1
 }
 
 export function calcOpMax(song: ParsedRecord) {
