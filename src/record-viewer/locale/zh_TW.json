@@ -69,10 +69,10 @@
     "record.fetch.diff.exp": "紅譜 (EXPERT)",
     "record.fetch.diff.adv": "黃譜 (ADVANCED)",
     "record.fetch.diff.bas": "綠譜 (BASIC)",
-    "record.fetch.unknown": "以下是我們沒辦法找到定數資料的歌曲：\n{{songs}}\n請投過推特或Discord等方式聯繫本查分器的製作者。",
+    "record.fetch.unknown": "以下是我們沒辦法找到定數資料的歌曲：\n{{songs}}\n請投過推特、Discord等方式聯繫本查分器的製作者。",
     "record.fetch.error": "<span style=\"color:red;\">在取得歌曲遊玩記錄時出現問題，<br/>您可能需要重新整理頁面後再試一次。</span>",
     "playcount.fetch.button": "取得",
     "playcount.fetch.progress": "正在取得歌曲遊玩次數…… ({{progress}}/{{all}})",
     "playcount.fetch.error": "<span style=\"color:red;\">在取得歌曲遊玩次數時出現問題，<br/>您可能需要重新整理頁面後再試一次。</span>",
-    "share.error": "在嘗試將您的成績轉換為圖檔時出現錯誤，請聯繫作者處理。"
+    "share.error": "在嘗試將您的成績轉換為圖檔時出現錯誤，請將以下的錯誤訊息截圖傳給作者處理。\n\n{{error}}"
 }

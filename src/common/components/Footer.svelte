@@ -1,6 +1,9 @@
 <script lang="ts">
-    import { language } from "@/common/config"
-    import { t, translationNames } from "../store"
+    import { language } from "../config"
+    import type { getTranslator } from "../i18n"
+    import type { Language } from "../lang"
+    export let t: ReturnType<typeof getTranslator>
+    export let translationNames: Map<Language, string>
 </script>
 
 <footer>

@@ -1,7 +1,5 @@
-import { get } from "svelte/store"
-import { calcOp, calcOpMax, calcRank, calcRawRating } from "@/common/rating"
-import { difficulties } from "@/common/song"
-import { constData$, t } from "./store"
+import { calcRank, calcRawRating, calcOp, calcOpMax } from "./rating"
+import { difficulties } from "./song"
 
 export const recordSorts: Record<string, (a: ParsedRecord, b: ParsedRecord) => number> = {
     default: (a, b) => {
@@ -43,9 +41,9 @@ function unescapeHtmlString(str: string) {
         .replace(/&#039;/g, "'")
 }
 
-export async function parseRecord(playRecord: PlayRecord[], isBestRecord = false) {
+export function parseRecord(playRecord: PlayRecord[], constData: Record<string, SongConstData>, alertMessage?: string) {
     const recordList = playRecord as ParsedRecord[]
-    const musicData = await get(constData$) as {[songName: string]: SongConstData}
+    const musicData = constData
     const cannotFetch = [] as ParsedRecord[]
     recordList.map((r) => {
         if (<string>r.difficulty === "WE") {
@@ -77,10 +75,8 @@ export async function parseRecord(playRecord: PlayRecord[], isBestRecord = false
         r.rank = calcRank(r.score)
     })
 
-    if (isBestRecord && cannotFetch.length) {
-        alert(get(t)("record.fetch.unknown", {
-            songs: cannotFetch.map(r => `    ${r.title} ${r.difficulty}`).join("\n")
-        }))
+    if (alertMessage && cannotFetch.length) {
+        alert(alertMessage.replace("{{songs}}", cannotFetch.map(r => `    ${r.title} ${r.difficulty}`).join("\n")))
     }
 
     recordList.sort(recordSorts.default)

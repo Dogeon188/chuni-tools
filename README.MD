@@ -14,7 +14,17 @@ The chart constant data is compiled from [chunirec](https://developer.chunirec.n
 
 ## Dev
 
+To initialize the repository, copy the `./docs` folder and rename to `./build`. After that, use the following command to create a dev session:
+
 ```sh
 npm install
+npm run dev
+```
+
+BTW, it's recommended to install Live Server plugin if you're using VSCode.
+
+With the following command, you can build and compile the code to `./docs`, then GitHub Pages will handle the rest.
+
+```sh
 npm run build
 ```

@@ -53,8 +53,11 @@ export function calcRawRating(song: ParsedRecord) {
 export function calcOp(song: ParsedRecord) {
     let e1 = { "AJ": 1, "FC": 0.5, "": 0 }[song.clear]
     if (song.score == 1010000) return (song.const + 3) * 5
-    if (song.score > 1007500) return (song.const + 2) * 5 + e1 + (song.score - 1007500) * 0.0015
-    return (song.rawRating / 100) * 5 + e1
+    // if (song.score > 1007500) return (song.const + 2) * 5 + Math.floor(e1 + (song.score - 1007500) * 0.15) / 100
+    let r
+    if (song.score > 1007500) r = (song.const + 2 + 0.75 * (song.score - 1007500) / 2500) * 5 + e1
+    else r = song.rawRating * 5 / 100 + e1
+    return Math.floor(r * 1000) / 1000
 }
 
 export function calcOpMax(song: ParsedRecord) {

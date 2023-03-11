@@ -8,7 +8,7 @@ const filename = "chunithm_b40.png"
 export async function saveResultAsPicture() {
     const resultNode = document.querySelector("main")
 
-    if (resultNode == null) return alert(get(t)("share.error") + "\nresultNode is null")
+    if (resultNode == null) return alert(get(t)("share.error", { error: "resultNode is null" }))
     let n = <HTMLElement>resultNode?.cloneNode(true)
 
     n.id = "copied-main"
@@ -19,7 +19,10 @@ export async function saveResultAsPicture() {
         backgroundColor: window.getComputedStyle(document.body).backgroundColor,
     }).then(async (blob) => {
         n.remove()
-        if (blob == null) return alert(get(t)("share.error"))
+        if (blob == null) {
+            alert(get(t)("share.error", { error: "result blob is null" }))
+            return
+        }
         if (isMobile()) {
             const f = new File([blob], filename, { type: blob.type })
             if (navigator?.canShare({ files: [f] })) {
@@ -32,7 +35,6 @@ export async function saveResultAsPicture() {
             a.click()
         }
     }).catch((err) => {
-        console.error(err)
-        alert(get(t)("share.error"))
+        alert(get(t)("share.error", { error: err }))
     })
 }

@@ -1,3 +1,5 @@
 {
-    "locale.name": "English (US)"
+    "locale.name": "English (US)",
+    "footer.chooseLang": "Choose Language",
+    "footer.source": "Source code & this page is hosted on <a href=\"https://github.com/Dogeon188/chuni-tools\" target=\"_blank\" rel=\"noreferrer noopener\">GitHub</a>"
 }

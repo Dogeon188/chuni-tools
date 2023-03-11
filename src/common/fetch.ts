@@ -43,9 +43,9 @@ export async function fetchBestRecord(diff: Difficulty = Difficulty.master): Pro
             clear: icons?.querySelector(`img[src*="alljustice"]`) ? "AJ" :
                 icons?.querySelector(`img[src*="fullcombo"]`) ? "FC" : "",
             idx: (<HTMLInputElement>f.querySelector(`input[name="idx"]`)).value
-        }
+        } as BestRecord
     }).filter((s) => s.title && s.score /* && s.score > 0 */)
-    return recordList as BestRecord[]
+    return recordList
 }
 
 export async function fetchPlayHistory(): Promise<HistoryRecord[]> {

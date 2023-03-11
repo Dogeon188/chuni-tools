@@ -69,10 +69,10 @@
     "record.fetch.diff.exp": "EXPERT",
     "record.fetch.diff.adv": "ADVANCED",
     "record.fetch.diff.bas": "BASIC",
-    "record.fetch.unknown": "Found unknown song(s):\n\n{{songs}}\n\nPlease contact the author at Twitter or Discord.",
+    "record.fetch.unknown": "Found unknown song(s):\n\n{{songs}}\n\nPlease contact the author via Twitter or Discord.",
     "record.fetch.error": "<span style=\"color:red;\">Some error occured when fetching best record!<br/>You probably need to reload the page now.</span>",
     "playcount.fetch.button": "Fetch",
     "playcount.fetch.progress": "Fetching play count... ({{progress}}/{{all}})",
     "playcount.fetch.error": "<span style=\"color:red;\">Some error occured when fetching play count!<br/>You probably need to reload the page now.</span>",
-    "share.error": "Something went wrong when converting your scores to PNG. Please ask the author to fix it."
+    "share.error": "Something went wrong when converting your scores to PNG. Please screenshot the error message to the author.\n\n{{error}}"
 }

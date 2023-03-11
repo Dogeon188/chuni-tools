@@ -1,10 +1,10 @@
 import { derived, get, writable } from "svelte/store"
 import { language } from "@/common/config"
 import { getTranslator } from "@/common/i18n"
+import { parseRecord } from "@/common/record"
 import { difficulties } from "@/common/song"
 import type { Language } from "@/common/lang"
 import { diffUpdateInterval, filterDiff, scoreDiffUpdateIntervals, usedConstData } from "./config"
-import { parseRecord } from "./record"
 import { CrossPageRequestMap, requestFor } from "./request"
 import { compareRecord, saveRecord } from "./history"
 
@@ -51,7 +51,7 @@ export const constData$ = derived(usedConstData, async ($usedConstData: string) 
             `../data/song-const/${$usedConstData}.json`
         ).then(async (d) => await d.json())
     }
-    return songConstData[$usedConstData]
+    return songConstData[$usedConstData] as Record<string, SongConstData>
 })
 
 function createPlayRecord<K extends "recentRecord" | "playHistory">(type: K) {
@@ -65,12 +65,12 @@ function createPlayRecord<K extends "recentRecord" | "playHistory">(type: K) {
         subscribe,
         async init() {
             raw = await requestFor(type)
-            set(await parseRecord(raw))
+            set(parseRecord(raw, await get(constData$)))
             inited = true
         },
         async updateConstData() {
             if (!inited) return
-            set(await parseRecord(raw))
+            set(parseRecord(raw, await get(constData$)))
         }
     }
 }
@@ -122,7 +122,7 @@ export const bestRecord$ = (() => {
                     diffFetched[d] = true
                 }
             }
-            const parsed = await parseRecord(raw, true)
+            const parsed = parseRecord(raw, await get(constData$), get(t)("record.fetch.unknown"))
             if (loadAllAndSave) saveRecord(parsed)
             compareRecord(parsed)
             set(parsed)
@@ -131,7 +131,7 @@ export const bestRecord$ = (() => {
         },
         async updateConstData() {
             if (!inited) return
-            set(await parseRecord(raw, true))
+            set(parseRecord(raw, await get(constData$), get(t)("record.fetch.unknown")))
         },
         async updateDiffFilter() {
             if (!inited) return
@@ -152,7 +152,7 @@ export const bestRecord$ = (() => {
                     }
                 }
                 if (fetchedAdditional) {
-                    const parsed = await parseRecord(raw, true)
+                    const parsed = parseRecord(raw, await get(constData$), get(t)("record.fetch.unknown"))
                     set(parsed)
                     compareRecord(parsed)
                 }

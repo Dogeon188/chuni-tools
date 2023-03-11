@@ -1,3 +1,5 @@
 {
-    "locale.name": "繁體中文"
+    "locale.name": "繁體中文",
+    "footer.chooseLang": "選擇語言",
+    "footer.source": "本網站透過GitHub Pages架設，原始碼可以在<a href=\"https://github.com/Dogeon188/chuni-tools\" target=\"_blank\" rel=\"noreferrer noopener\">GitHub</a>找到。"
 }

@@ -1,7 +1,8 @@
-<script context="module">
+<script lang="ts">
     import { t } from "../store"
     
     const bookmarkletScript = `javascript:(function(d,s){s=d.createElement('script');s.src='https://dogeon188.github.io/chuni-tools/scripts/chuni-tools.js?t='+Math.floor(Date.now()/60000);d.body.append(s);})(document);`
+    let copied = false
 </script>
 
 <h2>{$t("howto.title")}</h2>
@@ -15,10 +16,15 @@
         <button
             type="button"
             class="btn-copy"
+            disabled={copied}
             on:click={() => {
                 navigator.clipboard.writeText(bookmarkletScript)
+                copied = true
+                setTimeout(() => {
+                    copied = false
+                }, 3000)
             }}
-            >{@html $t("howto.step.copyLink.button")}
+            >{@html $t("howto.step.copyLink." + (copied ? "copied" : "button"))}
         </button>
     </li>
     <li>{@html $t("howto.step.bookmarkAdd")}</li>
@@ -28,7 +34,7 @@
     <li>
         <span>{@html $t("howto.step.done")}</span>
         <img
-            src="./images/chuni-net-viewer-button.jpg"
+            src="./images/chuni-net-viewer-button.png"
             alt={$t("howto.step.done.imgAlt")} />
     </li>
 </ol>
@@ -54,4 +60,6 @@
         padding: .5em 1em
         border-radius: 1em
         background-color: var(--theme-control)
+        &:disabled
+            cursor: no-drop
 </style>

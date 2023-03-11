@@ -1,7 +1,7 @@
 <script lang="ts">
+    import { recordSorts } from "@/common/record"
     import { showOverPower, showPlayCount } from "../config"
-    import { recordSorts } from "../record"
-    import { page$, t, showScoreDiff$, showOpPercent$ } from "../store"
+    import { page$, t, showScoreDiff$ } from "../store"
     import RecordItem from "./RecordItem.svelte"
 
     export let playRecord: ParsedRecord[]

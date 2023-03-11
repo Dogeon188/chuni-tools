@@ -4,7 +4,7 @@
   "description": "Variety of tools for the arcade game CHUNITHM (Intl. Ver.)",
   "scripts": {
     "build": "webpack",
-    "dev": "webpack --env development --watch"
+    "dev": "set NODE_ENV=development && webpack --env development --watch"
   },
   "author": "Dogeon188",
   "license": "ISC",
