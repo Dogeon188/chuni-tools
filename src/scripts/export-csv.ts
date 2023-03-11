@@ -11,14 +11,14 @@ import { parseRecord } from "@/common/record"
         [Language.en_US]: {
             pleaseLogin: "Please login to CHUNITHM-NET first.",
             needReload: "Oops! Something went wrong, please reload CHUNITHM-NET.",
-            downloadCSV: "Download Song Record as TSV",
+            downloadCSV: "Download Song Record as CSV",
             downloading: "Downloading {{diff}} data...",
             downloaded: "Completed!"
         },
         [Language.zh_TW]: {
             pleaseLogin: "請先登入 CHUNITHM-NET 再執行本程式。",
             needReload: "唉呀，看來我們這裡出了一點小意外，請重新整理 CHUNITHM-NET。",
-            downloadCSV: "以TSV下載歌曲記錄",
+            downloadCSV: "以CSV下載歌曲記錄",
             downloading: "正在下載 {{diff}} 資料...",
             downloaded: "下載完成！"
         }
@@ -58,7 +58,7 @@ import { parseRecord } from "@/common/record"
                 getScriptHost("export-csv") + "/data/song-const/intl.json"
             ).then(async (d) => await d.json()))
 
-            const rows = parsed.map((r) => `"${r.title.replace("\"", "\"\"")}",${r.difficulty},${r.const},${r.score},${r.rating},${r.op}`)
+            const rows = parsed.map((r) => `"${r.title.replace(/"/g, "\"\"")}",${r.difficulty},${r.const},${r.score},${r.rating},${r.op}`)
             b.innerText = UIString.downloaded
 
             const dlLink = document.createElement('a')
