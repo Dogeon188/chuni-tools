@@ -10,7 +10,7 @@ This project is a remake of [chuni_new_intl_viewer](https://github.com/Dogeon188
 
 This project is heavily inspired by [chuni_intl_viewer](https://github.com/kyroslee/chuni_intl_viewer) made by kyroslee.
 
-The chart constant data is compiled from [chunirec](https://developer.chunirec.net/docs/v2.0/).
+The chart constant data is from [CHUNITHM譜面定数メインフレーム](https://twitter.com/RCMF_chunithm).
 
 ## Dev
 
