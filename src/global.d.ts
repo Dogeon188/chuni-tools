@@ -32,8 +32,8 @@ type ParsedRecord = (BestRecord & HistoryRecord ) & {
     rawRating: number // multiplied by 100
     rating: number
     order: number
-    op: number
-    opMax: number
+    op: number //Multiply the OP by 1000 to circumvent the problem with decimal point arithmetic in JS --Cip
+    opMax: number //Multiply the OP by 1000 to circumvent the problem with decimal point arithmetic in JS --Cip
     opPercent: number
     playCount?: number | null
     genre: string

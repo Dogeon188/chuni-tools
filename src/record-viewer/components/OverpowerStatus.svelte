@@ -2,7 +2,9 @@
     export let records: ParsedRecord[]
 
     $: totalOverpower = records.reduce((pre, record) => pre + record.op, 0)
+    $: totalOverpower = totalOverpower / 1000
     $: maxOverpower = records.reduce((pre, record) => pre + record.opMax, 0)
+    $: maxOverpower = maxOverpower / 1000
     $: progress = (totalOverpower / maxOverpower) * 100
 </script>
 
@@ -10,12 +12,12 @@
     class="wrapper"
     class:aj={maxOverpower && totalOverpower.toFixed(2) === maxOverpower.toFixed(2)}>
     <div>
-        <div class="op-total">{totalOverpower.toFixed(2)}</div>
+        <div class="op-total">{Math.floor(totalOverpower*100)/100}</div>
         <div class="op-max">&#xFF0F;{maxOverpower.toFixed(1)}</div>
     </div>
     <div class="progress">
         <div style="width:{progress}%">
-            {isNaN(progress) ? "--" : progress.toFixed(3)}%
+            {isNaN(progress) ? "--" : Math.floor(progress*100)/100}%
         </div>
     </div>
 </div>
