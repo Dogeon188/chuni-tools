@@ -62,7 +62,7 @@ import { parseRecord } from "@/common/record"
             b.innerText = UIString.downloaded
 
             const dlLink = document.createElement('a')
-            dlLink.href= 'data:text/plain;charset=utf-8,' + encodeURIComponent("title,difficulty,const,score,rating\n" + rows.join("\n"))
+            dlLink.href= 'data:text/plain;charset=utf-8,' + encodeURIComponent("title,difficulty,const,score,rating,op\n" + rows.join("\n"))
             dlLink.target = "_blank"
             dlLink.download = `chunithm_record_${new Date().toISOString()}.csv`
 

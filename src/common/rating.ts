@@ -23,53 +23,55 @@ export function calcRank(score: number) {
 }
 
 const ratingPoints = [
-    [1010000, 215],
-    [1009000, 215],
-    [1007500, 200],
-    [1005000, 150],
-    [1000000, 100],
-    [975000, 0],
-    [925000, -300],
-    [900000, -500],
+    { score: 1009000, base: 21500, ratio: 0 },
+    { score: 1007500, base: 20000, ratio: 1 },
+    { score: 1005000, base: 15000, ratio: 2 },
+    { score: 1000000, base: 10000, ratio: 1 },
+    { score: 975000, base: 0, ratio: 0.4 },
+    { score: 900000, base: -50000, ratio: 2 / 3 }
 ]
 
 export function calcRawRating(song: ParsedRecord) {
-    if (song.score <= 500000) return 0
-    let c = song.const * 100
-    let ret
-    if (song.score <= 800000) {
-        ret = (song.score - 500000) / 300000 * ((c - 500) / 2)
-    } else if (song.score <= 900000) {
-        ret = (song.score - 800000) / 100000 * ((c - 500) / 2) + ((c - 500) / 2)
-    } else {
-        let p = 1
-        ratingPoints.some((v, i) => (p = i, song.score > v[0]))
-        const prev = ratingPoints[p - 1], cur = ratingPoints[p]
-        ret = c + cur[1] + (prev[1] - cur[1]) * (song.score - cur[0]) / (prev[0] - cur[0])
+    let _const = Math.floor(song.const * 10000)
+
+    if (song.score >= 900000) {
+        let point = ratingPoints.find((_point) => (song.score >= _point.score))!
+        return Math.max(0, _const + point.base + point.ratio * (song.score - point.score))
     }
-    return Math.max(0, ret)
+
+    let rating
+
+    if (song.score >= 800000)
+        rating = (_const - 50000) / 2 + ((_const - 50000) / 2) * (song.score - 800000) / 100000
+    else if (song.score >= 500000)
+        rating = ((_const - 50000) / 2) * (song.score - 500000) / 300000
+    else
+        return 0
+
+    return Math.max(0, rating)
 }
 
-export function calcOp(song: ParsedRecord) {//Multiply the OP by 1000 to circumvent the problem with decimal point arithmetic in JS --Cip
-    let e1 = { "AJ": 10000, "FC": 5000, "": 0 }[song.clear]
-    let fixedRating = 0
-    let fixedConst = Math.floor(parseFloat((song.const* 10000).toFixed()))
-    if (song.score == 1010000) {
-        fixedRating = (fixedConst + 3000)
-    } else if (song.score >= 1007500) {
-        fixedRating = fixedConst + 20000 + 3 * (song.score - 1007500)
-    } else if (song.score >= 1005000) {
-        fixedRating = fixedConst + 15000 + 2 * (song.score - 1005000)
-    }else if (song.score >= 1000000) {
-        fixedRating = fixedConst + 10000 + 1 * (song.score - 1000000)
-    } else if (song.score >= 975000) {
-        fixedRating = fixedConst + 0.4 * (song.score - 975000)
-    } else { fixedRating = song.rawRating * 100 }
-    return Math.floor((Math.floor(fixedRating/10) * 5 + (song.score == 1010000 ? 0 : e1/10)))//800000
+export function calcOp(song: ParsedRecord) {
+    // Multiply the OP by 10000 to circumvent the problem with decimal point arithmetic in JS --Cip
+    if (song.score >= 1010000) return calcOpMax(song)
+
+    let e1 = { "AJ": 2000, "FC": 1000, "": 0 }[song.clear]
+    let fixedConst = Math.floor(song.const * 10000)
+    let _rating = (song.score < 1007500) ?
+        song.rawRating :
+        fixedConst + 20000 + 3 * (song.score - 1007500)
+
+    if (song.score >= 975000)
+        _rating = Math.floor(_rating / 10) * 10
+    else
+        _rating = Math.floor(_rating / 100) * 100
+
+    return (_rating + e1) * 5
 }
 
-export function calcOpMax(song: ParsedRecord) {//Multiply the OP by 1000 to circumvent the problem with decimal point arithmetic in JS --Cip
-    return (song.const + 3) * 5*1000
+export function calcOpMax(song: ParsedRecord) {
+    // Multiply the OP by 10000 to circumvent the problem with decimal point arithmetic in JS --Cip
+    return (song.const + 3) * 5 * 10000
 }
 
 export function calcBestN(ratingList: number[], n: number) {

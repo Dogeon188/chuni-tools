@@ -32,8 +32,8 @@
                 {song.const < 0 ? "-" : song.opPercent.toPrecision(5)}<span class="opmx"
                     >%</span>
             {:else}
-                {song.const < 0 ? "-" : (song.op/1000).toFixed(2)}<span class="opmx">
-                    &#xFF0F;{song.const < 0 ? "-" : (song.opMax/1000).toFixed(1)}
+                {song.const < 0 ? "-" : (song.op / 10000).toFixed(2)}<span class="opmx">
+                    &#xFF0F;{song.const < 0 ? "-" : (song.opMax / 10000).toFixed(1)}
                 </span>
             {/if}
         </td>
@@ -56,7 +56,7 @@
             ? "-"
             : song.rating == null
             ? "??.??"
-            : song.rating.toFixed(2)}
+            : (song.rating / 100).toFixed(2)}
     </td>
     {#if $page$ === "history" || $page$ === "best"}
         <td data-clear={song.clear}>{song.clear}</td>

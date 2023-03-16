@@ -67,7 +67,7 @@ export function parseRecord(playRecord: PlayRecord[], constData: Record<string, 
             r.const = songInfo[r.difficulty]!
             r.rawRating = calcRawRating(r)
             r.genre = `${songInfo.genre}`
-            r.rating = Math.floor(r.rawRating) / 100
+            r.rating = Math.floor(r.rawRating / 100)
         }
         r.op = calcOp(r)
         r.opMax = calcOpMax(r)

@@ -26,14 +26,15 @@ type PlayRecord = {
 type BestRecord = PlayRecord & { idx: string }
 type HistoryRecord = PlayRecord & { timestamp: number }
 
-type ParsedRecord = (BestRecord & HistoryRecord ) & {
+type ParsedRecord = (BestRecord & HistoryRecord) & {
     const: number
     rank: string
-    rawRating: number // multiplied by 100
-    rating: number
+    rawRating: number // multiplied by 10000
+    rating: number // multiplied by 100
     order: number
-    op: number //Multiply the OP by 1000 to circumvent the problem with decimal point arithmetic in JS --Cip
-    opMax: number //Multiply the OP by 1000 to circumvent the problem with decimal point arithmetic in JS --Cip
+    // Multiply the OP by 1000 to circumvent the problem with decimal point arithmetic in JS --Cip
+    op: number
+    opMax: number
     opPercent: number
     playCount?: number | null
     genre: string
