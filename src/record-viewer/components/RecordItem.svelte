@@ -46,7 +46,7 @@
         class:clickable={$page$ === "best"}
         on:click={toggleShowScoreDiff}>
         {#if $showScoreDiff$}
-            {(song.scoreDiff <= 0 ? "" : "+") + song.scoreDiff}
+            {song.score == -1 ? "-" : (song.scoreDiff <= 0 ? "" : "+") + song.scoreDiff}
         {:else}
             {song.score == -1 ? "-" : song.score}
         {/if}

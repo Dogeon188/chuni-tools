@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { floorToFixed } from "@/common/number"
     import { calcBestN, calcMaxPossible } from "@/common/rating"
     import {
         bestRecord$,
@@ -30,23 +31,23 @@
         {#if $page$ === "best"}
             <PlayerStatsItem
                 title={$t("player.best.best30")}
-                content={(calcBestN(bestRating$$, 30) / 100).toFixed(4)} />
+                content={floorToFixed(calcBestN(bestRating$$, 30) / 100, 4)} />
             <PlayerStatsItem
                 title={$t("player.best.maxPossible")}
-                content={(calcMaxPossible(bestRating$$) / 100).toFixed(2)} />
+                content={floorToFixed(calcMaxPossible(bestRating$$) / 100, 2)} />
             <PlayerStatsItem
                 title={$t("player.best.playCount")}
                 content={$playerStats$.playCount} />
         {:else if $page$ === "recent" || $page$ === "history"}
             <PlayerStatsItem
                 title={$t("player.recent.best10")}
-                content={(calcBestN(recentRating$$, 10) / 100).toFixed(4)} />
+                content={floorToFixed(calcBestN(recentRating$$, 10) / 100, 4)} />
             <PlayerStatsItem
                 title={$t("player.recent.history10")}
-                content={(calcBestN(historyRating$$, 10) / 100).toFixed(4)} />
+                content={floorToFixed(calcBestN(historyRating$$, 10) / 100, 4)} />
             <PlayerStatsItem
                 title={$t("player.recent.history30")}
-                content={(calcBestN(historyRating$$, 30) / 100).toFixed(4)} />
+                content={floorToFixed(calcBestN(historyRating$$, 30) / 100, 4)} />
         {/if}
     </div>
 </div>

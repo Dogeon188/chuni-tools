@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { floorToFixed } from "@/common/number"
+
+
     export let records: ParsedRecord[]
 
     $: totalOverpower = records.reduce((pre, record) => pre + record.op, 0)
@@ -10,12 +13,12 @@
     class="wrapper"
     class:aj={maxOverpower && totalOverpower.toFixed() === maxOverpower.toFixed()}>
     <div>
-        <div class="op-total">{(Math.floor(totalOverpower / 100) / 100).toFixed(2)}</div>
+        <div class="op-total">{floorToFixed(totalOverpower / 10000, 2)}</div>
         <div class="op-max">&#xFF0F;{(maxOverpower / 10000).toFixed(1)}</div>
     </div>
     <div class="progress">
         <div style="width:{progress}%">
-            {isNaN(progress) ? "--" : progress.toFixed(3)}%
+            {isNaN(progress) ? "--" : floorToFixed(progress, 3)}%
         </div>
     </div>
 </div>
