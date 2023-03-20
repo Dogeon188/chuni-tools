@@ -4,24 +4,23 @@ For more information please refer to [this page](https://dogeon188.github.io/chu
 
 若要取得更多資訊，請參考[此頁面](https://dogeon188.github.io/chuni-tools/?lang=zh_TW)
 
-## About this project
+## Credits & about this project
 
 This project is a remake of [chuni_new_intl_viewer](https://github.com/Dogeon188/chuni_new_intl_viewer). The old project is deprecated, please don't mind those dirty codes.
 
-This project is heavily inspired by [chuni_intl_viewer](https://github.com/kyroslee/chuni_intl_viewer) made by kyroslee.
+This project is heavily inspired by [@kyroslee/chuni_intl_viewer](https://github.com/kyroslee/chuni_intl_viewer) and [@myjian/mai-tools](https://github.com/myjian/mai-tools).
 
 The chart constant data is from [CHUNITHM譜面定数メインフレーム](https://twitter.com/RCMF_chunithm).
 
 ## Dev
 
-To initialize the repository, copy the `./docs` folder and rename to `./build`. After that, use the following command to create a dev session:
+To initialize the repository, copy the `./docs` folder and rename to `./build`, and then use `npm install`. (If you know what you're doing, you can also just take advantages of the symlinks.) BTW, it's recommended to install Live Server plugin if you're using VSCode.
+
+After that, use the following command to create a dev session:
 
 ```sh
-npm install
 npm run dev
 ```
-
-BTW, it's recommended to install Live Server plugin if you're using VSCode.
 
 With the following command, you can build and compile the code to `./docs`, then GitHub Pages will handle the rest.
 
