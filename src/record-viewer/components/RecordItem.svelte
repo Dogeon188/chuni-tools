@@ -24,7 +24,11 @@
     <td class="song-order">{song.order}</td>
     <td data-diff={song.difficulty} colspan={$page$ === "history" ? 2 : 1}
         >{song.title}</td>
-    <td>{song.const < 0 ? "-" : song.const?.toFixed(1) ?? "??.?"}</td>
+    <td>
+        {song.const < 0 ? "-" : song.const?.toFixed(1) ?? "??.?"}{#if song.constUncertain}
+            <span style="color: var(--theme-text-dim)">?</span>
+        {/if}
+    </td>
     {#if $showOverPower != "hide"}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <td class="song-op" class:clickable={$page$ == "best"} on:click={toggleOpDisplay}>

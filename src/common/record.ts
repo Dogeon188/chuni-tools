@@ -1,5 +1,5 @@
 import { calcRank, calcRawRating, calcOp, calcOpMax } from "./rating"
-import { difficulties } from "./song"
+import { difficulties, Difficulty } from "./song"
 
 export const recordSorts: Record<string, (a: ParsedRecord, b: ParsedRecord) => number> = {
     default: (a, b) => {
@@ -47,6 +47,7 @@ export function parseRecord(playRecord: PlayRecord[], constData: Record<string, 
     const cannotFetch = [] as ParsedRecord[]
     recordList.map((r) => {
         if (<string>r.difficulty === "WE") {
+            r.title = unescapeHtmlString(r.title)
             r.const = -1
             r.rating = 0
             r.op = -1
@@ -65,6 +66,7 @@ export function parseRecord(playRecord: PlayRecord[], constData: Record<string, 
             r.rating = 0
         } else {
             r.const = songInfo[r.difficulty]!
+            if (songInfo.uncertain?.includes(r.difficulty)) r.constUncertain = true
             r.rawRating = calcRawRating(r)
             r.genre = `${songInfo.genre}`
             r.rating = Math.floor(r.rawRating / 100)
@@ -76,7 +78,17 @@ export function parseRecord(playRecord: PlayRecord[], constData: Record<string, 
     })
 
     if (alertMessage && cannotFetch.length) {
-        alert(alertMessage.replace("{{songs}}", cannotFetch.map(r => `    ${r.title} ${r.difficulty}`).join("\n")))
+        const merged = {} as { [song: string]: Difficulty[] }
+        cannotFetch.forEach((r) => {
+            merged[r.title] ??= []
+            merged[r.title].push(r.difficulty)
+        })
+
+        alert(alertMessage.replace(
+            "{{songs}}",
+            Object.entries(merged).map(([title, diffs]) =>
+                `    ${title} ${diffs.join(",")}`
+            ).join("\n")))
     }
 
     recordList.sort(recordSorts.default)

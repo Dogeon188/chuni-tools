@@ -28,6 +28,7 @@ type HistoryRecord = PlayRecord & { timestamp: number }
 
 type ParsedRecord = (BestRecord & HistoryRecord) & {
     const: number
+    constUncertain?: boolean
     rank: string
     rawRating: number // multiplied by 10000
     rating: number // multiplied by 100
@@ -56,5 +57,6 @@ type SongConstData = {
     EXP: number,
     MAS: number,
     ULT?: number,
-    genre: number
+    genre: number,
+    uncertain?: import("@/common/song").Difficulty[]
 }
