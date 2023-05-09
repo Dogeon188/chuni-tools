@@ -12,7 +12,8 @@
                 fill="var(--theme-text)" />
         </svg>
     </button>
-    {#if usedConstData.accepts.length >= 2}
+    <!-- svelte-ignore missing-declaration -->
+    {#if __INTL_VERSION__ !== __JP_VERSION__}
         <button
             type="button"
             title={$t("header.title.constData", {
@@ -25,7 +26,7 @@
                             usedConstData.accepts.length
                     ]
             }}>
-            {$usedConstData.slice(0, 2).toUpperCase()}
+            {$usedConstData === __INTL_VERSION__ ? "🌐" : "🗾"}
         </button>
     {/if}
     <button

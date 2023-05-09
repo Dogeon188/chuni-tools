@@ -55,7 +55,7 @@ import { parseRecord } from "@/common/record"
             }
 
             const parsed = parseRecord(records, await fetch(
-                getScriptHost("export-csv") + "/data/song-const/intl.json"
+                getScriptHost("export-csv") + `/data/song-const/${__INTL_VERSION__}.json`
             ).then(async (d) => await d.json()))
 
             const rows = parsed.map((r) => `"${r.title.replace(/"/g, "\"\"")}",${r.difficulty},${r.const},${r.score},${r.rating},${r.op}`)

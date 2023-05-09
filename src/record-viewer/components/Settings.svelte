@@ -43,7 +43,8 @@
 
         <h4>{@html $t("settings.data.title")}</h4>
 
-        {#if usedConstData.accepts.length >= 2}
+        <!-- svelte-ignore missing-declaration -->
+        {#if __INTL_VERSION__ !== __JP_VERSION__}
             <Select label={$t("settings.data.constData")} bind:value={$usedConstData}>
                 {#each usedConstData.accepts as d}
                     <option value={d}>{$t("settings.data.constData." + d)}</option>

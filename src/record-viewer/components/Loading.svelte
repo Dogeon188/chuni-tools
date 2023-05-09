@@ -30,7 +30,8 @@
         {:else}
             <div class="spinner" />
             <p>{@html $messageText$}</p>
-            {#if usedConstData.accepts.length >= 2}
+            <!-- svelte-ignore missing-declaration -->
+            {#if __INTL_VERSION__ !== __JP_VERSION__}
                 <p class="dim">
                     {@html $t("loading.constData", {
                         name: $t("settings.data.constData." + $usedConstData),

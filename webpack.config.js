@@ -89,7 +89,9 @@ module.exports = /** @type { import('webpack').Configuration } */ ({
             filename: (pathData) => (path.join(outputPath, "./common/styles/", pathData.chunk.name + ".css"))
         }),
         new DefinePlugin({
-            "__APP_VERSION__": `"${process.env.npm_package_version}"`
+            "__APP_VERSION__": `"${process.env.npm_package_version}"`,
+            "__INTL_VERSION__": `"sun"`,
+            "__JP_VERSION__": `"sun"`
         })
     ],
     devServer: { hot: true }

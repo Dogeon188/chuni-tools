@@ -1,6 +1,8 @@
 /// <reference types="svelte" />
 
 declare let __APP_VERSION__: string
+declare let __INTL_VERSION__: string
+declare let __JP_VERSION__: string
 
 type CrossPageRequestMessagePayload = {
     target?: string,
