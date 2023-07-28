@@ -14,7 +14,13 @@ The chart constant data is from [CHUNITHM譜面定数メインフレーム](http
 
 ## Dev
 
-To initialize the repository, copy the `./docs` folder and rename to `./build`, and then use `npm install`. (If you know what you're doing, you can also just take advantages of the symlinks.) BTW, it's recommended to install Live Server plugin if you're using VSCode.
+To initialize the repository, first copy the `./docs` folder and rename to `./build`. (If you know what you're doing, you can also just take advantages of the symlinks.) Then, use
+
+```sh
+npm install
+```
+
+to initialize the repo. BTW, it's recommended to install Live Server plugin if you're using VSCode.
 
 After that, use the following command to create a dev session:
 
