@@ -36,7 +36,8 @@ module.exports = /** @type { import('webpack').Configuration } */ ({
             "svelte": path.dirname(require.resolve('svelte/package.json'))
         },
         extensions: ['.js', '.ts', '.svelte'],
-        mainFields: ['svelte', 'browser', 'module', 'main']
+        mainFields: ['svelte', 'browser', 'module', 'main'],
+        conditionNames: ['import', 'svelte']
     },
     output: {
         path: __dirname,
@@ -90,7 +91,7 @@ module.exports = /** @type { import('webpack').Configuration } */ ({
         }),
         new DefinePlugin({
             "__APP_VERSION__": `"${process.env.npm_package_version}"`,
-            "__INTL_VERSION__": `"sun"`,
+            "__INTL_VERSION__": `"sunplus"`,
             "__JP_VERSION__": `"sunplus"`
         })
     ],

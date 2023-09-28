@@ -84,6 +84,7 @@ export function parseRecord(playRecord: PlayRecord[], constData: Record<string, 
             merged[r.title].push(r.difficulty)
         })
 
+        console.log(merged)
         alert(alertMessage.replace(
             "{{songs}}",
             Object.entries(merged).map(([title, diffs]) =>

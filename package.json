@@ -4,7 +4,8 @@
   "description": "Variety of tools for the arcade game CHUNITHM (Intl. Ver.)",
   "scripts": {
     "build": "webpack",
-    "dev": "set NODE_ENV=development && webpack --env development --watch"
+    "dev": "set NODE_ENV=development && webpack --env development --watch",
+    "devmac": "export NODE_ENV=development && webpack --env development --watch"
   },
   "author": "Dogeon188",
   "license": "ISC",
@@ -14,23 +15,23 @@
   },
   "devDependencies": {
     "@tsconfig/svelte": "^2.0.1",
-    "@types/uuid": "^9.0.0",
-    "axios": "^1.2.6",
-    "css-loader": "^6.7.3",
-    "mini-css-extract-plugin": "^2.7.2",
+    "@types/uuid": "^9.0.4",
+    "axios": "^1.5.1",
+    "css-loader": "^6.8.1",
+    "mini-css-extract-plugin": "^2.7.6",
     "node-sass": "^8.0.0",
-    "sass": "^1.57.1",
-    "sass-loader": "^13.2.0",
-    "svelte": "^3.55.1",
-    "svelte-loader": "^3.1.5",
+    "sass": "^1.68.0",
+    "sass-loader": "^13.3.2",
+    "svelte": "^3.59.2",
+    "svelte-loader": "^3.1.9",
     "svelte-preprocess": "^4.10.7",
-    "ts-loader": "^9.4.2",
-    "typescript": "^4.9.4",
-    "webpack": "^5.75.0",
+    "ts-loader": "^9.4.4",
+    "typescript": "^4.9.5",
+    "webpack": "^5.88.2",
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "html-to-image": "^1.11.7",
-    "uuid": "^9.0.0"
+    "html-to-image": "^1.11.11",
+    "uuid": "^9.0.1"
   }
 }
