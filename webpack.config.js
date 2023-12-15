@@ -92,7 +92,7 @@ module.exports = /** @type { import('webpack').Configuration } */ ({
         new DefinePlugin({
             "__APP_VERSION__": `"${process.env.npm_package_version}"`,
             "__INTL_VERSION__": `"sunplus"`,
-            "__JP_VERSION__": `"sunplus"`
+            "__JP_VERSION__": `"luminous"`
         })
     ],
     devServer: { hot: true }

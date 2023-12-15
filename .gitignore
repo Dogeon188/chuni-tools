@@ -7,3 +7,4 @@ build/
 build-data.js
 log.md
 .DS_Store
+secret/
