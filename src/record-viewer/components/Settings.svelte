@@ -1,21 +1,21 @@
 <script lang="ts">
-    import { fade } from "svelte/transition"
-    import { theme, language } from "@/common/config"
+    import DualSlider from "@/common/components/DualSlider.svelte"
     import Select from "@/common/components/Select.svelte"
     import Switch from "@/common/components/Switch.svelte"
-    import DualSlider from "@/common/components/DualSlider.svelte"
+    import { language, theme } from "@/common/config"
+    import { fade } from "svelte/transition"
     import {
+        configs,
         filterConstMax,
         filterConstMin,
-        showPlayCount,
         showOverPower,
+        showPlayCount,
         usedConstData,
-        configs,
     } from "../config"
-    import { t, translationNames, showSettings$, showScoreDiff$ } from "../store"
+    import { showScoreDiff$, showSettings$, t, translationNames } from "../store"
+    import SettingsFetchPlayCount from "./SettingsFetchPlayCount.svelte"
     import SettingsFilterDiff from "./SettingsFilterDiff.svelte"
     import SettingsFilterGenre from "./SettingsFilterGenre.svelte"
-    import SettingsFetchPlayCount from "./SettingsFetchPlayCount.svelte"
     import SettingsScoreDiffUpdate from "./SettingsScoreDiffUpdate.svelte"
 </script>
 
@@ -98,6 +98,7 @@
             class="reset-btn"
             on:click={() => {
                 for (const config of configs) config.reset()
+                showScoreDiff$.set(false)
             }}>
             {@html $t("settings.main.reset")}
         </button>

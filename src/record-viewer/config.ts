@@ -1,9 +1,9 @@
-import { subscribe } from "svelte/internal"
-import { get } from "svelte/store"
-import { stringConfig, numberConfig, flagsConfig, booleanConfig, language, theme } from "@/common/config"
+import { booleanConfig, flagsConfig, language, numberConfig, stringConfig, theme } from "@/common/config"
 import { chuniNet } from "@/common/const"
 import { Genre, genres } from "@/common/song"
 import { getPostMessageFunc } from "@/common/web"
+import { subscribe } from "svelte/internal"
+import { get } from "svelte/store"
 import { bestRecord$, playHistory$, recentRecord$ } from "./store"
 
 subscribe(language, () => {
@@ -48,4 +48,5 @@ export const scoreDiffUpdateIntervals: Record<string, number> = {
 }
 export const diffUpdateInterval = stringConfig("diffUpdateInterval", "manual", Object.keys(scoreDiffUpdateIntervals))
 
-export const configs = [theme, language, filterConstMax, filterConstMin, filterDiff, filterGenre, usedConstData, showOverPower, showPlayCount,]
+// FIXME filterConstMin and filterConstMax (of numberConfig) cannot be reset
+export const configs = [theme, language, filterConstMax, filterConstMin, filterDiff, filterGenre, usedConstData, showOverPower, showPlayCount, diffUpdateInterval]
