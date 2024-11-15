@@ -17,8 +17,7 @@ let oldData = JSON.parse(fs.readFileSync(fileName))
 
 // start from 10.0
 let musicData = {
-    "サクリファイス":{"BAS":3,"ADV":7,"EXP":9.5,"MAS":13.4,"genre":2},
-    "HECATONCHEIR":{"BAS":3,"ADV":7,"EXP":11.8,"MAS":14.1,"genre":9},
+    // insert temporary data here
 }
 
 const logger = fs.createWriteStream("log.md")
