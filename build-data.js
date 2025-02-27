@@ -29,14 +29,14 @@ let musicData = {
         ADV: 8.5,
         EXP: 14,
         MAS: 15.5,
-        uncertain: ["MAS"]
+        uncertain: ["EXP"]
     },
     "Crush the Dystopia": {
         BAS: 5,
         ADV: 8,
         EXP: 13,
         MAS: 15,
-        uncertain: ["MAS"]
+        uncertain: ["EXP","MAS"]
     },
 }
 
