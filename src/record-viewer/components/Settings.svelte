@@ -29,7 +29,7 @@
         <h4>{@html $t("settings.filter.title")}</h4>
         <DualSlider
             label={$t("settings.filter.const")}
-            max={15.4}
+            max={15.7}
             min={1}
             step={0.1}
             bind:high={$filterConstMax}

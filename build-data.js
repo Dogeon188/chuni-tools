@@ -1,7 +1,7 @@
 const axios = require("axios").default
 const fs = require("fs")
 
-const versionName = "luminousplus"
+const versionName = "verse"
 const fileName = `docs/data/song-const/${versionName}.json`
 const genres = {
     "POPS&ANIME": 0,
@@ -15,9 +15,29 @@ const genres = {
 
 let oldData = JSON.parse(fs.readFileSync(fileName))
 
-// start from 10.0
+// uncertain start from 10.0
 let musicData = {
     // insert temporary data here
+    "Help me, ERINNNNNN!!": {
+        BAS: 3,
+        ADV: 5,
+        EXP: 8,
+        MAS: 10.9
+    },
+    "Aether Crest: Celestial": {
+        BAS: 5,
+        ADV: 8.5,
+        EXP: 14,
+        MAS: 15.5,
+        uncertain: ["MAS"]
+    },
+    "Crush the Dystopia": {
+        BAS: 5,
+        ADV: 8,
+        EXP: 13,
+        MAS: 15,
+        uncertain: ["MAS"]
+    },
 }
 
 const logger = fs.createWriteStream("log.md")
