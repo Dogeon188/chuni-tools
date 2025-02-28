@@ -13,8 +13,8 @@ subscribe(language, () => {
     } catch (err) { console.error(err) }
 })
 
-export const filterConstMin = numberConfig("filterConstMin", 1, 1, 15.4)
-export const filterConstMax = numberConfig("filterConstMax", 15.4, 1, 15.4)
+export const filterConstMin = numberConfig("filterConstMin", 1, 1, 15.7)
+export const filterConstMax = numberConfig("filterConstMax", 15.7, 1, 15.7)
 
 export const filterDiff = flagsConfig("filterDiff", {
     "BAS": true, "ADV": true, "EXP": true, "MAS": true, "ULT": true
