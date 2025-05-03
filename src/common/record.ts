@@ -1,5 +1,5 @@
-import { calcRank, calcRawRating, calcOp, calcOpMax } from "./rating"
-import { difficulties, Difficulty } from "./song"
+import { calcOp, calcOpMax, calcRank, calcRawRating } from "./rating"
+import { difficulties, Difficulty, genreId2Name } from "./song"
 
 export const recordSorts: Record<string, (a: ParsedRecord, b: ParsedRecord) => number> = {
     default: (a, b) => {
@@ -41,21 +41,15 @@ function unescapeHtmlString(str: string) {
         .replace(/&#039;/g, "'")
 }
 
-export function parseRecord(playRecord: PlayRecord[], constData: Record<string, SongConstData>, alertMessage?: string) {
+export function parseRecord(
+    playRecord: PlayRecord[],
+    constData: Record<string, SongConstData>,
+    alertMessage?: string
+) {
     const recordList = playRecord as ParsedRecord[]
     const musicData = constData
     const cannotFetch = [] as ParsedRecord[]
     recordList.map((r) => {
-        if (<string>r.difficulty === "WE") {
-            r.title = unescapeHtmlString(r.title)
-            r.const = -1
-            r.rating = 0
-            r.op = -1
-            r.opMax = -1
-            r.opPercent = -1
-            r.rank = calcRank(r.score)
-            return
-        }
         if (musicData[r.title] === undefined) {
             r.title = unescapeHtmlString(r.title)
         }
@@ -64,12 +58,24 @@ export function parseRecord(playRecord: PlayRecord[], constData: Record<string, 
             cannotFetch.push(r)
             r.const = -1
             r.rating = 0
+        } else if (<string>r.difficulty === "WE") {
+            r.title = unescapeHtmlString(r.title)
+            r.const = -1
+            r.rating = 0
+            r.op = -1
+            r.opMax = -1
+            r.opPercent = -1
+            r.rank = calcRank(r.score)
+            r.genre = genreId2Name[songInfo.genre]
+            r.version = songInfo.version
+            return
         } else {
             r.const = songInfo[r.difficulty]!
             if (songInfo.uncertain?.includes(r.difficulty)) r.constUncertain = true
             r.rawRating = calcRawRating(r)
             r.genre = `${songInfo.genre}`
             r.rating = Math.floor(r.rawRating / 100)
+            r.version = songInfo.version
         }
         r.op = calcOp(r)
         r.opMax = calcOpMax(r)
@@ -85,14 +91,20 @@ export function parseRecord(playRecord: PlayRecord[], constData: Record<string, 
         })
 
         console.log(merged)
-        alert(alertMessage.replace(
-            "{{songs}}",
-            Object.entries(merged).map(([title, diffs]) =>
-                `    ${title} ${diffs.join(",")}`
-            ).join("\n")))
+        alert(
+            alertMessage.replace(
+                "{{songs}}",
+                Object.entries(merged)
+                    .map(([title, diffs]) => `    ${title} ${diffs.join(",")}`)
+                    .join("\n")
+            )
+        )
     }
 
     recordList.sort(recordSorts.default)
-    recordList.map((r, i) => { r.order = i + 1 })
+    recordList.map((r, i) => {
+        r.order = i + 1
+    })
+
     return recordList
 }

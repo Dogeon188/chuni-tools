@@ -1,9 +1,9 @@
 import { booleanConfig, flagsConfig, language, numberConfig, stringConfig, theme } from "@/common/config"
 import { chuniNet } from "@/common/const"
-import { Genre, genres } from "@/common/song"
+import { Genre, genres, versionId } from "@/common/song"
 import { getPostMessageFunc } from "@/common/web"
 import { subscribe } from "svelte/internal"
-import { get } from "svelte/store"
+import { derived, get } from "svelte/store"
 import { bestRecord$, playHistory$, recentRecord$ } from "./store"
 
 subscribe(language, () => {
@@ -31,6 +31,10 @@ export const usedConstData = stringConfig("usedConstData", __INTL_VERSION__, ava
     recentRecord$.updateConstData()
     playHistory$.updateConstData()
     bestRecord$.updateConstData()
+})
+
+export const currentVersionId = derived(usedConstData, ($usedConstData) => {
+    return versionId[$usedConstData.toUpperCase() as keyof typeof versionId]
 })
 
 const showOverPowerChoice = ["hide", "value", "percentage"] as const

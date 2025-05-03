@@ -78,22 +78,6 @@ let musicData = {
         genre: genres["東方Project"],
         version: versionId["VERSE"],
     },
-    // new songs
-    "Aether Crest: Celestial": {
-        BAS: 5,
-        ADV: 8.5,
-        EXP: 14.4,
-        MAS: 15.5,
-        genre: genres["ORIGINAL"],
-    },
-    "Crush the Dystopia": {
-        BAS: 5,
-        ADV: 8,
-        EXP: 13.4,
-        MAS: 15,
-        uncertain: ["MAS"],
-        genre: genres["ORIGINAL"],
-    },
 }
 
 const logger = fs.createWriteStream("log.md")

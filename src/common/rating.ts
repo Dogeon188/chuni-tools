@@ -78,6 +78,8 @@ export function calcBestN(ratingList: number[], n: number) {
     return ratingList.slice(0, n).reduce((a, b) => a + b, 0) / n
 }
 
+/*
 export function calcMaxPossible(ratingList: number[]) {
     return (ratingList.slice(0, 30).reduce((a, b) => a + b, 0) + ratingList[0] * 10) / 40
 }
+*/

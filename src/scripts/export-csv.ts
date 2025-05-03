@@ -1,10 +1,9 @@
-import { getInitialLang, Language } from "@/common/lang"
-import { getCookie } from "@/common/web"
-import { fetchBestRecord } from "@/common/fetch"
-import { getScriptHost } from "@/common/web"
 import { chuniNet } from "@/common/const"
-import { difficulties } from "@/common/song"
+import { fetchBestRecord } from "@/common/fetch"
+import { getInitialLang, Language } from "@/common/lang"
 import { parseRecord } from "@/common/record"
+import { difficulties } from "@/common/song"
+import { getCookie, getScriptHost } from "@/common/web"
 
 (async function (d: Document) {
     const UIString = {
@@ -113,4 +112,4 @@ N2=IF(
     FLOOR(M2,$S$11)*5,
     M2*5
 )+I2
- */
+*/

@@ -1,17 +1,17 @@
 <script lang="ts">
     import { floorToFixed } from "@/common/number"
-    import { calcBestN, calcMaxPossible } from "@/common/rating"
-    import {
-        bestRecord$,
-        page$,
-        playerStats$,
-        playHistory$,
-        recentRecord$,
-        t,
-    } from "../store"
+    import { calcBestN } from "@/common/rating"
+    import { currentVersionId } from "../config"
+    import { bestRecord$, page$, playHistory$, playerStats$, t } from "../store"
     import PlayerStatsItem from "./PlayerStatsItem.svelte"
-    $: bestRating$$ = $bestRecord$.slice(0, 30).map((s) => s.rating)
-    $: recentRating$$ = $recentRecord$.map((s) => s.rating)
+    $: notCurrentVersionRecord$$ = $bestRecord$.filter((v) => {
+        return v.version != $currentVersionId
+    })
+    $: currentVersionRecord$$ = $bestRecord$.filter((v) => {
+        return v.version == $currentVersionId
+    })
+    $: bestRating$$ = notCurrentVersionRecord$$.slice(0, 30).map((s) => s.rating)
+    $: currentRating$$ = currentVersionRecord$$.slice(0, 20).map((s) => s.rating)
     $: historyRating$$ = $playHistory$.map((s) => s.rating)
 </script>
 
@@ -27,23 +27,17 @@
         <PlayerStatsItem
             title={$t("player.generic.generatedAt")}
             content={new Date().toLocaleDateString()} />
+        <PlayerStatsItem
+            title={$t("player.best.best30")}
+            content={floorToFixed(calcBestN(bestRating$$, 30) / 100, 4)} />
+        <PlayerStatsItem
+            title={$t("player.recent.current20")}
+            content={floorToFixed(calcBestN(currentRating$$, 20) / 100, 4)} />
         {#if $page$ === "best"}
-            <PlayerStatsItem
-                title={$t("player.best.best30")}
-                content={floorToFixed(calcBestN(bestRating$$, 30) / 100, 4)} />
-            <PlayerStatsItem
-                title={$t("player.best.maxPossible")}
-                content={floorToFixed(calcMaxPossible(bestRating$$) / 100, 2)} />
             <PlayerStatsItem
                 title={$t("player.best.playCount")}
                 content={$playerStats$.playCount} />
         {:else if $page$ === "recent" || $page$ === "history"}
-            <PlayerStatsItem
-                title={$t("player.recent.best10")}
-                content={floorToFixed(calcBestN(recentRating$$, 10) / 100, 4)} />
-            <PlayerStatsItem
-                title={$t("player.recent.history10")}
-                content={floorToFixed(calcBestN(historyRating$$, 10) / 100, 4)} />
             <PlayerStatsItem
                 title={$t("player.recent.history30")}
                 content={floorToFixed(calcBestN(historyRating$$, 30) / 100, 4)} />

@@ -7,7 +7,7 @@
         <h3 class:selected={$page$ == "best"}>BEST</h3>
     </a>
     <a href="#recent">
-        <h3 class:selected={$page$ == "recent"}>RECENT</h3>
+        <h3 class:selected={$page$ == "recent"}>CURRENT</h3>
     </a>
     <a href="#history">
         <h3 class:selected={$page$ == "history"}>HISTORY</h3>
