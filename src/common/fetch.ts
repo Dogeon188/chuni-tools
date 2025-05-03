@@ -1,6 +1,6 @@
 import { chuniNet } from "./const"
 import { parseNumber } from "./number"
-import { genreAll, Difficulty, difficulties } from "./song"
+import { Difficulty, difficulties, genreAll } from "./song"
 import { getCookie } from "./web"
 
 async function fetchChuniPage(url: string, fd?: FormData) {
@@ -103,7 +103,6 @@ export async function fetchPlayerStats(): Promise<PlayerStats> {
             color: honorColor ? honorColor[0].slice(9) : "normal"
         },
         rating,
-        ratingMax: dom.querySelector(".player_rating_max")!.innerHTML,
         playCount: dom.querySelector(".user_data_play_count .user_data_text")!.innerHTML,
         lastPlayed: Date.parse(dom.querySelector(".player_lastplaydate_text")!.innerHTML)
     }

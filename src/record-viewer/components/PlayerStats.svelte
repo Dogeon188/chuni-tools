@@ -4,9 +4,9 @@
     import {
         bestRecord$,
         page$,
+        playerStats$,
         playHistory$,
         recentRecord$,
-        playerStats$,
         t,
     } from "../store"
     import PlayerStatsItem from "./PlayerStatsItem.svelte"
@@ -19,7 +19,6 @@
     <h2 class="stats-name">{$playerStats$.name}</h2>
     <div class="stats-rating">
         <h2>{$playerStats$.rating}</h2>
-        <span>MAX {$playerStats$.ratingMax}</span>
     </div>
     <div class="stats-honor" data-honor={$playerStats$.honor.color} class:marquee={true}>
         <span>{$playerStats$.honor.text}</span>
@@ -80,8 +79,6 @@
         flex-direction: column
         h2
             margin: auto
-        span
-            color: var(--theme-text-dim)
     .stats-honor
         grid-area: 2/1/3/3
         color: var(--theme-honor-normal)

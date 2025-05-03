@@ -48,7 +48,6 @@ type PlayerStats = {
     name: string,
     honor: { text: string, color: string },
     rating: string,
-    ratingMax: string,
     playCount: string,
     lastPlayed: number,
 }
