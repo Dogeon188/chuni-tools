@@ -1,6 +1,6 @@
 {
   "name": "chuni_tools",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Variety of tools for the arcade game CHUNITHM (Intl. Ver.)",
   "scripts": {
     "build": "webpack",

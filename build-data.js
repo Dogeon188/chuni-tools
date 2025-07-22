@@ -1,7 +1,7 @@
 const axios = require("axios").default
 const fs = require("fs")
 
-const versionName = "verse"
+const versionName = "xverse"
 const fileName = `docs/data/song-const/${versionName}.json`
 
 const genres = {
@@ -34,6 +34,7 @@ const _releaseDate = {
     "2023-12-14": "LUMINOUS",
     "2024-06-20": "LUMINOUS+",
     "2024-12-12": "VERSE",
+    "2025-07-16": "XVERSE",
 }
 
 const versionId = {
@@ -57,6 +58,7 @@ const versionId = {
     LUMINOUS: 17,
     "LUMINOUS+": 18,
     VERSE: 19,
+    XVERSE: 20,
 }
 
 const releaseDate = {}
