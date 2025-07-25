@@ -5,12 +5,8 @@
 		"https://cdn.jsdelivr.net/npm/@inlang/plugin-m-function-matcher@2/dist/index.js"
 	],
 	"plugin.inlang.messageFormat": {
-		"pathPattern": "./messages/{locale}.json"
+		"pathPattern": "./locales/{locale}.json"
 	},
 	"baseLocale": "en",
-	"locales": [
-		"en",
-		"zh-tw",
-		"jp"
-	]
+	"locales": ["en", "zh-tw", "jp"]
 }

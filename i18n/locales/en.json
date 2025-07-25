@@ -1,0 +1,11 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"locale_name": "English",
+	"about": {
+		"title": "About CHUNITHM Tools",
+		"intro": {
+			"about": "With the bookmarklet, you can look for a variety of play records on CHUNITHM, including your **best record**, **recent play history**, etc. Combining with the song constant data, you can even view details of your in-game **rating**.",
+			"contact": "More functionalities are expected, and we will keep updating the bookmarklet tool for your best experience. If you have any idea, or if you see something needed improvements, feel free to open an issue at [GitHub](https://github.com/Dogeon188/chuni-tools/issues), or DM the author [Dogeon](https://twitter.com/dogeon188)."
+		}
+	}
+}
