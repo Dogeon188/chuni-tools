@@ -1,11 +1,31 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"locale_name": "English",
+	"common": {
+		"locale_name": "English (US)",
+		"choose_language": "Choose Language",
+		"powered_by": "Source code & this page is hosted on [GitHub](https://github.com/Dogeon188/chuni-tools)"
+	},
 	"about": {
 		"title": "About CHUNITHM Tools",
 		"intro": {
-			"about": "With the bookmarklet, you can look for a variety of play records on CHUNITHM, including your **best record**, **recent play history**, etc. Combining with the song constant data, you can even view details of your in-game **rating**.",
-			"contact": "More functionalities are expected, and we will keep updating the bookmarklet tool for your best experience. If you have any idea, or if you see something needed improvements, feel free to open an issue at [GitHub](https://github.com/Dogeon188/chuni-tools/issues), or DM the author [Dogeon](https://twitter.com/dogeon188)."
+			"about": "With CHUNITHM Tools, you can look for a variety of play records on CHUNITHM, including your **best record**, **recent play history**, etc. Combining with the song constant data, you can even view details of your in-game **rating**.",
+			"contact": "More functionalities are expected to be added in the future, and we will keep updating the bookmarklet tool for your best experience. If you have any idea, or if you see something needed improvements, feel free to open an issue at [GitHub](https://github.com/Dogeon188/chuni-tools/issues), or DM the official X (formerly Twitter) account [@ChuniToolsIntl](https://x.com/ChuniToolsIntl)."
+		},
+		"usage": {
+			"title": "What can CHUNITHM Tools do?",
+			"viewer": {
+				"title": "Score Viewer",
+				"description": "Just the score viewer. To use this function, you need to execute CHUNITHM Tools in the [HOME PAGE](https://chunithm-net-eng.com/mobile/home/) of CHUNITHM-NET.\n\nYou can query your highscore record, recent play record, etc. With the song constant data, you can even get your **rating and OVER POWER** data. More information on how to use the score viewer, please refer to [this page (WIP)](https://dogeon188.github.io/chuni-tools/record-viewer/manual)."
+			},
+			"export_csv": {
+				"title": "Export Data as CSV",
+				"description": "Export your **highscore record of all difficulty** as a single CSV file. To use this function, you need to execute CHUNITHM Tools in the [SONG RECORD](https://chunithm-net-eng.com/mobile/record/musicGenre) page of CHUNITHM-NET.\n\nA CSV (comma-separated values) file can be opened by spreadsheet softwares such as Excel, where you can further analyze your own record.\n::: note The download file should be **opened with UTF-8 encoding**, or the file might not be correctly loaded.\n:::"
+			}
+		},
+		"bookmarklet": {
+			"title": "How to use CHUNITHM Tools Bookmarklet",
+			"steps": "1. Copy the link above.\n2. Add this page to your bookmarks, and rename it to **CHUNI TOOLS**.\n3. Open your bookmark list, found the added bookmark, then **Edit** the bookmark, clear the original link, paste the link you just copied, and finally click **Save**.\n4. Navigate to [CHUNITHM-NET](https://chunithm-net-eng.com/mobile/) If you haven't logged-in to CHUNITHM-NET before, you will have to first log-in to CHUNITHM-NET. [How to log-in to CHUNITHM-NET? (Chinese)](https://chunithm.fandom.com/zh/wiki/CHUNITHM-NET?variant=zh-tw#Aime_%E5%B8%B3%E8%99%9F%E7%B6%81%E5%AE%9A)\n5. After you successfully logged-in, open your bookmark list **on the CHUNITHM-NET page**, found the **CHUNI TOOLS** bookmark you just added, then click it.\n6. Now there should be a button at the top of the page, as shown in the picture below. **Click the button**, it will do things for you.",
+			"afterward": "After you follow all the steps and successfully open the record viewer for the first time, you'll just have to repeat **step 4 to step 6**. If you face any problem when using the bookmarklet, just DM the author via Twitter or Discord."
 		}
 	}
 }

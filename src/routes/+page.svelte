@@ -1,38 +1,40 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
 	import { page } from '$app/state'
+	import CopyBlock from '$lib/components/CopyBlock.svelte'
+	import Markdown from '$lib/components/Markdown.svelte'
 	import { m } from '$lib/paraglide/messages.js'
-	import { setLocale } from '$lib/paraglide/runtime'
+
+	const bookmarkletScript = `javascript:(function(d,s){s=d.createElement('script');s.src='https://dogeon188.github.io/chuni-tools/scripts/chuni-tools.js?t='+Math.floor(Date.now()/60000);d.body.append(s);})(document);`
 </script>
 
 <svelte:head>
 	<title>{m['about.title']()}</title>
 </svelte:head>
+
 <div class="card mx-auto max-w-3xl">
-	<div>
-		# {@html m['about.title']()}
+	<h1>
+		{m['about.title']()}
+	</h1>
+
+	<div class="max-w-none">
+		<Markdown content={m['about.intro.about']()} />
+		<Markdown content={m['about.intro.contact']()} />
 	</div>
 
-	<div class="prose prose-lg max-w-none">
-		<p>{@html m['about.intro.about']()}</p>
-		<p>{@html m['about.intro.contact']()}</p>
+	<div class="max-w-none">
+		<h2>{m['about.usage.title']()}</h2>
+		<h3><Markdown content={m['about.usage.viewer.title']()} /></h3>
+		<Markdown content={m['about.usage.viewer.description']()} />
+		<h3><Markdown content={m['about.usage.export_csv.title']()} /></h3>
+		<Markdown content={m['about.usage.export_csv.description']()} />
 	</div>
 
-	<div class="mb-8">
-		## Language Selection
-		<div class="flex flex-wrap gap-3">
-			<button onclick={() => setLocale('en')} class="btn btn-primary">
-				{m['locale_name']({}, { locale: 'en' })}
-				<!-- English -->
-			</button>
-			<button onclick={() => setLocale('zh-tw')} class="btn btn-success">
-				{m['locale_name']({}, { locale: 'zh-tw' })}
-				<!-- 繁體中文 -->
-			</button>
-			<button onclick={() => setLocale('jp')} class="btn btn-purple">
-				{m['locale_name']({}, { locale: 'jp' })}
-				<!-- 日本語 -->
-			</button>
-		</div>
+	<div class="max-w-none">
+		<h2>{m['about.bookmarklet.title']()}</h2>
+		<CopyBlock code={bookmarkletScript} language="js" />
+		<Markdown content={m['about.bookmarklet.steps']()} />
+		<img src="img/chuni-net-viewer-button.png" alt="Chuni Net Viewer Button" class="block mb-4 w-lg mx-auto" />
+		<Markdown content={m['about.bookmarklet.afterward']()} />
 	</div>
 </div>

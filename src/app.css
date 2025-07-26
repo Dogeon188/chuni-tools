@@ -44,10 +44,22 @@ p {
 	@apply text-gray-800;
 }
 
+ol {
+	@apply list-decimal pl-5 mb-4;
+}
+
+img {
+	@apply max-w-full h-auto rounded-md shadow-sm;
+}
+
 /* Link styles */
 a {
-	@apply text-blue-600 hover:text-blue-800 underline;
+	@apply text-cyan-500 hover:text-cyan-600 decoration-dotted underline;
 	@apply transition-colors duration-200;
+}
+
+strong {
+	@apply font-semibold text-gray-900;
 }
 
 /* Button base styles */
@@ -95,7 +107,7 @@ a {
 
 /* Info box component */
 .info-box {
-	@apply bg-blue-50 border border-blue-200 rounded-lg p-4;
+	@apply bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4;
 }
 
 .info-box p {
@@ -140,8 +152,16 @@ label {
 		@apply text-blue-200;
 	}
 
+	.info-box strong {
+		@apply text-blue-100;
+	}
+
 	p {
 		@apply text-gray-200;
+	}
+
+	strong {
+		@apply text-gray-100;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
