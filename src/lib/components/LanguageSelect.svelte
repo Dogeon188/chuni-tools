@@ -19,7 +19,7 @@
 </script>
 
 <div class="language-select flex flex-row items-center gap-3">
-	<label for="language-dropdown" class="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
+	<label for="language-dropdown" class="text-sm font-medium whitespace-nowrap">
 		{m['common.choose_language']()}
 	</label>
 	<select

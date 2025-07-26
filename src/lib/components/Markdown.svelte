@@ -3,33 +3,37 @@
 	import MarkdownItContainer from 'markdown-it-container'
 	import { onMount } from 'svelte'
 
-	let { className: className = '', content }: { className?: string; content: string } = $props()
+	let {
+		className: className = '',
+		content,
+		inline = false
+	}: { className?: string; content: string; inline?: boolean } = $props()
 
 	let htmlContent = $state('')
 	let mounted = false
 
+	const md = new MarkdownIt({
+		html: true, // Enable HTML tags in source
+		linkify: false, // Auto-convert URL-like text to links
+		typographer: true // Enable some language-neutral replacement + quotes beautification
+	})
+
+	md.use(MarkdownItContainer, 'note', {
+		validate: (params: string) => params.trim().match(/^note\s+(.*)$/),
+		render: (tokens: any[], idx: number) => {
+			if (tokens[idx].nesting === 1) {
+				// Opening tag
+				return `<div class="info-box"><p>${md.render(tokens[idx].info.trim().match(/^note\s+(.*)$/)[1])}</p>`
+			} else {
+				// Closing tag
+				return '</div>'
+			}
+		}
+	})
+
 	// Function to convert markdown to HTML
 	async function convertMarkdownToHtml(markdown: string): Promise<string> {
 		try {
-			// Use dynamic import to load markdown-it
-			const md = new MarkdownIt({
-				html: true, // Enable HTML tags in source
-				linkify: false, // Auto-convert URL-like text to links
-				typographer: true // Enable some language-neutral replacement + quotes beautification
-			})
-			md.use(MarkdownItContainer, 'note', {
-				validate: (params: string) => params.trim().match(/^note\s+(.*)$/),
-				render: (tokens: any[], idx: number) => {
-					if (tokens[idx].nesting === 1) {
-						// Opening tag
-						return `<div class="info-box"><p>${md.render(tokens[idx].info.trim().match(/^note\s+(.*)$/)[1])}</p>`
-					} else {
-						// Closing tag
-						return '</div>'
-					}
-				}
-			})
-
 			return md.render(markdown)
 		} catch (error) {
 			console.error('Error converting markdown to HTML:', error)
@@ -57,6 +61,12 @@
 	})
 </script>
 
-<div class="markdown-content {className}">
+<div class="markdown-content {className}" class:markdown-inline={inline}>
 	{@html htmlContent}
 </div>
+
+<style>
+	.markdown-content.markdown-inline > :global(p) {
+		margin-bottom: 0;
+	}
+</style>
