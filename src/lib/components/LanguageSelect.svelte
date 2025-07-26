@@ -2,13 +2,13 @@
 	import { m } from '$lib/paraglide/messages.js'
 	import { getLocale, locales, setLocale } from '$lib/paraglide/runtime'
 
-	type Locale = typeof locales[number]
+	type Locale = (typeof locales)[number]
 
 	let currentLocale = $state(getLocale() as Locale)
 
 	// Language options with display names
-	const languageOptions = locales.map(locale => {
-		const name = m[`common.locale_name`]({}, {locale})
+	const languageOptions = locales.map((locale) => {
+		const name = m[`common.locale_name`]({}, { locale })
 		return { code: locale, name }
 	})
 
@@ -24,11 +24,10 @@
 	</label>
 	<select
 		id="language-dropdown"
-		class="px-3 py-1 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-gray-200 transition-colors duration-200 min-w-0 flex-shrink-0"
 		bind:value={currentLocale}
-		onchange={(e) => handleLocaleChange((e.target as HTMLSelectElement).value as Locale)}
-		aria-label={m['common.choose_language']()}
-	>
+		onchange={(e) =>
+			handleLocaleChange((e.target as HTMLSelectElement).value as Locale)}
+		aria-label={m['common.choose_language']()}>
 		{#each languageOptions as option}
 			<option value={option.code} selected={currentLocale === option.code}>
 				{option.name}

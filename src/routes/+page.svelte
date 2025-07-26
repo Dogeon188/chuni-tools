@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
 	import { page } from '$app/state'
-	import CopyBlock from '$lib/components/CopyBlock.svelte'
+	import CodeBlock from '$lib/components/CodeBlock.svelte'
 	import Markdown from '$lib/components/Markdown.svelte'
 	import { m } from '$lib/paraglide/messages.js'
 
@@ -32,7 +32,7 @@
 
 	<div class="max-w-none">
 		<h2>{m['about.bookmarklet.title']()}</h2>
-		<CopyBlock code={bookmarkletScript} language="js" />
+		<CodeBlock title="bookmarklet" code={bookmarkletScript} language="js" />
 		<Markdown content={m['about.bookmarklet.steps']()} />
 		<img src="img/chuni-net-viewer-button.png" alt="Chuni Net Viewer Button" class="block mb-4 w-lg mx-auto" />
 		<Markdown content={m['about.bookmarklet.afterward']()} />

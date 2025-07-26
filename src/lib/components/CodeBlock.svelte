@@ -84,20 +84,20 @@
 
 <div class="relative mb-4 overflow-hidden rounded-lg bg-gray-900 shadow-lg {className}">
 	<!-- Header with title and copy button -->
-	<div class="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-2">
+	<div class="flex items-center justify-between border-b border-borderc-normal bg-bgc-normal px-4 py-2">
 		<div class="flex items-center gap-3">
 			{#if title}
-				<span class="text-sm font-medium text-gray-200">{title}</span>
+				<span class="text-sm font-medium text-textc-normal">{title}</span>
 			{/if}
 			{#if language}
 				<span
-					class="rounded bg-gray-700 px-2 py-1 font-mono text-xs text-gray-400 uppercase"
+					class="rounded bg-bgc-accent px-2 py-1 font-mono text-xs text-textc-dim uppercase"
 					>{language}</span>
 			{/if}
 		</div>
 		<button
 			type="button"
-			class="flex cursor-pointer items-center gap-1 rounded border-none bg-gray-700 px-2 py-1 text-xs text-gray-400 transition-colors duration-200 hover:bg-gray-600 hover:text-gray-200"
+			class="flex cursor-pointer items-center gap-1 rounded border-none bg-bgc-accent/75 px-2 py-1 text-xs text-textc-dim transition-colors duration-200 hover:bg-bgc-accent hover:text-textc-normal"
 			class:!text-green-400={copied}
 			class:!bg-green-900={copied}
 			onclick={copyToClipboard}
@@ -141,7 +141,7 @@
 	<div class="relative flex">
 		{#if showLineNumbers}
 			<div
-				class="flex flex-col border-r border-gray-700 bg-gray-800 px-3 py-4 font-mono text-xs leading-6 text-gray-500 select-none">
+				class="flex flex-col border-r border-borderc-dim bg-bgc-dim px-3 py-4 font-mono text-xs leading-6 text-textc-dim select-none">
 				{#each codeLines as _, index}
 					<span class="min-w-[2rem] text-right">{index + 1}</span>
 				{/each}
@@ -149,9 +149,9 @@
 		{/if}
 		<pre
 			bind:this={codeElement}
-			class="m-0 flex-1 overflow-x-auto bg-gray-900 p-4 font-mono text-sm leading-6 text-gray-200"
+			class="m-0 flex-1 overflow-x-auto p-4 font-mono text-sm leading-6"
 			class:pl-4={showLineNumbers}
-			style="tab-size: 2;"><code class="block text-gray-200 language-{language}"
+			style="tab-size: 2;"><code class="blocklanguage-{language}"
 				>{@html highlightedCode}</code></pre>
 	</div>
 </div>
