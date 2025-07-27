@@ -1,9 +1,9 @@
 import {
-    fetchBestRecord,
-    fetchPlayerStats,
-    fetchPlayHistory,
-    fetchRecentRecord,
-    fetchSongPlayCount
+	fetchBestRecord,
+	fetchPlayerStats,
+	fetchPlayHistory,
+	fetchRecentRecord,
+	fetchSongPlayCount
 } from '$lib/chuninet/api';
 import type { Difficulty } from '$lib/chuninet/song';
 import { chuniNet } from '$lib/chuninet/website';
@@ -11,19 +11,6 @@ import { m } from '$lib/paraglide/messages';
 import { getCookie, getPostMessageFunction, getScriptBaseUrl } from '$lib/web';
 
 (async function (d: Document) {
-	// const UIString = {
-	//     [Language.en_US]: {
-	//         pleaseLogin: "Please login to CHUNITHM-NET first.",
-	//         needReload: "Oops! Something went wrong, please reload CHUNITHM-NET.",
-	//         analyzeRating: "Analyze Rating"
-	//     },
-	//     [Language.zh_TW]: {
-	//         pleaseLogin: "請先登入 CHUNITHM-NET 再執行本程式。",
-	//         needReload: "唉呀，看來我們這裡出了一點小意外，請重新整理 CHUNITHM-NET。",
-	//         analyzeRating: "分析遊戲成績"
-	//     }
-	// }[getInitialLang()]
-
 	if (!getCookie('_t')) {
 		alert(m['chuni_tools.require_login']())
 		window.location.href = chuniNet
@@ -33,16 +20,11 @@ import { getCookie, getPostMessageFunction, getScriptBaseUrl } from '$lib/web';
 	function insertOpenerBtn() {
 		const b = d.createElement('a')
 		b.className = 'chuni-tool-btn'
-		const s = d.createElement('link')
-		s.rel = 'stylesheet'
-		s.href = getScriptBaseUrl() + '/styles/inject.css'
 		b.innerText = m['score_viewer.press_to_start']()
 		b.href = getScriptBaseUrl() + '/record-viewer/#best'
-		b.target = 'recordViewer'
-		d.getElementsByTagName('head')[0].appendChild(s)
-		s.addEventListener('load', () => {
-			d.querySelector('.clearfix')?.insertAdjacentElement('afterend', b)
-		})
+		b.target = 'recordViewer-' + Date.now()
+
+		d.querySelector('.clearfix')?.insertAdjacentElement('afterend', b)
 	}
 
 	function handleMessageRequest(
