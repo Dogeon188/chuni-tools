@@ -30,12 +30,12 @@
 	},
 	"chuni_tools": {
 		"already_run": "CHUNITHM Toolsはすでに実行されています。もう一度実行するには、ページをリフレッシュしてください。",
-		"wrong_place": "おっと！間違ったページにいるようです。CHUNITHM-NET Intl. ({chuniNetUrl})を開いてログインし、もう一度試してください。"
+		"wrong_place": "おっと！間違ったページにいるようです。CHUNITHM-NET Intl. ({chuniNetUrl})を開いてログインし、もう一度試してください。",
+		"require_login": "CHUNITHM-NETにログインしてください。",
+		"require_reload": "おっと！何か問題が発生しました。CHUNITHM-NETをリロードしてください。"
 	},
 	"export_csv": {
-		"require_login": "CHUNITHM-NETにログインしてください。",
 		"press_to_download": "レコードCSVをダウンロード",
-		"require_reload": "おっと！何か問題が発生しました。CHUNITHM-NETをリロードしてください。",
 		"finished": "完了しました！",
 		"downloading": "{diff}のデータをダウンロード中..."
 	}

@@ -1,6 +1,3 @@
-export const chuniNetBase = "chunithm-net-eng.com"
-export const chuniNet = "https://" + chuniNetBase
-
 export function getScriptBaseUrl() {
     if (__ENV__ === "development") {
         return "https://localhost:5174"
@@ -20,4 +17,13 @@ export function getCookie(key: string) {
         .find(e => e[0] === key)
     if (cookieEntry) return cookieEntry[1] // value
     return ""
+}
+
+export function getPostMessageFunction(w: WindowProxy, origin: string): PostMessageFunc {
+    if (!w) throw new Error("Target window does not exist")
+    return (action, payload, uuid?: string) => {
+        const obj = <CrossPageRequestMessageEvent["data"]>{ action, payload }
+        if (uuid) obj.uuid = uuid
+        w.postMessage(obj, origin)
+    }
 }

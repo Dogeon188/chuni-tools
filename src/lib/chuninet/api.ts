@@ -1,6 +1,7 @@
 import { parseNumber } from "$lib/numeric";
-import { chuniNet, getCookie } from "$lib/web";
+import { getCookie } from "$lib/web";
 import { Difficulty, difficulties, genreAll } from "./song";
+import { chuniNet } from "./website";
 
 async function fetchChuniPage(url: string, fd?: FormData) {
     const res = await fetch(chuniNet + url, {

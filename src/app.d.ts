@@ -1,10 +1,28 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
 declare global {
-	declare let __ENV__: 'development' | 'production'
-	declare let __INTL_VERSION__: string
-	declare let __JP_VERSION__: string
-	
+	let __ENV__: 'development' | 'production'
+	let __INTL_VERSION__: string
+	let __JP_VERSION__: string
+
+	type CrossPageRequestMessagePayload<PayloadType> = {
+		target?: string
+		error?: Error
+		data?: PayloadType
+	}
+
+	type PostMessageFunc = (
+		action: string,
+		payload: CrossPageRequestMessagePayload,
+		uuid?: string
+	) => void
+
+	type CrossPageRequestMessageEvent<PayloadType> = MessageEvent<{
+		uuid: string
+		action: string
+		payload: CrossPageRequestMessagePayload<PayloadType>
+	}>
+
 	type PlayRecord = {
 		title: string
 		score: number

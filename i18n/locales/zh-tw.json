@@ -30,13 +30,16 @@
 	},
 	"chuni_tools": {
 		"already_run": "你已經執行過CHUNITHM小工具了！若要重新執行一次，請先重新整理頁面再試一次",
-		"wrong_place": "哇，看來你走錯路了。請到CHUNITHM-NET Intl. ({chuniNetUrl}) 登入之後再試一次。"
+		"wrong_place": "哇，看來你走錯路了。請到CHUNITHM-NET Intl. ({chuniNetUrl}) 登入之後再試一次。",
+		"require_login": "請先登入CHUNITHM-NET再執行本程式。",
+		"require_reload": "哎呀！發生了一些錯誤，請重新載入CHUNITHM-NET。"
 	},
 	"export_csv": {
-		"require_login": "請先登入CHUNITHM-NET再執行本程式。",
 		"press_to_download": "下載歌曲記錄為CSV",
-		"require_reload": "哎呀！發生了一些錯誤，請重新載入CHUNITHM-NET。",
 		"finished": "下載完成！",
 		"downloading": "正在下載 {diff} 資料..."
+	},
+	"score_viewer": {
+		"press_to_start": "分析遊戲成績"
 	}
 }

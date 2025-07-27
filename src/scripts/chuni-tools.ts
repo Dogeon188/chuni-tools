@@ -1,5 +1,6 @@
+import { chuniNet, chuniNetBase } from "$lib/chuninet/website";
 import { m } from '$lib/paraglide/messages';
-import { chuniNet, chuniNetBase, getScriptBaseUrl } from '$lib/web';
+import { getScriptBaseUrl } from '$lib/web';
 
 // if run the script again, paraglide will fail to create new variable
 // -> generate uncaught syntax error
@@ -42,6 +43,6 @@ window.onerror = () => {
 		appendScript('export-csv')
 	} else {
 		// usually `/mobile/home`
-		appendScript('fetch-all')
+		appendScript('score-viewer')
 	}
 })(document, window as unknown as Window & { chuniTools: boolean })

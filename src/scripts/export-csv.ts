@@ -1,12 +1,13 @@
-import { fetchBestRecord } from '$lib/chuninet/fetch';
+import { fetchBestRecord } from '$lib/chuninet/api';
 import { parseRecord } from '$lib/chuninet/record';
 import { difficulties } from '$lib/chuninet/song';
+import { chuniNet } from "$lib/chuninet/website";
 import { m } from '$lib/paraglide/messages';
-import { chuniNet, getCookie, getScriptBaseUrl } from '$lib/web';
+import { getCookie, getScriptBaseUrl } from '$lib/web';
 
 (async function (d: Document) {
 	if (!getCookie('_t')) {
-		alert(m['export_csv.require_login']())
+		alert(m['chuni_tools.require_login']())
 		window.location.href = chuniNet
 		return
 	}
@@ -66,7 +67,7 @@ import { chuniNet, getCookie, getScriptBaseUrl } from '$lib/web';
 			}, 3000)
 		})
 	} catch (error) {
-		alert(m['export_csv.require_reload']())
+		alert(m['chuni_tools.require_reload']())
 		console.log(error)
 	}
 })(document)

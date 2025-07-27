@@ -1,4 +1,4 @@
-import { fetchBestRecord } from "$lib/chuninet/fetch"
+import { fetchBestRecord } from "$lib/chuninet/api"
 import { Difficulty } from "$lib/chuninet/song"
 
 fetchBestRecord(Difficulty.master).then((record) => {

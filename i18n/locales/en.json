@@ -30,13 +30,16 @@
 	},
 	"chuni_tools": {
 		"already_run": "Please refresh the page before running CHUNI TOOLS again!",
-		"wrong_place": "Oops! Looks like you are on the wrong page.\\nPlease open CHUNITHM-NET Intl. ({chuniNetUrl}) and login, then try again."
+		"wrong_place": "Oops! Looks like you are on the wrong page.\\nPlease open CHUNITHM-NET Intl. ({chuniNetUrl}) and login, then try again.",
+		"require_login": "Please login to CHUNITHM-NET first.",
+		"require_reload": "Oops! Something went wrong, please reload CHUNITHM-NET."
 	},
 	"export_csv": {
-		"require_login": "Please login to CHUNITHM-NET first.",
 		"press_to_download": "Download Song Record as CSV",
-		"require_reload": "Oops! Something went wrong, please reload CHUNITHM-NET.",
 		"finished": "Completed!",
 		"downloading": "Downloading {diff} data..."
+	},
+	"score_viewer": {
+		"press_to_start": "Analyze Rating"
 	}
 }
