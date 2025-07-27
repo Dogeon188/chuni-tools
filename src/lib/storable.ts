@@ -179,6 +179,7 @@ abstract class BaseStorable<T> implements Writable<T> {
 	set = (value: T): void => {
 		const validatedValue = this.validator.validate(value)
 		this.store.set(validatedValue)
+		console.log(`Setting value for ${this.config.key}:`, validatedValue)
 		saveToStorage(this.config.key, validatedValue)
 	}
 

@@ -41,5 +41,18 @@
 	},
 	"score_viewer": {
 		"press_to_start": "Analyze Rating"
+	},
+	"viewer": {
+		"settings": {
+			"title": "Settings",
+			"filters": {
+				"title": "Filters",
+				"const": "By Chart Constant"
+			},
+			"ui": {
+				"title": "User Interface",
+				"theme": "Color Theme"
+			}
+		}
 	}
 }

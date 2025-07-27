@@ -21,9 +21,11 @@ export const currentVersionId = derived(usedConstData, ($usedConstData) => {
 
 // record filter
 
-export const filterConstMin = NumberStorable.create('filterConstMin', 1, 1, 15.7)
+export const songConstMin = 1, songConstMax = 15.7
 
-export const filterConstMax = NumberStorable.create('filterConstMax', 15.7, 1, 15.7)
+export const filterConstMin = NumberStorable.create('filterConstMin', songConstMin, songConstMin, songConstMax)
+
+export const filterConstMax = NumberStorable.create('filterConstMax', songConstMax, songConstMin, songConstMax)
 
 export const filterDifficulty = FlagStorable.create(
 	'filterDifficulty',

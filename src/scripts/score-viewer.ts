@@ -20,7 +20,7 @@ import { getCookie, getPostMessageFunction, getScriptBaseUrl } from '$lib/web';
 	function insertOpenerBtn() {
 		const b = d.createElement('a')
 		b.className = 'chuni-tool-btn'
-		b.innerText = m['score_viewer.press_to_start']()
+		b.innerText = m['viewer.press_to_start']()
 		b.href = getScriptBaseUrl() + '/record-viewer/#best'
 		b.target = 'recordViewer-' + Date.now()
 

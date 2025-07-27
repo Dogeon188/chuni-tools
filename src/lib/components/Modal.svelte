@@ -123,7 +123,7 @@
 			aria-label="Modal content">
 			<!-- Close button -->
 			<button
-				class="absolute top-4 right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-accent/50 text-textc-muted transition-all duration-200 hover:scale-110 hover:bg-bgc-accent/70 hover:text-textc-dim focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
+				class="absolute top-4 right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-accent/50 text-textc-muted transition-all duration-200 hover:scale-110 hover:bg-bgc-accent/70 hover:text-textc-dim focus:ring-2 focus:ring-borderc-form focus:ring-offset-2 focus:outline-none"
 				onclick={close}
 				aria-label="Close modal"
 				type="button">

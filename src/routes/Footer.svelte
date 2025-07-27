@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages.js'
-	import { theme } from '$lib/preference'
 	import LanguageSelect from '../lib/components/LanguageSelect.svelte'
 	import Markdown from '../lib/components/Markdown.svelte'
 </script>
@@ -11,14 +10,6 @@
 			<!-- Language Selector -->
 			<div class="flex-shrink-0">
 				<LanguageSelect />
-			</div>
-
-			<!-- Theme Selector -->
-			<div class="flex-shrink-0">
-				<select bind:value={$theme} class="rounded border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-200">
-					<option value="light">Light</option>
-					<option value="dark">Dark</option>
-				</select>
 			</div>
 
 			<!-- Powered by message -->
