@@ -46,3 +46,5 @@ export const versionId = {
 	VERSE: 19,
 	'X-VERSE': 20
 }
+
+export const versions = Object.keys(versionId) as (keyof typeof versionId)[]

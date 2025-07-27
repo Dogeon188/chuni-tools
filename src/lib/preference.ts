@@ -1,5 +1,5 @@
 import { browser } from '$app/environment'
-import { StringStorable, } from '$lib/storable'
+import { StringStorable } from '$lib/storable'
 
 const userPreferredDarkMode = browser
 	? window.matchMedia('(prefers-color-scheme: dark)').matches

@@ -1,47 +1,51 @@
 import { browser } from '$app/environment'
 import { writable, type Writable } from 'svelte/store'
 
+//#region Storable Configurations
+
 // Base storable interface
-interface StorableConfig<T> {
+interface BaseStorableConfig<T> {
 	key: string
 	defaultValue: T
 }
 
 // Boolean storable configuration
-interface BooleanStorableConfig extends StorableConfig<boolean> {
+interface BooleanStorableConfig extends BaseStorableConfig<boolean> {
 	type: 'boolean'
 }
 
 // Flag storable configuration (list of booleans)
-interface FlagStorableConfig extends StorableConfig<Record<string, boolean>> {
+interface FlagStorableConfig extends BaseStorableConfig<Record<string, boolean>> {
 	type: 'flag'
-	flags: string[]
+	flags: readonly string[]
 }
 
 // String storable configuration
-interface StringStorableConfig extends StorableConfig<string> {
+interface StringStorableConfig extends BaseStorableConfig<string> {
 	type: 'string'
-	legalValues?: string[]
+	legalValues?: readonly string[]
 }
 
 // Number storable configuration
-interface NumberStorableConfig extends StorableConfig<number> {
+interface NumberStorableConfig extends BaseStorableConfig<number> {
 	type: 'number'
 	min?: number
 	max?: number
 }
 
 // Union type for all configs
-type AnyStorableConfig =
+type StorableConfig =
 	| BooleanStorableConfig
 	| FlagStorableConfig
 	| StringStorableConfig
 	| NumberStorableConfig
 
+//#region Storable Interfaces
+
 // Base storable store interface
 interface BaseStorableStore<T> extends Writable<T> {
 	reset: () => void
-	getConfig: () => AnyStorableConfig
+	getConfig: () => StorableConfig
 }
 
 // Extended interfaces for specific types
@@ -63,6 +67,8 @@ interface NumberStorableStore extends BaseStorableStore<number> {
 	getConfig: () => NumberStorableConfig
 }
 
+//#region Validators
+
 // Abstract validator interface
 interface StorableValidator<T> {
 	validate(value: T): T
@@ -76,7 +82,7 @@ class BooleanValidator implements StorableValidator<boolean> {
 }
 
 class StringValidator implements StorableValidator<string> {
-	constructor(private legalValues?: string[]) {}
+	constructor(private legalValues?: readonly string[]) {}
 
 	validate(value: string): string {
 		if (!this.legalValues || this.legalValues.includes(value)) {
@@ -107,7 +113,7 @@ class NumberValidator implements StorableValidator<number> {
 }
 
 class FlagValidator implements StorableValidator<Record<string, boolean>> {
-	constructor(private flags: string[]) {}
+	constructor(private flags: readonly string[]) {}
 
 	validate(value: Record<string, boolean>): Record<string, boolean> {
 		const result: Record<string, boolean> = {}
@@ -118,7 +124,8 @@ class FlagValidator implements StorableValidator<Record<string, boolean>> {
 	}
 }
 
-// Storage utilities
+//#region Storage utilities
+
 function loadFromStorage<T>(key: string, defaultValue: T): T {
 	if (!browser) return defaultValue
 
@@ -141,14 +148,16 @@ function saveToStorage<T>(key: string, value: T): void {
 	}
 }
 
+//#region Storable Classes
+
 // Base storable class using polymorphism
 abstract class BaseStorable<T> implements Writable<T> {
 	protected store: Writable<T>
 	protected validator: StorableValidator<T>
-	protected config: StorableConfig<T> & { type: string }
+	protected config: BaseStorableConfig<T> & { type: string }
 
 	constructor(
-		config: StorableConfig<T> & { type: string },
+		config: BaseStorableConfig<T> & { type: string },
 		validator: StorableValidator<T>
 	) {
 		this.config = config
@@ -189,7 +198,10 @@ abstract class BaseStorable<T> implements Writable<T> {
 }
 
 // Specific storable implementations
-export class BooleanStorable extends BaseStorable<boolean> implements BooleanStorableStore {
+export class BooleanStorable
+	extends BaseStorable<boolean>
+	implements BooleanStorableStore
+{
 	declare protected config: BooleanStorableConfig
 
 	constructor(config: BooleanStorableConfig) {
@@ -226,7 +238,7 @@ export class FlagStorable
 
 	static create(
 		key: string,
-		flags: string[],
+		flags: readonly string[],
 		defaultValue?: Record<string, boolean>
 	): FlagStorableStore {
 		const config: FlagStorableConfig = {
@@ -234,7 +246,8 @@ export class FlagStorable
 			key,
 			flags,
 			defaultValue:
-				defaultValue ?? flags.reduce((acc, flag) => ({ ...acc, [flag]: false }), {})
+				defaultValue ??
+				flags.reduce((acc, flag) => ({ ...acc, [flag]: false }), {})
 		}
 		return new FlagStorable(config)
 	}
@@ -261,7 +274,7 @@ export class StringStorable extends BaseStorable<string> implements StringStorab
 	static create(
 		key: string,
 		defaultValue: string,
-		legalValues?: string[]
+		legalValues?: readonly string[]
 	): StringStorableStore {
 		const config: StringStorableConfig = {
 			type: 'string',
@@ -305,35 +318,8 @@ export class NumberStorable extends BaseStorable<number> implements NumberStorab
 	}
 }
 
-// Factory functions with direct parameter passing (kept for backward compatibility)
-export function createBooleanPreference(
-	key: string,
-	defaultValue: boolean
-): BooleanStorableStore {
-	return BooleanStorable.create(key, defaultValue)
-}
-
-export function createFlagPreference(
-	key: string,
-	flags: string[],
-	defaultValue?: Record<string, boolean>
-): FlagStorableStore {
-	return FlagStorable.create(key, flags, defaultValue)
-}
-
-export function createStringPreference(
-	key: string,
-	defaultValue: string,
-	legalValues?: string[]
-): StringStorableStore {
-	return StringStorable.create(key, defaultValue, legalValues)
-}
-
-export function createNumberPreference(
-	key: string,
-	defaultValue: number,
-	min?: number,
-	max?: number
-): NumberStorableStore {
-	return NumberStorable.create(key, defaultValue, min, max)
-}
+export type Storable =
+	| BooleanStorableStore
+	| FlagStorableStore
+	| StringStorableStore
+	| NumberStorableStore
