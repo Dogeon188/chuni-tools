@@ -1,6 +1,6 @@
 export function getScriptBaseUrl() {
     if (__ENV__ === "development") {
-        return "https://localhost:5174"
+        return "https://localhost:5173"
     }
     return "https://dogeon188.github.io/chuni-tools"
 }
@@ -22,7 +22,7 @@ export function getCookie(key: string) {
 export function getPostMessageFunction(w: WindowProxy, origin: string): PostMessageFunc {
     if (!w) throw new Error("Target window does not exist")
     return (action, payload, uuid?: string) => {
-        const obj = <CrossPageRequestMessageEvent["data"]>{ action, payload }
+        const obj = <CrossPageRequestMessageEvent<unknown>["data"]>{ action, payload }
         if (uuid) obj.uuid = uuid
         w.postMessage(obj, origin)
     }

@@ -1,9 +1,8 @@
-import tailwindcss from '@tailwindcss/vite';
-import { glob } from 'glob';
-import fs from 'node:fs';
-import path from 'node:path';
-import { defineConfig } from 'vite';
-import { viteDefine } from './vite.common.config.js';
+import tailwindcss from '@tailwindcss/vite'
+import { glob } from 'glob'
+import path from 'node:path'
+import { defineConfig } from 'vite'
+import { viteDefine } from './vite.common.config.js'
 
 // Get all TypeScript files in src/scripts
 const scriptEntries = glob.sync('src/scripts/**/*.ts').reduce(
@@ -25,32 +24,15 @@ const styleEntries = glob.sync('src/styles/**/*.css').reduce(
 )
 
 export default defineConfig({
-	publicDir: 'build',
 	define: viteDefine,
 	resolve: {
 		alias: {
 			$lib: path.resolve('src/lib')
 		}
 	},
-	plugins: [
-		tailwindcss(),
-	],
-	server: {
-		port: 5174,
-		cors: {
-			origin: '*',
-			credentials: true
-		},
-		fs: {
-			allow: ['..']
-		},
-		https: {
-			key: fs.readFileSync('./.cert/key.pem'),
-			cert: fs.readFileSync('./.cert/cert.pem')
-		}
-	},
+	plugins: [tailwindcss()],
 	build: {
-		outDir: 'build',
+		outDir: 'static',
 		emptyOutDir: false,
 		cssCodeSplit: true,
 		lib: {
@@ -72,9 +54,9 @@ export default defineConfig({
 						return 'styles/[name][extname]'
 					}
 					return '[name][extname]'
-				}
+				},
+				chunkFileNames: 'scripts/[name].js'
 			}
 		}
 	}
 })
-

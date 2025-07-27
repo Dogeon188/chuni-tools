@@ -1,6 +1,7 @@
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
+import fs from 'node:fs';
 import { defineConfig } from 'vitest/config';
 import { viteDefine } from './vite.common.config.js';
 
@@ -14,6 +15,20 @@ export default defineConfig({
 			outdir: './src/lib/paraglide'
 		})
 	],
+
+	server: {
+		cors: {
+			origin: '*',
+			credentials: true
+		},
+		fs: {
+			allow: ['..']
+		},
+		https: {
+			key: fs.readFileSync('./.cert/key.pem'),
+			cert: fs.readFileSync('./.cert/cert.pem')
+		}
+	},
 	test: {
 		projects: [
 			{
