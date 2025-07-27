@@ -1,9 +1,12 @@
 import { paraglideVitePlugin } from '@inlang/paraglide-js';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+	define: {
+		__ENV__: JSON.stringify(process.env.ENV || 'development')
+	},
 	plugins: [
 		tailwindcss(),
 		sveltekit(),

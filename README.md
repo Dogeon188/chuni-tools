@@ -14,22 +14,8 @@ The chart constant data is from [CHUNITHM譜面定数メインフレーム](http
 
 ## Dev
 
-To initialize the repository, first copy the `./docs` folder and rename to `./build`. (If you know what you're doing, you can also just take advantages of the symlinks.) Then, use
+To initialize the repository, first use `bun install` or `npm install` to install the dependencies. After that, use `bun dev` or `npm run dev` to start the development server for the website part.
 
-```sh
-bun install
-```
+To build the bookmarklet script, first create a certificate with any tool you like (e.g. [mkcert](https://github.com/FiloSottile/mkcert)) at `./cert`, then run `bun dev:scripts` or `npm run dev:scripts`. This will start a development server hosting from `./build`. Due to technical limitations, you still need to manually build the bookmarklet script separately with `bun build:scripts` or `npm run build:scripts`, which will output the script to `./build/scripts/*.js`.
 
-to initialize the repo. BTW, it's recommended to install Live Server plugin if you're using VSCode.
-
-After that, use the following command to create a dev session:
-
-```sh
-bun dev
-```
-
-With the following command, you can build and compile the code to `./docs`, then GitHub Pages will handle the rest.
-
-```sh
-bun run build
-```
+With `bun run build` or `npm run build`, you can build and compile the code to `./build`, then GitHub Pages will handle the rest.

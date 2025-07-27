@@ -27,5 +27,9 @@
 			"steps": "1. 複製上方的連結.\n2. 將此頁面加入書籤，並將其重新命名為 **CHUNI TOOLS**。\n3. 打開您的書籤列表，找到剛剛新增的**CHUNI TOOLS**書籤，然後 **編輯** 該書籤，清除原始連結，貼上剛剛複製的連結，最後點擊 **保存**。\n4. 瀏覽至 [CHUNITHM-NET](https://chunithm-net-eng.com/mobile/) 。如果您之前尚未登入CHUNITHM-NET，您需要先登入。 [如何登入CHUNITHM-NET？](https://chunithm.fandom.com/zh/wiki/CHUNITHM-NET?variant=zh-tw#Aime_%E5%B8%B3%E8%99%9F%E7%B6%81%E5%AE%9A)\n5. 成功登入後，在 **CHUNITHM-NET頁面** 打開您的書籤列表，找到剛剛新增的 **CHUNI TOOLS** 書籤，然後點擊它。\n6. 現在頁面頂部應該會出現一個按鈕，如下圖所示。 **點擊該按鈕**，它將為您執行操作。",
 			"afterward": "完成所有步驟並成功首次打開記錄查看器後，您只需重複**第4步到第6步**便可使用。如果在使用書籤小工具時遇到任何問題，請通過X或Discord私信作者。"
 		}
+	},
+	"chuni_tools": {
+		"already_run": "你已經執行過CHUNITHM小工具了！若要重新執行一次，請先重新整理頁面再試一次",
+		"wrong_place": "哇，看來你走錯路了。請到CHUNITHM-NET Intl. ({chuniNetUrl}) 登入之後再試一次。"
 	}
 }

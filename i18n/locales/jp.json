@@ -27,5 +27,9 @@
 			"steps": "1. 上記のリンクをコピーします。\n2. このページをブックマークに追加し、名前を**CHUNI TOOLS**に変更します。\n3. ブックマークリストを開き、追加したブックマークを見つけて**編集**し、元のリンクをクリアして、コピーしたリンクを貼り付け、最後に**保存**をクリックします。\n4. [CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)にアクセスします。以前にCHUNITHM-NETにログインしたことがない場合は、まずCHUNITHM-NETにログインする必要があります。[CHUNITHM-NETへのログイン方法は？（中国語）](https://chunithm.fandom.com/zh/wiki/CHUNITHM-NET?variant=zh-tw#Aime_%E5%B8%B3%E8%99%9F%E7%B6%81%E5%AE%9A)\n5. ログインに成功したら、**CHUNITHM-NETページで**ブックマークリストを開き、追加した**CHUNI TOOLS**ブックマークを見つけてクリックします。\n6. これで、下の画像に示すように、ページの上部にボタンが表示されます。**ボタンをクリック**すると、処理が実行されます。",
 			"afterward": "すべての手順に従って初回のレコードビューアの起動に成功した後は、**手順4から手順6**を繰り返すだけです。ブックマークレットの使用中に問題が発生した場合は、TwitterやDiscordで作者にDMしてください。"
 		}
+	},
+	"chuni_tools": {
+		"already_run": "CHUNITHM Toolsはすでに実行されています。もう一度実行するには、ページをリフレッシュしてください。",
+		"wrong_place": "おっと！間違ったページにいるようです。CHUNITHM-NET Intl. ({chuniNetUrl})を開いてログインし、もう一度試してください。"
 	}
 }
