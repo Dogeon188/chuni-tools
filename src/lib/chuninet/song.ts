@@ -9,12 +9,12 @@ export enum Difficulty {
 export const difficulties = Object.values(Difficulty)
 
 export enum Genre {
-	'P & A' = '0',
+	'POPS & ANIME' = '0',
 	'niconico' = '2',
 	'東方Project' = '3',
 	'ORIGINAL' = '5',
 	'VARIETY' = '6',
-	'イロドリ' = '7',
+	'イロドリミドリ' = '7',
 	'ゲキマイ' = '9'
 }
 export const genres = Object.keys(Genre) as (keyof typeof Genre)[]
@@ -47,4 +47,6 @@ export const versionId = {
 	'X-VERSE': 20
 }
 
-export const versions = Object.keys(versionId) as (keyof typeof versionId)[]
+export const versions = Object.keys(versionId).filter(
+	(key) => key !== 'UNKNOWN'
+) as (keyof typeof versionId)[]
