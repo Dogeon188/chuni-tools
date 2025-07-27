@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { m } from '$lib/paraglide/messages.js'
 	import { theme } from '$lib/preference'
-	import LanguageSelect from './LanguageSelect.svelte'
-	import Markdown from './Markdown.svelte'
+	import LanguageSelect from '../lib/components/LanguageSelect.svelte'
+	import Markdown from '../lib/components/Markdown.svelte'
 </script>
 
 <footer class="mt-auto border-t border-borderc-normal text-textc-dim">
