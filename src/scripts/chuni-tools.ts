@@ -7,8 +7,7 @@ import { chuniNet, chuniNetBase, getScriptBaseUrl } from '$lib/web';
 window.onerror = () => {
 	alert(m['chuni_tools.already_run']())
 }
-
-(function (d: Document, w: Window & { chuniTools: boolean }) {
+;(function (d: Document, w: Window & { chuniTools: boolean }) {
 	// just in case the above method fails
 	if (w.chuniTools) {
 		alert(m['chuni_tools.already_run']())
@@ -16,18 +15,26 @@ window.onerror = () => {
 	}
 	w.chuniTools = true
 
+	// Check if the script is running on the correct domain
 	if (w.location.hostname !== chuniNetBase) {
-		alert(m['chuni_tools.wrong_place']({chuniNetUrl: chuniNet}))
+		alert(m['chuni_tools.wrong_place']({ chuniNetUrl: chuniNet }))
 		w.location.href = chuniNet
 		return
 	}
 
+	// Add a stylesheet for the bookmarklet
+	const s = d.createElement('link')
+	s.rel = 'stylesheet'
+	s.href = getScriptBaseUrl() + '/styles/inject.css'
+	d.getElementsByTagName('head')[0].appendChild(s)
+
 	function appendScript(script: string) {
 		const s = d.createElement('script')
 		s.src = `${getScriptBaseUrl()}/scripts/${script}.js`
+		s.type = 'module'
 		d.body.append(s)
 	}
-
+	// Check the current path to determine which script to run
 	const path = d.location.pathname
 	if (path.indexOf('/mobile/home/userOption/updateUserName') != -1) {
 		appendScript('idxmap-generate')

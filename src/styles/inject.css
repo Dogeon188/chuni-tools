@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+
+.chuni-tool-btn {
+    @apply text-white text-2xl font-bold p-6 mx-auto my-8 block w-fit no-underline rounded-lg border-4 text-center cursor-pointer select-none brightness-75 transition-all duration-200;
+    border-color: #567;
+    background-color: #234;
+}
+.chuni-tool-btn:hover {
+    @apply brightness-100 text-white;
+}

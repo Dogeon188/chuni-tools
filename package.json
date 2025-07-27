@@ -6,7 +6,7 @@
 		"dev": "vite dev",
 		"dev:app": "vite dev",
 		"dev:scripts": "vite dev --config vite.scripts.config.ts",
-		"build": "npm run build:app && npm run build:scripts",
+		"build": "bun build:app && bun build:scripts",
 		"build:app": "vite build",
 		"build:scripts": "vite build --config vite.scripts.config.ts",
 		"build:scripts:dev": "ENV=development vite build --config vite.scripts.config.ts",

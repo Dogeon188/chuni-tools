@@ -4,7 +4,7 @@
 	import { m } from '$lib/paraglide/messages.js'
 	import { getScriptBaseUrl } from '$lib/web'
 
-	const bookmarkletScript = `javascript:(function(d,s){s=d.createElement('script');s.src='${getScriptBaseUrl()}/scripts/chuni-tools.js?t='+Math.floor(Date.now()/60000);d.body.append(s);})(document);`
+	const bookmarkletScript = `javascript:(function(d,s){s=d.createElement('script');s.type='module';s.src='${getScriptBaseUrl()}/scripts/chuni-tools.js?t='+Math.floor(Date.now()/60000);d.body.append(s);})(document);`
 </script>
 
 <svelte:head>
