@@ -23,8 +23,8 @@
 		disabled = false,
 		onchange,
 		label,
-		minLabel = 'Min: ',
-		maxLabel = 'Max: ',
+		minLabel = 'Min',
+		maxLabel = 'Max',
 		showValues = true
 	}: Props = $props()
 
@@ -58,6 +58,29 @@
 
 	const formattedMinValue = $derived(formatValue(minValue))
 	const formattedMaxValue = $derived(formatValue(maxValue))
+
+	// Handle manual input changes
+	function handleMinInput(event: Event) {
+		const target = event.target as HTMLInputElement
+		const value = parseFloat(target.value)
+		if (!isNaN(value)) {
+			const clampedValue = Math.max(min, Math.min(value, maxValue))
+			const steppedValue = Math.round(clampedValue / step) * step
+			minValue = steppedValue
+			onchange?.({ min: minValue, max: maxValue })
+		}
+	}
+
+	function handleMaxInput(event: Event) {
+		const target = event.target as HTMLInputElement
+		const value = parseFloat(target.value)
+		if (!isNaN(value)) {
+			const clampedValue = Math.min(max, Math.max(value, minValue))
+			const steppedValue = Math.round(clampedValue / step) * step
+			maxValue = steppedValue
+			onchange?.({ min: minValue, max: maxValue })
+		}
+	}
 
 	function handleMouseDown(event: MouseEvent, type: 'min' | 'max') {
 		if (disabled) return
@@ -147,7 +170,7 @@
 </script>
 
 <div
-    class="my-5 w-full select-none"
+	class="my-5 w-full select-none"
 	class:opacity-60={disabled}
 	class:pointer-events-none={disabled}>
 	<!-- Main label -->
@@ -157,7 +180,7 @@
 		</div>
 	{/if}
 
-	<div class="relative mx-4 my-5 w-[calc(100%-2rem)] h-1.5" bind:this={sliderElement}>
+	<div class="relative mx-4 my-5 h-1.5 w-[calc(100%-2rem)]" bind:this={sliderElement}>
 		<!-- Background track -->
 		<div class="absolute h-full w-full rounded bg-bgc-accent"></div>
 
@@ -168,24 +191,24 @@
 		</div>
 
 		<!-- Min handle -->
-        <button
-            class="group absolute top-1/2 z-10 flex h-5 w-5 -translate-x-4/5 -translate-y-1/2
+		<button
+			class="group absolute top-1/2 z-10 flex h-5 w-5 -translate-x-4/5 -translate-y-1/2
                    cursor-pointer items-center justify-center rounded-l-full border-2
                    border-borderc-form bg-white text-[0px] transition-shadow duration-200
                    hover:shadow-[0_0_0_4px_rgba(59,130,246,0.2)] focus:shadow-[0_0_0_4px_rgba(59,130,246,0.2)] focus:outline-none
                    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-borderc-form disabled:cursor-not-allowed disabled:opacity-60"
-            class:shadow-[0_0_0_6px_rgba(59,130,246,0.3)]={isDraggingMin}
-            class:scale-110={isDraggingMin}
-            style="left: {minPercent}%"
-            {disabled}
-            onmousedown={(e) => handleMouseDown(e, 'min')}
-            onkeydown={(e) => handleKeyDown(e, 'min')}
-            aria-label="Minimum value"
-            aria-valuemin={min}
-            aria-valuemax={max}
-            aria-valuenow={formattedMinValue}
-            role="slider"
-            tabindex="0">
+			class:shadow-[0_0_0_6px_rgba(59,130,246,0.3)]={isDraggingMin}
+			class:scale-110={isDraggingMin}
+			style="left: {minPercent}%"
+			{disabled}
+			onmousedown={(e) => handleMouseDown(e, 'min')}
+			onkeydown={(e) => handleKeyDown(e, 'min')}
+			aria-label="Minimum value"
+			aria-valuemin={min}
+			aria-valuemax={max}
+			aria-valuenow={formattedMinValue}
+			role="slider"
+			tabindex="0">
 			<span
 				class="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded bg-bgc-inverse px-2
 					   py-1 text-xs whitespace-nowrap text-textc-inverse opacity-0 transition-opacity
@@ -230,9 +253,39 @@
 
 	<!-- Value display -->
 	{#if showValues}
-		<div class="mt-2.5 flex justify-between text-sm text-gray-500">
-			<span>{minLabel}{formattedMinValue}</span>
-			<span>{maxLabel}{formattedMaxValue}</span>
+		<div class="mt-2.5 flex items-center justify-between gap-4 text-sm">
+			<div class="flex items-center gap-2">
+				<input
+					id="min-input"
+					type="number"
+					class="w-20 rounded border border-borderc-normal bg-bgc-normal px-2 py-1
+                text-sm text-textc-normal focus:border-borderc-form
+                focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+					value={formattedMinValue}
+					{min}
+					max={formattedMaxValue}
+					{step}
+					{disabled}
+					oninput={handleMinInput}
+					onblur={handleMinInput} />
+				<label for="min-input" class="!mb-0 text-gray-500">{minLabel}</label>
+			</div>
+			<div class="flex items-center gap-2">
+				<label for="max-input" class="!mb-0 text-gray-500">{maxLabel}</label>
+				<input
+					id="max-input"
+					type="number"
+					class="w-20 rounded border border-borderc-normal bg-bgc-normal px-2 py-1
+						   text-sm text-textc-normal focus:border-borderc-form
+						   focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+					value={formattedMaxValue}
+					min={formattedMinValue}
+					{max}
+					{step}
+					{disabled}
+					oninput={handleMaxInput}
+					onblur={handleMaxInput} />
+			</div>
 		</div>
 	{/if}
 </div>
