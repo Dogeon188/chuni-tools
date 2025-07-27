@@ -13,7 +13,7 @@
 			</div>
 
 			<!-- Powered by message -->
-			<Markdown inline className="text-sm" content={m['common.powered_by']()} />
+			<Markdown inline class="text-sm" content={m['common.powered_by']()} />
 		</div>
 	</div>
 </footer>

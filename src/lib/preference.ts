@@ -11,12 +11,5 @@ export const theme = StringStorable.create(
 	['light', 'dark']
 )
 
-theme.subscribe((value) => {
-	if (browser) {
-		document.documentElement.classList.toggle('dark', value === 'dark')
-		document.documentElement.setAttribute('data-theme', value)
-	}
-})
-
 // omitted: handled by paraglide via cookies
 // export const language = createStringPreference('language', ...)

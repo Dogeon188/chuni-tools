@@ -4,10 +4,10 @@
 	import { onMount } from 'svelte'
 
 	let {
-		className: className = '',
+		class: className = '',
 		content,
 		inline = false
-	}: { className?: string; content: string; inline?: boolean } = $props()
+	}: { class?: string; content: string; inline?: boolean } = $props()
 
 	let htmlContent = $state('')
 	let mounted = false
