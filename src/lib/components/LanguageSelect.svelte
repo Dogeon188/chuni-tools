@@ -18,20 +18,14 @@
 	}
 </script>
 
-<div class="language-select flex flex-row items-center gap-3">
-	<label for="language-dropdown" class="text-sm font-medium whitespace-nowrap">
-		{m['common.choose_language']()}
-	</label>
-	<select
-		id="language-dropdown"
-		bind:value={currentLocale}
-		onchange={(e) =>
-			handleLocaleChange((e.target as HTMLSelectElement).value as Locale)}
-		aria-label={m['common.choose_language']()}>
-		{#each languageOptions as option}
-			<option value={option.code} selected={currentLocale === option.code}>
-				{option.name}
-			</option>
-		{/each}
-	</select>
-</div>
+<select
+	id="language-dropdown"
+	bind:value={currentLocale}
+	onchange={(e) => handleLocaleChange((e.target as HTMLSelectElement).value as Locale)}
+	aria-label={m['common.choose_language']()}>
+	{#each languageOptions as option}
+		<option value={option.code} selected={currentLocale === option.code}>
+			{option.name}
+		</option>
+	{/each}
+</select>

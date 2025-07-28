@@ -12,6 +12,7 @@
 		}
 		colorStyles?: Record<string, string>
 		label?: string
+		description?: string
 		disabled?: boolean
 		class?: string
 	}
@@ -21,6 +22,7 @@
 		store,
 		colorStyles = {},
 		label,
+		description,
 		disabled = false,
 		class: className = ''
 	}: Props = $props()
@@ -70,6 +72,9 @@
 			for="multi-select-{componentId}"
 			class="mb-2 block text-sm font-medium text-textc-normal">
 			{label}
+			{#if description}
+				<span class="text-xs text-textc-muted">{description}</span>
+			{/if}
 		</label>
 	{/if}
 
