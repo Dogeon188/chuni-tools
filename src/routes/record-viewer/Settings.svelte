@@ -20,7 +20,7 @@
 		usedConstData
 	} from './preference'
 
-	let isOpen = $state(true)
+	let isOpen = $state(false)
 
 	export function open() {
 		isOpen = true
@@ -44,8 +44,8 @@
 			min={songConstMin}
 			max={songConstMax}
 			step={0.1}
-			minValue={$filterConstMin}
-			maxValue={$filterConstMax} />
+			bind:minValue={$filterConstMin}
+			bind:maxValue={$filterConstMax} />
 
 		<MultiSelectBox
 			class="mb-4"
@@ -89,7 +89,7 @@
 			</select>
 		{/if}
 
-		<div class="label">
+		<div class="label !mb-0">
 			{m['viewer.settings.data.overpower.title']()}
 		</div>
 		<div class="text-xs text-textc-muted mb-2">

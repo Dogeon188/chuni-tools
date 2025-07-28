@@ -13,7 +13,7 @@
 			<div class="language-select flex flex-row items-center gap-3">
 				<label
 					for="language-dropdown"
-					class="text-sm font-medium whitespace-nowrap">
+					class="!mb-0 whitespace-nowrap">
 					{m['common.choose_language']()}
 				</label>
 				<LanguageSelect />

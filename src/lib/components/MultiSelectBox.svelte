@@ -85,7 +85,8 @@
 		<div
 			class="flex items-center justify-between rounded-t-lg border-b border-borderc-normal bg-bgc-dim p-3">
 			<span class="text-sm font-medium text-textc-dim">
-				{choices.filter((choice) => values[choice]).length} / {choices.length}
+				{choices.filter((choice) => values[choice]).length}
+				<span class="text-textc-muted"> / {choices.length}</span>
 			</span>
 			<button
 				type="button"
