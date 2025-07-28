@@ -110,23 +110,23 @@
 			bind:checked={$showPlayCount} />
 
 		{#if $showPlayCount}
-			<div class="label">{m['viewer.settings.data.play_count.fetch.title']()}</div>
+			<div class="label">{m['viewer.settings.data.fetch_play_count.title']()}</div>
 			<div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center">
 				<div class="flex min-w-0 flex-1 items-center gap-2">
 					<input
 						type="number"
 						min="1"
 						class="input input-bordered min-w-[80px] flex-1"
-						placeholder={m['viewer.settings.data.play_count.fetch.from']()} />
+						placeholder={m['viewer.settings.data.fetch_play_count.from']()} />
 					<span class="flex-shrink-0 text-textc-dim">~</span>
 					<input
 						type="number"
 						min="1"
 						class="input input-bordered min-w-[80px] flex-1"
-						placeholder={m['viewer.settings.data.play_count.fetch.to']()} />
+						placeholder={m['viewer.settings.data.fetch_play_count.to']()} />
 				</div>
 				<button class="btn btn-primary w-full flex-shrink-0 sm:w-auto">
-					{m['viewer.settings.data.play_count.fetch.button']()}
+					{m['viewer.settings.data.fetch_play_count.button']()}
 				</button>
 				<!-- TODO: Implement batch fetch play count -->
 			</div>
