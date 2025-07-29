@@ -2,7 +2,9 @@ import { browser } from '$app/environment'
 import { parseRecord } from '$lib/chuninet/record'
 import { difficulties, Difficulty } from '$lib/chuninet/song'
 import { requestFor } from '$lib/cwr'
-import { DerivedStream, Stream } from '$lib/stream'
+import logger from '$lib/logger'
+import { m } from '$lib/paraglide/messages'
+import { DerivedStream, noUpdate, Stream } from '$lib/stream'
 import { getScriptBaseUrl } from '$lib/web'
 import { derived, get, writable } from 'svelte/store'
 import { filterDifficulty, usedConstData } from './preference'
@@ -92,10 +94,12 @@ export const playHistory = DerivedStream(constData, async ($constData) => {
 })
 
 const rawBestRecord: BestRecord[] = []
-const fetchedDifficulties = Object.fromEntries(
-	difficulties.map((d) => [d, undefined])
-) as Record<Difficulty, boolean | undefined>
-
+const fetchedDifficulties = writable(
+	Object.fromEntries(difficulties.map((d) => [d, undefined])) as Record<
+		Difficulty,
+		boolean | undefined
+	>
+)
 export const bestRecord = DerivedStream([constData, filterDifficulty], async (values) => {
 	const [$constData, $filterDifficulty] = values as [
 		Record<string, SongConstData>,
@@ -108,22 +112,62 @@ export const bestRecord = DerivedStream([constData, filterDifficulty], async (va
 		return []
 	}
 
-	for (const diff of difficulties) {
-		if ($filterDifficulty[diff] && !fetchedDifficulties[diff]) {
-			try {
-				fetchedDifficulties[diff] = true // set flag first to prevent race conditions
-				rawBestRecord.push(...(await requestFor('bestRecord', diff)))
-			} catch (error) {
-				console.error('Error fetching bestRecord:', error)
-				fetchedDifficulties[diff] = false // reset flag on error
-			}
+	const updatingDifficulties = Object.entries($filterDifficulty)
+		.filter(
+			([key, value]) =>
+				value && get(fetchedDifficulties)[key as Difficulty] === undefined
+		)
+		.map(([key]) => key as Difficulty)
+	if (updatingDifficulties.length === 0) {
+		return noUpdate
+	}
+
+	const logHandle = logger.log('')
+
+	for (const diff of updatingDifficulties) {
+		try {
+			fetchedDifficulties.update((prev) => ({ ...prev, [diff]: false }))
+			logHandle.updateContent(
+				m['viewer.fetch.record.progress']({
+					diff: `<span class="font-bold" style="color:var(--color-diff-${diff.toLowerCase()});">${diff}</span>`
+				})
+			)
+			logHandle.refreshCountdown(5000)
+			rawBestRecord.push(...(await requestFor('bestRecord', diff)))
+			fetchedDifficulties.update((prev) => ({ ...prev, [diff]: true }))
+		} catch (error) {
+			console.error('Error fetching bestRecord:', error)
+			fetchedDifficulties.update((prev) => ({ ...prev, [diff]: false }))
 		}
 	}
+
+	logHandle.remove()
+
 	return parseRecord(rawBestRecord, $constData, true)
 })
 
-// not considering bestRecord since difficulty filter can be all false
+// Make sure loading screen won't show for post-init requests
+const filterDifficultySnapshot = get(filterDifficulty)
 export const allFetched = derived(
-	[playerStatsInitialized, rawRecentRecordInitialized, rawPlayHistoryInitialized],
-	(values) => values.every(Boolean)
+	[
+		playerStatsInitialized,
+		rawRecentRecordInitialized,
+		rawPlayHistoryInitialized,
+		fetchedDifficulties
+	],
+	([
+		$playerStatsInitialized,
+		$rawRecentRecordInitialized,
+		$rawPlayHistoryInitialized,
+		$fetchedDifficulties,
+	]) => {
+		return (
+			$playerStatsInitialized &&
+			$rawRecentRecordInitialized &&
+			$rawPlayHistoryInitialized &&
+			Object.entries($fetchedDifficulties).every(
+				([key, value]) => !filterDifficultySnapshot[key] || value
+			)
+		)
+	}
 )

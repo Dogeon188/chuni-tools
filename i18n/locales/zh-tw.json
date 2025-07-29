@@ -44,6 +44,7 @@
 		"downloading": "正在下載 {diff} 資料..."
 	},
 	"viewer": {
+		"title": "CHUNI TOOLS 查分器",
 		"press_to_start": "分析遊戲成績",
 		"settings": {
 			"title": "設定",
@@ -83,6 +84,8 @@
 		},
 		"fetch": {
 			"record": {
+				"using_const": "使用的譜面定數資料：{name}",
+				"progress": "正在獲取 {diff} 難度的遊玩記錄...",
 				"unknown_song": "以下歌曲缺少定數資料：\n\n{songs}\n\n若要報告此問題，請通過X（前Twitter）或Discord聯繫作者。"
 			}
 		}

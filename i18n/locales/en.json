@@ -52,6 +52,7 @@
 		"downloading": "Downloading {diff} data..."
 	},
 	"viewer": {
+		"title": "CHUNI TOOLS Score Viewer",
         "press_to_start": "Analyze Rating",
 		"settings": {
 			"title": "Settings",
@@ -95,6 +96,8 @@
 		},
 		"fetch": {
 			"record": {
+				"using_const": "Used song constant data: {name}",
+				"progress": "Fetching record for {diff} difficulty...",
 				"unknown_song": "Found unknown song(s):\n\n{songs}\n\nPlease contact the author via X (formerly Twitter) or Discord to report this issue."
 			}
 		}

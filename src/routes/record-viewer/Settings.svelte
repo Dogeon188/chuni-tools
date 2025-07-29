@@ -54,11 +54,11 @@
 			choices={['BAS', 'ADV', 'EXP', 'MAS', 'ULT']}
 			store={filterDifficulty}
 			colorStyles={{
-				BAS: 'color: #22c55e;',
-				ADV: 'color: #f97316;',
-				EXP: 'color: #ef4444;',
-				MAS: 'color: #8b5cf6;',
-				ULT: 'color: #38bdf8;'
+				BAS: 'color: var(--color-diff-bas)',
+				ADV: 'color: var(--color-diff-adv)',
+				EXP: 'color: var(--color-diff-exp)',
+				MAS: 'color: var(--color-diff-mas)',
+				ULT: 'color: var(--color-diff-ult)',
 			}} />
 
 		<MultiSelectBox

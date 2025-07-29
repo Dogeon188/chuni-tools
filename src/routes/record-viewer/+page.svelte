@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { bestRecord, playerStats, playHistory, recentRecord } from './fetched'
+	import NotificationPopup from '$lib/components/NotificationPopup.svelte'
+	import { logger } from '$lib/logger'
+	import {
+		allFetched,
+		bestRecord,
+		playerStats,
+		playHistory,
+		recentRecord
+	} from './fetched'
+	import Loading from './Loading.svelte'
 	import Settings from './Settings.svelte'
 
 	let settingsRef = $state<Settings>()
@@ -26,7 +35,18 @@
 	})
 </script>
 
+{#if $allFetched}
+	<NotificationPopup position="top-right" maxVisible={5} showProgress={false} />
+{/if}
+
 <Settings bind:this={settingsRef} />
+
+<Loading />
+
+<div class="content">
+	<h1>Record Viewer</h1>
+	<!-- Display player stats, recent record, play history, and best record here -->
+</div>
 
 <h2>Record Viewer</h2>
 <p>Welcome to the record viewer! This tool helps you analyze your game records.</p>

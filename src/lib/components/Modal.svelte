@@ -5,6 +5,7 @@
 		isOpen?: boolean
 		closeOnEscape?: boolean
 		closeOnBackdrop?: boolean
+		showCloseButton?: boolean
 		onclose?: () => void
 		onopen?: () => void
 		children?: import('svelte').Snippet
@@ -14,6 +15,7 @@
 		isOpen = $bindable(false),
 		closeOnEscape = true,
 		closeOnBackdrop = true,
+		showCloseButton = true,
 		onclose,
 		onopen,
 		children
@@ -91,7 +93,7 @@
 				document.body.style.overflow = ''
 			}
 		}
-		
+
 		// Cleanup function - runs when effect is destroyed
 		return () => {
 			if (typeof document !== 'undefined') {
@@ -122,23 +124,25 @@
 			role="region"
 			aria-label="Modal content">
 			<!-- Close button -->
-			<button
-				class="absolute top-4 right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-accent/50 text-textc-muted transition-all duration-200 hover:scale-110 hover:bg-bgc-accent/70 hover:text-textc-dim focus:ring-2 focus:ring-borderc-form focus:ring-offset-2 focus:outline-none"
-				onclick={close}
-				aria-label="Close modal"
-				type="button">
-				<svg
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round">
-					<path d="M18 6L6 18M6 6l12 12" />
-				</svg>
-			</button>
+			{#if showCloseButton}
+				<button
+					class="absolute top-4 right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-accent/50 text-textc-muted transition-all duration-200 hover:scale-110 hover:bg-bgc-accent/70 hover:text-textc-dim focus:ring-2 focus:ring-borderc-form focus:ring-offset-2 focus:outline-none"
+					onclick={close}
+					aria-label="Close modal"
+					type="button">
+					<svg
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round">
+						<path d="M18 6L6 18M6 6l12 12" />
+					</svg>
+				</button>
+			{/if}
 
 			<!-- Scrollable content area -->
 			<div

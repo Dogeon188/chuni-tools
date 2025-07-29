@@ -3,7 +3,7 @@
 	"common": {
 		"locale_name": "日本語",
 		"choose_language": "言語を選択",
-		"powered_by": "ソースコードとこのページは [GitHub](https://github.com/Dogeon188/chuni-tools) でホストされています",
+		"powered_by": "ソースコード及びにこのページは [GitHub](https://github.com/Dogeon188/chuni-tools) でホストされています",
 		"ui": {
 			"multi_select": { "deselect_all": "すべて選択解除", "select_all": "全選択" }
 		}
@@ -17,8 +17,8 @@
 		"usage": {
 			"title": "CHUNITHM Toolsでできること",
 			"viewer": {
-				"title": "スコアビューア",
-				"description": "スコアビューア機能です。この機能を使用するには、CHUNITHM-NETの[ホームページ](https://chunithm-net-eng.com/mobile/home/)でCHUNITHM Toolsを実行する必要があります。\n\nハイスコアレコード、最近のプレイレコードなどを検索できます。楽曲定数データを使用することで、**レーティングとOVER POWER**のデータも取得できます。スコアビューアの使用方法の詳細については、[このページ（作成中）](https://dogeon188.github.io/chuni-tools/record-viewer/manual)を参照してください。"
+				"title": "レコードビューア",
+				"description": "レコードビューア機能です。この機能を使用するには、CHUNITHM-NETの[ホームページ](https://chunithm-net-eng.com/mobile/home/)でCHUNITHM Toolsを実行する必要があります。\n\nハイスコアレコード、最近のプレイレコードなどを検索できます。楽曲定数データを使用することで、**レーティングとOVER POWER**のデータも取得できます。レコードビューアの使用方法の詳細については、[このページ（作成中）](https://dogeon188.github.io/chuni-tools/record-viewer/manual)を参照してください。"
 			},
 			"export_csv": {
 				"title": "データをCSVでエクスポート",
@@ -43,7 +43,8 @@
 		"downloading": "{diff}のデータをダウンロード中..."
 	},
 	"viewer": {
-        "press_to_start": "レーティングを分析",
+		"title": "CHUNI TOOLS レコードビューア",
+        "press_to_start": "レコードビューアへ",
 		"settings": {
 			"title": "設定",
 			"filters": {
@@ -86,6 +87,8 @@
 		},
 		"fetch": {
 			"record": {
+				"using_const": "使っている楽曲定数データ: {name}",
+				"progress": "{diff} のレコードを取得中...",
 				"unknown_song": "これらの楽曲は定数データが欠けています：\n\n{songs}\n\nこの問題を報告するには、X（旧Twitter）またはDiscordを通じて作者に連絡してください。"
 			}
 		}

@@ -4,6 +4,7 @@ declare global {
 	let __ENV__: 'development' | 'production'
 	let __INTL_VERSION__: string
 	let __JP_VERSION__: string
+	let __APP_VERSION__: string
 
 	type CWRPayload<PayloadType> = {
 		target?: string
