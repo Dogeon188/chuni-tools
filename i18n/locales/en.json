@@ -107,6 +107,19 @@
 				"noopener": "Wrong place here!\n\nTo use the record viewer, please properly open [CHUNITHM-NET](https://chunithm-net-eng.com/mobile/) and run the bookmarklet. Also, make sure you **left-clicked the button**, instead of opening a new tab via mid-click, etc.\n\nIf you've accidentally closed the original CHUNITHM-NET page, please close this page first and try again.",
 				"unknown": "An unknown error occured.\n\nPlease **screenshot or copy the error message** to the author, and hopefully he will figure it out."
 			}
+		},
+		"table": {
+			"play_order": "Played #",
+			"order": "#",
+			"title": "Title",
+			"const": "Const",
+			"overpower": "OP",
+			"overpower_percent": "OP%",
+			"rank": "Rank",
+			"score": "Score",
+			"rating": "Rating",
+			"clear": "AJ",
+			"play_count": "Plays"
 		}
 	}
 }

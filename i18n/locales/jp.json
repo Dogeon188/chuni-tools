@@ -98,6 +98,19 @@
 				"noopener": "場所が間違っています！\n\nレコードビューアを使用するには、[CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)を正しく開いてブックマークレットを実行してください。また、**ボタンを左クリック**したことを確認してください。中クリックなどで新しいタブを開かないでください。\n\n元のCHUNITHM-NETページを誤って閉じた場合は、このページを閉じてから再試行してください。",
 				"unknown": "未知のエラーが発生しました。\n\n**エラーのスクリーンショットまたはメッセージを**作者に送信してください。"
 			}
+		},
+		"table": {
+			"play_order": "プレイ順",
+			"order": "#",
+			"title": "タイトル",
+			"const": "定数",
+			"overpower": "OP",
+			"overpower_percent": "OP%",
+			"rank": "ランク",
+			"score": "スコア",
+			"rating": "レーティング",
+			"clear": "AJ",
+			"play_count": "プレイ回数"
 		}
 	}
 }

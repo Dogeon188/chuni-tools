@@ -25,7 +25,7 @@ export const recordSorts: Record<string, (a: ParsedRecord, b: ParsedRecord) => n
 		const clears = ['', 'FC', 'AJ']
 		return clears.indexOf(b.clear) - clears.indexOf(a.clear)
 	},
-	playcount: (a, b) => {
+	playCount: (a, b) => {
 		if (a.playCount == undefined) return 100
 		if (b.playCount == undefined) return -100
 		if (a.playCount == b.playCount) return a.order - b.order

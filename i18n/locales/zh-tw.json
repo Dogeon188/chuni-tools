@@ -95,6 +95,19 @@
 				"noopener": "哎呀！你走錯地方了！\n\n要使用查分器，請確保是從[CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)執行書籤小工具，並且一定要**左鍵點擊按鈕**，而不是透過中鍵點擊等方式開啟新分頁。\n\n如果您不小心關閉了原本的CHUNITHM-NET分頁，請先關閉此分頁再試一次。",
 				"unknown": "發生了未知錯誤。\n\n請**截圖或複製錯誤訊息**給作者，希望他能解決這個問題。"
 			}
+		},
+		"table": {
+			"play_order": "遊玩時間",
+			"order": "#",
+			"title": "曲名",
+			"const": "定數",
+			"overpower": "OP",
+			"overpower_percent": "OP%",
+			"rank": "等級",
+			"score": "分數",
+			"rating": "評分",
+			"clear": "AJ",
+			"play_count": "遊玩次數"
 		}
 	}
 }

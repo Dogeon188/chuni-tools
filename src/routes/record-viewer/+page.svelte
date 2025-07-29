@@ -1,5 +1,6 @@
 <script lang="ts">
 	import NotificationPopup from '$lib/components/NotificationPopup.svelte'
+	import type { EventHandler } from 'svelte/elements'
 	import { _page } from './+page'
 	import {
 		allFetched,
@@ -10,13 +11,13 @@
 	} from './fetched'
 	import Loading from './Loading.svelte'
 	import PlayerStats from './PlayerStats.svelte'
+	import RecordTable from './RecordTable.svelte'
 	import Settings from './Settings.svelte'
 
 	let settingsRef = $state<Settings>()
 
-	function routeChange() {
-		// Reset the settings when the route changes
-		$_page = (window.location.hash.slice(1) as typeof $_page) || 'best'
+	const routeChange: EventHandler<HashChangeEvent, Window> = (event) => {
+		$_page = (new URL(event.newURL).hash.slice(1) as typeof $_page) || 'best'
 	}
 
 	// Subscribe to the stores to ensure they are loaded
@@ -24,6 +25,10 @@
 	recentRecord.subscribe(() => {})
 	playHistory.subscribe(() => {})
 	bestRecord.subscribe(() => {})
+
+	const shownRecords = $derived(
+		$_page === 'best' ? bestRecord : $_page === 'recent' ? recentRecord : playHistory
+	)
 </script>
 
 <svelte:window on:hashchange={routeChange} />
@@ -73,9 +78,11 @@
 </header>
 
 <main>
-	<!-- Player Stats -->
 	<PlayerStats />
-	<!-- Display player stats, recent record, play history, and best record here -->
-</main>
 
-<button class="btn btn-primary" onclick={() => settingsRef!.open()}>Open Settings</button>
+	<button class="btn btn-primary" onclick={() => settingsRef!.open()}>
+		Open Settings
+	</button>
+
+	<RecordTable records={$shownRecords} />
+</main>

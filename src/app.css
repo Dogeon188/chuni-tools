@@ -4,11 +4,11 @@
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
 @theme {
-	--color-diff-bas: var(--color-green-600);
-	--color-diff-adv: var(--color-orange-600);
-	--color-diff-exp: var(--color-red-600);
-	--color-diff-mas: var(--color-purple-600);
-	--color-diff-ult: var(--color-cyan-600);
+	--color-diff-bas: var(--color-green-500);
+	--color-diff-adv: var(--color-orange-500);
+	--color-diff-exp: var(--color-red-500);
+	--color-diff-mas: var(--color-purple-500);
+	--color-diff-ult: var(--color-cyan-500);
 
 	--color-honor-normal: var(--color-gray-400);
     --color-honor-bronze: var(--color-amber-400);

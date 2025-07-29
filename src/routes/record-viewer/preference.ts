@@ -56,7 +56,7 @@ export const filterVersion = FlagStorable.create(
 export const showOverPower = StringStorable.create('showOverPower', 'hide', [
 	'hide',
 	'value',
-	'percentage'
+	'percent'
 ] as const)
 
 export const showPlayCount = BooleanStorable.create('showPlaycount', false)
