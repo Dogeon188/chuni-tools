@@ -1,9 +1,9 @@
 import {
-	fetchBestRecord,
-	fetchPlayerStats,
-	fetchPlayHistory,
-	fetchRecentRecord,
-	fetchSongPlayCount
+    fetchBestRecord,
+    fetchPlayerStats,
+    fetchPlayHistory,
+    fetchRecentRecord,
+    fetchSongPlayCount
 } from '$lib/chuninet/api';
 import type { Difficulty } from '$lib/chuninet/song';
 import { chuniNet } from '$lib/chuninet/website';
@@ -28,7 +28,7 @@ import { getCookie, getPostMessageFunction, getScriptBaseUrl } from '$lib/web';
 	}
 
 	function handleMessageRequest(
-		event: CrossPageRequestMessageEvent<{
+		event: CWRMessageEvent<{
 			idx?: string
 			difficulty?: Difficulty
 		}>
@@ -102,7 +102,7 @@ import { getCookie, getPostMessageFunction, getScriptBaseUrl } from '$lib/web';
 		})
 	}
 
-	function messageHandler(e: CrossPageRequestMessageEvent<{
+	function messageHandler(e: CWRMessageEvent<{
         action: 'request',
         idx?: string,
         difficulty?: Difficulty

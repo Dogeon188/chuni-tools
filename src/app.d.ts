@@ -5,7 +5,7 @@ declare global {
 	let __INTL_VERSION__: string
 	let __JP_VERSION__: string
 
-	type CrossPageRequestMessagePayload<PayloadType> = {
+	type CWRPayload<PayloadType> = {
 		target?: string
 		error?: Error
 		data?: PayloadType
@@ -13,14 +13,14 @@ declare global {
 
 	type PostMessageFunc = (
 		action: string,
-		payload: CrossPageRequestMessagePayload,
+		payload: CWRPayload,
 		uuid?: string
 	) => void
 
-	type CrossPageRequestMessageEvent<PayloadType> = MessageEvent<{
+	type CWRMessageEvent<PayloadType> = MessageEvent<{
 		uuid: string
 		action: string
-		payload: CrossPageRequestMessagePayload<PayloadType>
+		payload: CWRPayload<PayloadType>
 	}>
 
 	type PlayRecord = {
@@ -52,7 +52,7 @@ declare global {
 
 	type PlayerStats = {
 		name: string
-		honor: { text: string; color: string }
+		honors: ({ text: string; color: string } | null)[]
 		rating: string
 		playCount: string
 		lastPlayed: number
