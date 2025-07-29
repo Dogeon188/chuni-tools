@@ -83,6 +83,11 @@
 					"description": "※「OVER POWERを示す」を選択すると、未プレイの楽曲も表示されます。<br/>※未解放の楽曲がある場合、総OVER POWERは公式のものと異なる可能性があります。"
 				}
 			}
+		},
+		"fetch": {
+			"record": {
+				"unknown_song": "これらの楽曲は定数データが欠けています：\n\n{songs}\n\nこの問題を報告するには、X（旧Twitter）またはDiscordを通じて作者に連絡してください。"
+			}
 		}
 	}
 }

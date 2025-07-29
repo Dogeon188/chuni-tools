@@ -104,8 +104,22 @@ export async function fetchRecentRecord(): Promise<PlayRecord[]> {
 export async function fetchPlayerStats(): Promise<PlayerStats> {
 	const dom = await fetchChuniPage('/mobile/home/playerData')
 
-	const honorBg = <HTMLDivElement>dom.querySelector('.player_honor_short')
-	const honorColor = /honor_bg_.*(?=\.png)/.exec(honorBg.style.backgroundImage)
+	const honorDivs = <NodeListOf<HTMLDivElement>>(
+		dom.querySelectorAll('.player_honor_short')
+	)
+	const honors = Array.from(honorDivs).map((h) => {
+		try {
+			return {
+				text: h.querySelector('.player_honor_text_view span')!.innerHTML,
+				color: /honor_bg_.*(?=\.png)/
+					.exec(h.style.backgroundImage || '')![0]
+					.slice(9)
+			}
+		} catch {
+			return null
+		}
+	})
+
 	const rating = (<Array<HTMLImageElement>>(
 		Array.from(dom.querySelectorAll('.player_rating_num_block img'))
 	))
@@ -118,10 +132,7 @@ export async function fetchPlayerStats(): Promise<PlayerStats> {
 
 	return {
 		name: dom.querySelector('.player_name_in')!.innerHTML,
-		honor: {
-			text: dom.querySelector('.player_honor_text_view span')!.innerHTML,
-			color: honorColor ? honorColor[0].slice(9) : 'normal'
-		},
+		honors,
 		rating,
 		playCount: dom.querySelector('.user_data_play_count .user_data_text')!.innerHTML,
 		lastPlayed: Date.parse(dom.querySelector('.player_lastplaydate_text')!.innerHTML)

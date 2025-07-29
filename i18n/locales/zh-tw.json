@@ -80,6 +80,11 @@
 				},
 				"title": "遊玩資料"
 			}
+		},
+		"fetch": {
+			"record": {
+				"unknown_song": "以下歌曲缺少定數資料：\n\n{songs}\n\n若要報告此問題，請通過X（前Twitter）或Discord聯繫作者。"
+			}
 		}
 	}
 }

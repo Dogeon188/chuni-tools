@@ -1,3 +1,4 @@
+import { m } from '$lib/paraglide/messages'
 import { calcOp, calcOpMax, calcRank, calcRawRating } from './rating'
 import { difficulties, Difficulty, genreId2Name } from './song'
 
@@ -44,16 +45,16 @@ function unescapeHtmlString(str: string) {
 export function parseRecord(
 	playRecord: PlayRecord[],
 	constData: Record<string, SongConstData>,
-	alertMessage?: string
-) {
+	alertUnknownSongs = false
+): ParsedRecord[] {
 	const recordList = playRecord as ParsedRecord[]
-	const musicData = constData
 	const cannotFetch = [] as ParsedRecord[]
+
 	recordList.map((r) => {
-		if (musicData[r.title] === undefined) {
+		if (constData[r.title] === undefined) {
 			r.title = unescapeHtmlString(r.title)
 		}
-		const songInfo = musicData[r.title]
+		const songInfo = constData[r.title]
 		if (songInfo === undefined) {
 			cannotFetch.push(r)
 			r.const = -1
@@ -83,21 +84,20 @@ export function parseRecord(
 		r.rank = calcRank(r.score)
 	})
 
-	if (alertMessage && cannotFetch.length) {
+	if (alertUnknownSongs && cannotFetch.length) {
 		const merged = {} as { [song: string]: Difficulty[] }
 		cannotFetch.forEach((r) => {
 			merged[r.title] ??= []
 			merged[r.title].push(r.difficulty)
 		})
 
-		console.log(merged)
+		console.log('Song constant data not found:', merged)
 		alert(
-			alertMessage.replace(
-				'{{songs}}',
-				Object.entries(merged)
-					.map(([title, diffs]) => `    ${title} ${diffs.join(',')}`)
+			m['viewer.fetch.record.unknown_song']({
+				songs: Object.entries(merged)
+					.map(([title, diffs]) => `${title} ${diffs.join(',')}`)
 					.join('\n')
-			)
+			})
 		)
 	}
 

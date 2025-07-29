@@ -35,7 +35,7 @@ export const filterDifficulty = FlagStorable.create(
 		ADV: true,
 		EXP: true,
 		MAS: true,
-		ULT: false
+		ULT: true
 	}
 )
 

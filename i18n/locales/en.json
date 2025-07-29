@@ -92,6 +92,11 @@
 				"const": "Chart Constant Data to Use"
 			},
 			"reset": "Reset All Preferences"
+		},
+		"fetch": {
+			"record": {
+				"unknown_song": "Found unknown song(s):\n\n{songs}\n\nPlease contact the author via X (formerly Twitter) or Discord to report this issue."
+			}
 		}
 	}
 }
