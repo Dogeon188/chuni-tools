@@ -36,21 +36,33 @@
 <Loading />
 
 <header class="flex gap-4 p-4">
-	<a href="#best" class="!no-underline !decoration-none" style="text-decoration: none;">
+	<a
+		id="best"
+		href="#best"
+		class="!decoration-none !no-underline"
+		style="text-decoration: none;">
 		<h4
 			class:!text-textc-normal={$_page === 'best'}
 			class:!text-textc-dim={$_page !== 'best'}>
 			BEST
 		</h4>
 	</a>
-	<a href="#recent" class="!no-underline !decoration-none" style="text-decoration: none;">
+	<a
+		id="recent"
+		href="#recent"
+		class="!decoration-none !no-underline"
+		style="text-decoration: none;">
 		<h4
 			class:!text-textc-normal={$_page === 'recent'}
 			class:!text-textc-dim={$_page !== 'recent'}>
 			CURRENT
 		</h4>
 	</a>
-	<a href="#history" class="!no-underline !decoration-none" style="text-decoration: none;">
+	<a
+		id="history"
+		href="#history"
+		class="!decoration-none !no-underline"
+		style="text-decoration: none;">
 		<h4
 			class:!text-textc-normal={$_page === 'history'}
 			class:!text-textc-dim={$_page !== 'history'}>

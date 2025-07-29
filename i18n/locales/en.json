@@ -96,9 +96,16 @@
 		},
 		"fetch": {
 			"record": {
-				"using_const": "Used song constant data: {name}",
+				"using_const": "Used song constant version: {name}",
 				"progress": "Fetching record for {diff} difficulty...",
 				"unknown_song": "Found unknown song(s):\n\n{songs}\n\nPlease contact the author via X (formerly Twitter) or Discord to report this issue."
+			},
+			"error": {
+				"service_down": "CHUNITHM-NET service is under maintenance.\n\nPlease check the available time on the website and come back later.",
+				"rejected": "...but CHUNITHM-NET refuses to!\n\nIt's probably because you opened it somewhere else. **Reload the page**, **re-login to [CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)** or **re-run the bookmarklet** might help.",
+				"timeout": "We've lost connection with Houston.\n\nYou probably have accidentally navigated your CHUNITHM-NET tab to somewhere else. Please **re-open [CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)** and **run the bookmarklet again**.",
+				"noopener": "Wrong place here!\n\nTo use the record viewer, please properly open [CHUNITHM-NET](https://chunithm-net-eng.com/mobile/) and run the bookmarklet. Also, make sure you **left-clicked the button**, instead of opening a new tab via mid-click, etc.\n\nIf you've accidentally closed the original CHUNITHM-NET page, please close this page first and try again.",
+				"unknown": "An unknown error occured.\n\nPlease **screenshot or copy the error message** to the author, and hopefully he will figure it out."
 			}
 		}
 	}

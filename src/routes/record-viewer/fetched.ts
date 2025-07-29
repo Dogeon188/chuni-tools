@@ -28,6 +28,8 @@ export const constData = DerivedStream(
 	undefined
 )
 
+export const fetchError = writable<Error | null>(null)
+
 const playerStatsInitialized = writable<boolean>(undefined)
 
 export const playerStats = Stream<PlayerStats>(async () => {
@@ -39,6 +41,7 @@ export const playerStats = Stream<PlayerStats>(async () => {
 	} catch (error) {
 		console.error('Error fetching playerStats:', error)
 		playerStatsInitialized.set(false)
+		fetchError.set(error as Error)
 		return { name: '', honors: [], rating: '', playCount: '', lastPlayed: 0 }
 	}
 })
@@ -46,52 +49,60 @@ export const playerStats = Stream<PlayerStats>(async () => {
 let rawRecentRecord: PlayRecord[] = []
 const rawRecentRecordInitialized = writable<boolean>(undefined)
 
-export const recentRecord = DerivedStream(constData, async ($constData) => {
-	// If constData is not available yet
-	if (!$constData || Object.keys($constData).length === 0) {
-		// can just fail quietly, happens only when constData is not loaded yet
-		return []
-	}
-
-	if (get(rawRecentRecordInitialized) === undefined) {
-		try {
-			rawRecentRecordInitialized.set(false)
-			rawRecentRecord = await requestFor('recentRecord')
-			rawRecentRecordInitialized.set(true)
-		} catch (error) {
-			console.error('Error fetching recentRecord:', error)
-			rawRecentRecord = []
-			rawRecentRecordInitialized.set(false)
+export const recentRecord = DerivedStream(
+	constData,
+	async ($constData) => {
+		// If constData is not available yet
+		if (!$constData || Object.keys($constData).length === 0) {
+			// can just fail quietly, happens only when constData is not loaded yet
+			return noUpdate
 		}
-	}
-	return parseRecord(rawRecentRecord, $constData)
-}, [])
+
+		if (get(rawRecentRecordInitialized) === undefined) {
+			try {
+				rawRecentRecordInitialized.set(false)
+				rawRecentRecord = await requestFor('recentRecord')
+				rawRecentRecordInitialized.set(true)
+			} catch (error) {
+				console.error('Error fetching recentRecord:', error)
+				rawRecentRecordInitialized.set(false)
+				fetchError.set(error as Error)
+				return noUpdate
+			}
+		}
+		return parseRecord(rawRecentRecord, $constData)
+	},
+	[]
+)
 
 let rawPlayHistory: PlayRecord[] = []
 const rawPlayHistoryInitialized = writable<boolean>(undefined)
 
-export const playHistory = DerivedStream(constData, async ($constData) => {
-	// If constData is not available yet
-	if (!$constData || Object.keys($constData).length === 0) {
-		// can just fail quietly, happens only when constData is not loaded yet
-		return []
-	}
-
-	console.log('Fetching playHistory:', $constData)
-
-	if (get(rawPlayHistoryInitialized) === undefined) {
-		try {
-			rawPlayHistoryInitialized.set(false)
-			rawPlayHistory = await requestFor('playHistory')
-			rawPlayHistoryInitialized.set(true)
-		} catch (error) {
-			console.error('Error fetching playHistory:', error)
-			rawPlayHistory = []
-			rawPlayHistoryInitialized.set(false)
+export const playHistory = DerivedStream(
+	constData,
+	async ($constData) => {
+		// If constData is not available yet
+		if (!$constData || Object.keys($constData).length === 0) {
+			// can just fail quietly, happens only when constData is not loaded yet
+			return noUpdate
 		}
-	}
-	return parseRecord(rawPlayHistory, $constData)
-}, [])
+
+		if (get(rawPlayHistoryInitialized) === undefined) {
+			try {
+				rawPlayHistoryInitialized.set(false)
+				rawPlayHistory = await requestFor('playHistory')
+				rawPlayHistoryInitialized.set(true)
+			} catch (error) {
+				console.error('Error fetching playHistory:', error)
+				rawPlayHistoryInitialized.set(false)
+				fetchError.set(error as Error)
+				return noUpdate
+			}
+		}
+		return parseRecord(rawPlayHistory, $constData)
+	},
+	[]
+)
 
 const rawBestRecord: BestRecord[] = []
 const fetchedDifficulties = writable(
@@ -100,51 +111,58 @@ const fetchedDifficulties = writable(
 		boolean | undefined
 	>
 )
-export const bestRecord = DerivedStream([constData, filterDifficulty], async (values) => {
-	const [$constData, $filterDifficulty] = values as [
-		Record<string, SongConstData>,
-		Record<Difficulty, boolean>
-	]
+export const bestRecord = DerivedStream(
+	[constData, filterDifficulty],
+	async (values) => {
+		const [$constData, $filterDifficulty] = values as [
+			Record<string, SongConstData>,
+			Record<Difficulty, boolean>
+		]
 
-	// If constData is not available yet
-	if (!$constData || Object.keys($constData).length === 0) {
-		// can just fail quietly, happens only when constData is not loaded yet
-		return []
-	}
-
-	const updatingDifficulties = Object.entries($filterDifficulty)
-		.filter(
-			([key, value]) =>
-				value && get(fetchedDifficulties)[key as Difficulty] === undefined
-		)
-		.map(([key]) => key as Difficulty)
-	if (updatingDifficulties.length === 0) {
-		return noUpdate
-	}
-
-	const logHandle = logger.log('')
-
-	for (const diff of updatingDifficulties) {
-		try {
-			fetchedDifficulties.update((prev) => ({ ...prev, [diff]: false }))
-			logHandle.updateContent(
-				m['viewer.fetch.record.progress']({
-					diff: `<span class="font-bold" style="color:var(--color-diff-${diff.toLowerCase()});">${diff}</span>`
-				})
-			)
-			logHandle.refreshCountdown(5000)
-			rawBestRecord.push(...(await requestFor('bestRecord', diff)))
-			fetchedDifficulties.update((prev) => ({ ...prev, [diff]: true }))
-		} catch (error) {
-			console.error('Error fetching bestRecord:', error)
-			fetchedDifficulties.update((prev) => ({ ...prev, [diff]: false }))
+		// If constData is not available yet
+		if (!$constData || Object.keys($constData).length === 0) {
+			// can just fail quietly, happens only when constData is not loaded yet
+			return []
 		}
-	}
 
-	logHandle.remove()
+		const updatingDifficulties = Object.entries($filterDifficulty)
+			.filter(
+				([key, value]) =>
+					value && get(fetchedDifficulties)[key as Difficulty] === undefined
+			)
+			.map(([key]) => key as Difficulty)
 
-	return parseRecord(rawBestRecord, $constData, true)
-}, [])
+		if (updatingDifficulties.length === 0) {
+			return noUpdate
+		}
+
+		const logHandle = logger.log('')
+
+		for (const diff of updatingDifficulties) {
+			try {
+				fetchedDifficulties.update((prev) => ({ ...prev, [diff]: false }))
+				logHandle.updateContent(
+					m['viewer.fetch.record.progress']({
+						diff: `<span class="font-bold" style="color:var(--color-diff-${diff.toLowerCase()});">${diff}</span>`
+					})
+				)
+				logHandle.refreshCountdown(5000)
+				rawBestRecord.push(...(await requestFor('bestRecord', diff)))
+				fetchedDifficulties.update((prev) => ({ ...prev, [diff]: true }))
+			} catch (error) {
+				console.error('Error fetching bestRecord:', error)
+				fetchedDifficulties.update((prev) => ({ ...prev, [diff]: false }))
+				fetchError.set(error as Error)
+				return noUpdate
+			}
+		}
+
+		logHandle.remove()
+
+		return parseRecord(rawBestRecord, $constData, true)
+	},
+	[]
+)
 
 // Make sure loading screen won't show for post-init requests
 const filterDifficultySnapshot = get(filterDifficulty)
@@ -159,7 +177,7 @@ export const allFetched = derived(
 		$playerStatsInitialized,
 		$rawRecentRecordInitialized,
 		$rawPlayHistoryInitialized,
-		$fetchedDifficulties,
+		$fetchedDifficulties
 	]) => {
 		return (
 			$playerStatsInitialized &&

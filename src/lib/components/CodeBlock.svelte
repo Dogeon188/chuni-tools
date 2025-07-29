@@ -7,6 +7,7 @@
 		language?: string
 		title?: string
 		showLineNumbers?: boolean
+		showLanguage?: boolean
 		class?: string
 	}
 
@@ -15,6 +16,7 @@
 		language = '',
 		title = '',
 		showLineNumbers = false,
+		showLanguage = false,
 		class: className = ''
 	}: Props = $props()
 
@@ -89,7 +91,7 @@
 			{#if title}
 				<span class="text-sm font-medium text-textc-normal">{title}</span>
 			{/if}
-			{#if language}
+			{#if language && showLanguage}
 				<span
 					class="rounded bg-bgc-accent px-2 py-1 font-mono text-xs text-textc-dim uppercase"
 					>{language}</span>

@@ -84,9 +84,16 @@
 		},
 		"fetch": {
 			"record": {
-				"using_const": "使用的譜面定數資料：{name}",
+				"using_const": "使用的譜面定數版本：{name}",
 				"progress": "正在獲取 {diff} 難度的遊玩記錄...",
 				"unknown_song": "以下歌曲缺少定數資料：\n\n{songs}\n\n若要報告此問題，請通過X（前Twitter）或Discord聯繫作者。"
+			},
+			"error": {
+				"service_down": "CHUNITHM-NET正在維護中。\n\n請查看CHUNITHM-NET的可用時間，稍後再回來。",
+				"rejected": "死亡技能發動！\n\n您可能在其他地方打開了CHUNITHM-NET，請**重新載入此頁面**、**重新登入[CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)**或**重新執行書籤小工具**。",
+				"timeout": "與CHUNITHM-NET失去連線。\n\n您可能不小心將CHUNITHM-NET的分頁跳轉到其他地方了。請**重新打開[CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)**並**再次執行書籤小工具**。",
+				"noopener": "哎呀！你走錯地方了！\n\n要使用查分器，請確保是從[CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)執行書籤小工具，並且一定要**左鍵點擊按鈕**，而不是透過中鍵點擊等方式開啟新分頁。\n\n如果您不小心關閉了原本的CHUNITHM-NET分頁，請先關閉此分頁再試一次。",
+				"unknown": "發生了未知錯誤。\n\n請**截圖或複製錯誤訊息**給作者，希望他能解決這個問題。"
 			}
 		}
 	}

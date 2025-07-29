@@ -16,7 +16,6 @@ export default defineConfig({
 			strategy: ["cookie", "baseLocale"]
 		})
 	],
-
 	server: {
 		cors: {
 			origin: '*',

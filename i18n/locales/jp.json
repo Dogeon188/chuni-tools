@@ -64,7 +64,7 @@
 			},
 			"reset": "すべてをリセット",
 			"data": {
-				"const": "使う定数資料",
+				"const": "使う定数バージョン",
 				"fetch_play_count": {
 					"to": "まで",
 					"from": "から",
@@ -87,9 +87,16 @@
 		},
 		"fetch": {
 			"record": {
-				"using_const": "使っている楽曲定数データ: {name}",
+				"using_const": "使っている譜面定数バージョン: {name}",
 				"progress": "{diff} のレコードを取得中...",
 				"unknown_song": "これらの楽曲は定数データが欠けています：\n\n{songs}\n\nこの問題を報告するには、X（旧Twitter）またはDiscordを通じて作者に連絡してください。"
+			},
+			"error": {
+				"service_down": "CHUNITHM-NETはメンテナンス中です。\n\nCHUNITHM-NETの利用可能時間を確認して、後で戻ってきてください。",
+				"rejected": "だが断る！\n\nおそらく、他の場所でCHUNITHM-NETを開いているためです。**ページをリロード**、**[CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)に再ログイン**、または**ブックマークレットを再実行**してみてください。",
+				"timeout": "接続が失われました。\n\nおそらく、CHUNITHM-NETのタブを他の場所に誤って移動してしまったためです。**[CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)**を再度開き、**ブックマークレットを再実行**してください。",
+				"noopener": "場所が間違っています！\n\nレコードビューアを使用するには、[CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)を正しく開いてブックマークレットを実行してください。また、**ボタンを左クリック**したことを確認してください。中クリックなどで新しいタブを開かないでください。\n\n元のCHUNITHM-NETページを誤って閉じた場合は、このページを閉じてから再試行してください。",
+				"unknown": "未知のエラーが発生しました。\n\n**エラーのスクリーンショットまたはメッセージを**作者に送信してください。"
 			}
 		}
 	}
