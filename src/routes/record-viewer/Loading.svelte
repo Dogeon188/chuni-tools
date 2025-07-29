@@ -9,8 +9,8 @@
 	import { usedConstData } from './preference'
 
 	const constDataMessages = {
-		[__INTL_VERSION__]: (m as any)[`common.version.${__INTL_VERSION__}`],
-		[__JP_VERSION__]: (m as any)[`common.version.${__JP_VERSION__}`]
+		[__INTL_VERSION__]: (m as any)[`common.version.${__INTL_VERSION__}`](),
+		[__JP_VERSION__]: (m as any)[`common.version.${__JP_VERSION__}`]()
 	}
 
 	const lastMessage = logger.lastMessage

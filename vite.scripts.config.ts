@@ -5,14 +5,17 @@ import { defineConfig } from 'vite'
 import { viteDefine } from './vite.common.config.js'
 
 // Get all TypeScript files in src/scripts
-const scriptEntries = glob.sync('src/scripts/**/*.ts').reduce(
-	(entries: Record<string, string>, file: string) => {
-		const name = path.basename(file, '.ts')
-		entries[name] = path.resolve(file)
-		return entries
-	},
-	{} as Record<string, string>
-)
+const scriptEntries = glob
+	.sync('src/scripts/**/*.ts')
+	.filter((file) => process.env.ENV === 'development' || !file.includes('.debug.'))
+	.reduce(
+		(entries: Record<string, string>, file: string) => {
+			const name = path.basename(file, '.ts')
+			entries[name] = path.resolve(file)
+			return entries
+		},
+		{} as Record<string, string>
+	)
 
 const styleEntries = glob.sync('src/styles/**/*.css').reduce(
 	(entries: Record<string, string>, file: string) => {

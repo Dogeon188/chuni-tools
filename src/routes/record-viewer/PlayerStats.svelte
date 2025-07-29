@@ -70,7 +70,7 @@
 				</div>
 			{:else if $_page === 'recent' || $_page === 'history'}
 				<div class="flex flex-row justify-between gap-4">
-					<span class="text-textc-info no-underline">Recent 30</span>
+					<span class="text-textc-info no-underline">History 30</span>
 					<span class="stats-item-content">
 						{floorToFixed(calcBestN(historyRating, 30) / 100, 4)}
 					</span>
@@ -84,10 +84,10 @@
 
 <!-- Dummy elements for SSR to recognize honor color classes -->
 <div class="invisible">
-    <span class="text-honor-normal">Normal</span>
-    <span class="text-honor-bronze">Bronze</span>
-    <span class="text-honor-silver">Silver</span>
-    <span class="text-honor-gold">Gold</span>
-    <span class="text-honor-platina">Platina</span>
-    <span class="text-honor-rainbow">Rainbow</span>
+	<span class="text-honor-normal">Normal</span>
+	<span class="text-honor-bronze">Bronze</span>
+	<span class="text-honor-silver">Silver</span>
+	<span class="text-honor-gold">Gold</span>
+	<span class="text-honor-platina">Platina</span>
+	<span class="text-honor-rainbow">Rainbow</span>
 </div>

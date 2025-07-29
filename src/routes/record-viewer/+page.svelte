@@ -19,6 +19,7 @@
 		$_page = (window.location.hash.slice(1) as typeof $_page) || 'best'
 	}
 
+	// Subscribe to the stores to ensure they are loaded
 	playerStats.subscribe(() => {})
 	recentRecord.subscribe(() => {})
 	playHistory.subscribe(() => {})

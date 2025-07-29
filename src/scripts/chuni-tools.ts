@@ -1,4 +1,4 @@
-import { chuniNet, chuniNetBase } from "$lib/chuninet/website";
+import { chuniNet, chuniNetBase } from '$lib/chuninet/website';
 import { m } from '$lib/paraglide/messages';
 import { getScriptBaseUrl } from '$lib/web';
 
@@ -41,6 +41,8 @@ window.onerror = () => {
 		appendScript('idxmap-generate')
 	} else if (path.indexOf('/mobile/record/musicGenre') != -1) {
 		appendScript('export-csv')
+	} else if (__ENV__ === 'development' && path.indexOf('/debug') != -1) {
+		appendScript('score-viewer.debug')
 	} else {
 		// usually `/mobile/home`
 		appendScript('score-viewer')
