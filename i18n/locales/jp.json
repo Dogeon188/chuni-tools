@@ -80,7 +80,7 @@
 					"title": "OVER POWERを示す",
 					"hide": "隠す（代わりにランクを示す）",
 					"value": "OVER POWER値を示す",
-					"percentage": "単曲達成率を示す",
+					"percent": "単曲達成率を示す",
 					"description": "※「OVER POWERを示す」を選択すると、未プレイの楽曲も表示されます。<br/>※未解放の楽曲がある場合、総OVER POWERは公式のものと異なる可能性があります。"
 				}
 			}

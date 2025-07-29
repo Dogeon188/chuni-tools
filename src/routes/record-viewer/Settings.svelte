@@ -27,7 +27,18 @@
 	}
 
 	export function close() {
-		songConstMin
+		isOpen = false
+	}
+
+	const constDataMessages = {
+		[__INTL_VERSION__]: (m as any)[`common.version.${__INTL_VERSION__}`],
+		[__JP_VERSION__]: (m as any)[`common.version.${__JP_VERSION__}`]
+	}
+
+	const overpowerMessages = {
+		hide: m['viewer.settings.data.overpower.hide'](),
+		value: m['viewer.settings.data.overpower.value'](),
+		percent: m['viewer.settings.data.overpower.percent']()
 	}
 </script>
 
@@ -58,7 +69,7 @@
 				ADV: 'color: var(--color-diff-adv)',
 				EXP: 'color: var(--color-diff-exp)',
 				MAS: 'color: var(--color-diff-mas)',
-				ULT: 'color: var(--color-diff-ult)',
+				ULT: 'color: var(--color-diff-ult)'
 			}} />
 
 		<MultiSelectBox
@@ -83,7 +94,7 @@
 			<select bind:value={$usedConstData} class="mb-4">
 				{#each usedConstData.getConfig().legalValues! as choice}
 					<option value={choice}>
-						{(m as any)[`common.version.${choice}`]()}
+						{constDataMessages[choice]()}
 					</option>
 				{/each}
 			</select>
@@ -92,13 +103,14 @@
 		<div class="label !mb-0">
 			{m['viewer.settings.data.overpower.title']()}
 		</div>
-		<div class="text-xs text-textc-muted mb-2">
+		<div class="mb-2 text-xs text-textc-muted">
 			{@html m['viewer.settings.data.overpower.description']()}
 		</div>
 		<select bind:value={$showOverPower} class="mb-4">
 			{#each showOverPower.getConfig().legalValues! as choice}
-			<option value={choice}
-			>{(m as any)[`viewer.settings.data.overpower.${choice}`]()}</option>
+				<option value={choice}>
+					{overpowerMessages[choice as keyof typeof overpowerMessages]}
+				</option>
 			{/each}
 		</select>
 

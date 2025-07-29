@@ -73,7 +73,7 @@
 					"description": "※您可以透過「點擊歌曲條目旁的深色方塊」查看單曲遊玩次數"
 				},
 				"overpower": {
-					"percentage": "顯示達成率",
+					"percent": "顯示達成率",
 					"title": "顯示 OVER POWER",
 					"hide": "隱藏（只顯示歌曲遊玩等級）",
 					"value": "顯示OVER POWER數值",

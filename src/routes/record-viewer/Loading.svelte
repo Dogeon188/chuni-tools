@@ -8,6 +8,11 @@
 	import { allFetched, fetchError } from './fetched'
 	import { usedConstData } from './preference'
 
+	const constDataMessages = {
+		[__INTL_VERSION__]: (m as any)[`common.version.${__INTL_VERSION__}`],
+		[__JP_VERSION__]: (m as any)[`common.version.${__JP_VERSION__}`]
+	}
+
 	const lastMessage = logger.lastMessage
 
 	function getErrorType(error: Error) {
@@ -62,7 +67,7 @@
 				{#if __INTL_VERSION__ !== __JP_VERSION__}
 					<p class="text-textc-dim">
 						{m['viewer.fetch.record.using_const']({
-							name: (m as any)['common.version.' + $usedConstData]()
+							name: constDataMessages[$usedConstData]
 						})}
 					</p>
 				{/if}

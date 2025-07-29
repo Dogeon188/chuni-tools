@@ -1,10 +1,10 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
 declare global {
-	let __ENV__: 'development' | 'production'
-	let __INTL_VERSION__: string
-	let __JP_VERSION__: string
-	let __APP_VERSION__: string
+	const __ENV__: 'development' | 'production'
+	const __INTL_VERSION__: string
+	const __JP_VERSION__: string
+	const __APP_VERSION__: string
 
 	type CWRPayload<PayloadType> = {
 		target?: string

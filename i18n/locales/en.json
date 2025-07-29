@@ -77,7 +77,7 @@
 					"title": "Show OVER POWER",
 					"hide": "Hide (Show Rank)",
 					"value": "Show (OVER POWER Value)",
-					"percentage": "Show (OVER POWER Achievement%)",
+					"percent": "Show (OVER POWER Achievement%)",
 					"description": "*It will also show unplayed song when toggled to \"Show Over Power\".<br/>*Total over power might differ from the official one, if some of the songs are not unlocked yet."
 				},
 				"play_count": {
