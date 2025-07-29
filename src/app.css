@@ -9,6 +9,13 @@
 	--color-diff-exp: var(--color-red-600);
 	--color-diff-mas: var(--color-purple-600);
 	--color-diff-ult: var(--color-cyan-600);
+
+	--color-honor-normal: var(--color-gray-400);
+    --color-honor-bronze: var(--color-amber-400);
+    --color-honor-silver: var(--color-teal-400);
+    --color-honor-gold: var(--color-yellow-400);
+    --color-honor-platina: var(--color-amber-200);
+    --color-honor-rainbow: var(--color-green-400);
 }
 
 @theme {

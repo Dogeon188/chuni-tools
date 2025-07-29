@@ -1,6 +1,6 @@
 <script lang="ts">
 	import NotificationPopup from '$lib/components/NotificationPopup.svelte'
-	import { logger } from '$lib/logger'
+	import { _page } from './+page'
 	import {
 		allFetched,
 		bestRecord,
@@ -9,31 +9,23 @@
 		recentRecord
 	} from './fetched'
 	import Loading from './Loading.svelte'
+	import PlayerStats from './PlayerStats.svelte'
 	import Settings from './Settings.svelte'
 
 	let settingsRef = $state<Settings>()
 
-	playerStats.subscribe((stats) => {
-		if (stats) {
-			console.log('Player stats updated:', stats)
-		}
-	})
-	recentRecord.subscribe((record) => {
-		if (record) {
-			console.log('Recent record updated:', record)
-		}
-	})
-	playHistory.subscribe((history) => {
-		if (history) {
-			console.log('Play history updated:', history)
-		}
-	})
-	bestRecord.subscribe((record) => {
-		if (record) {
-			console.log('Best record updated:', record)
-		}
-	})
+	function routeChange() {
+		// Reset the settings when the route changes
+		$_page = (window.location.hash.slice(1) as typeof $_page) || 'best'
+	}
+
+	playerStats.subscribe(() => {})
+	recentRecord.subscribe(() => {})
+	playHistory.subscribe(() => {})
+	bestRecord.subscribe(() => {})
 </script>
+
+<svelte:window on:hashchange={routeChange} />
 
 {#if $allFetched}
 	<NotificationPopup position="top-right" maxVisible={5} showProgress={false} />
@@ -43,12 +35,34 @@
 
 <Loading />
 
-<div class="content">
-	<h1>Record Viewer</h1>
-	<!-- Display player stats, recent record, play history, and best record here -->
-</div>
+<header class="flex gap-4 p-4">
+	<a href="#best" class="!no-underline !decoration-none" style="text-decoration: none;">
+		<h4
+			class:!text-textc-normal={$_page === 'best'}
+			class:!text-textc-dim={$_page !== 'best'}>
+			BEST
+		</h4>
+	</a>
+	<a href="#recent" class="!no-underline !decoration-none" style="text-decoration: none;">
+		<h4
+			class:!text-textc-normal={$_page === 'recent'}
+			class:!text-textc-dim={$_page !== 'recent'}>
+			CURRENT
+		</h4>
+	</a>
+	<a href="#history" class="!no-underline !decoration-none" style="text-decoration: none;">
+		<h4
+			class:!text-textc-normal={$_page === 'history'}
+			class:!text-textc-dim={$_page !== 'history'}>
+			HISTORY
+		</h4>
+	</a>
+</header>
 
-<h2>Record Viewer</h2>
-<p>Welcome to the record viewer! This tool helps you analyze your game records.</p>
+<main>
+	<!-- Player Stats -->
+	<PlayerStats />
+	<!-- Display player stats, recent record, play history, and best record here -->
+</main>
 
 <button class="btn btn-primary" onclick={() => settingsRef!.open()}>Open Settings</button>

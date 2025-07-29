@@ -65,7 +65,7 @@ export const recentRecord = DerivedStream(constData, async ($constData) => {
 		}
 	}
 	return parseRecord(rawRecentRecord, $constData)
-})
+}, [])
 
 let rawPlayHistory: PlayRecord[] = []
 const rawPlayHistoryInitialized = writable<boolean>(undefined)
@@ -91,7 +91,7 @@ export const playHistory = DerivedStream(constData, async ($constData) => {
 		}
 	}
 	return parseRecord(rawPlayHistory, $constData)
-})
+}, [])
 
 const rawBestRecord: BestRecord[] = []
 const fetchedDifficulties = writable(
@@ -144,7 +144,7 @@ export const bestRecord = DerivedStream([constData, filterDifficulty], async (va
 	logHandle.remove()
 
 	return parseRecord(rawBestRecord, $constData, true)
-})
+}, [])
 
 // Make sure loading screen won't show for post-init requests
 const filterDifficultySnapshot = get(filterDifficulty)
