@@ -85,6 +85,12 @@
 				}
 			}
 		},
+		"menu": {
+			"save_pic": "ベスト枠40を保存・共有",
+			"save_error": "スコアをPNGに変換中にエラーが発生しました。エラーメッセージをスクリーンショットして作者に送信してください。\n\n{error}",
+			"change_const": "楽曲定数データを変更する（現在: {name}）",
+			"settings": "設定"
+		},
 		"stats": {
 			"generated_at": "生成日時",
 			"current20": "新曲枠20",

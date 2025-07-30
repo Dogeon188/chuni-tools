@@ -82,6 +82,12 @@
 				"title": "遊玩資料"
 			}
 		},
+		"menu": {
+			"save_pic": "儲存/分享B40為圖片",
+			"save_error": "在將記錄轉換為PNG時發生錯誤。請截圖錯誤訊息並發送給作者。\n\n{error}",
+			"change_const": "更改歌曲定數資料（目前：{name}）",
+			"settings": "設定"
+		},
 		"stats": {
 			"generated_at": "生成時間",
 			"current20": "新曲B20",

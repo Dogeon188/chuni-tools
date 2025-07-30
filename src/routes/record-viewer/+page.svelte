@@ -137,7 +137,7 @@
 <div class="fixed top-4 right-4 z-[999] flex flex-row gap-4">
 	<button
 		onclick={saveResultAsPicture}
-		class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-normal text-2xl shadow-lg transition-shadow hover:bg-bgc-accent hover:shadow-2xl"
+		class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-normal text-2xl text-textc-dim shadow-lg transition-shadow hover:bg-bgc-accent hover:shadow-2xl"
 		title={m['viewer.menu.save_pic']()}
 		aria-label={m['viewer.menu.save_pic']()}>
 		<span class="material-icons">photo_camera_back</span>
@@ -145,7 +145,7 @@
 	{#if __INTL_VERSION__ !== __JP_VERSION__}
 		<button
 			onclick={toggleConstData}
-			class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-normal text-2xl shadow-lg transition-shadow hover:bg-bgc-accent hover:shadow-2xl"
+			class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-normal text-2xl text-textc-dim shadow-lg transition-shadow hover:bg-bgc-accent hover:shadow-2xl"
 			title={m['viewer.menu.change_const']({
 				name: constDataMessages[$usedConstData]
 			})}
@@ -161,7 +161,7 @@
 	{/if}
 	<button
 		onclick={settingsRef!.open}
-		class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-normal text-2xl shadow-lg transition-shadow hover:bg-bgc-accent hover:shadow-2xl"
+		class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-normal text-2xl text-textc-dim shadow-lg transition-shadow hover:bg-bgc-accent hover:shadow-2xl"
 		title={m['viewer.menu.settings']()}
 		aria-label={m['viewer.menu.settings']()}>
 		<span class="material-icons">settings</span>
@@ -197,51 +197,53 @@
 
 <!-- Main Content -->
 <div id="main-content">
-	<PlayerStats />
+	<div class="flex flex-col items-center gap-4 px-4 xl:flex-row">
+		<PlayerStats />
 
-	<div class="card lg:mx-auto lg:max-w-2/3 mt-8 mb-4">
-		<!-- Rank Counts -->
-		<div class="flex flex-row justify-center gap-4 md:gap-8">
-			{#each ['S', 'S+', 'SS', 'SS+', 'SSS', 'SSS+'] as rank}
+		<div class="card flex flex-col gap-4 mb-4 lg:mx-auto lg:max-w-2/3">
+			<!-- Rank Counts -->
+			<div class="flex flex-row justify-center gap-4 md:gap-8">
+				{#each ['S', 'S+', 'SS', 'SS+', 'SSS', 'SSS+'] as rank}
+					<div class="flex flex-col items-center">
+						<span class="text-xs text-textc-dim">{rank}</span>
+						<span class="text-lg text-textc-normal">
+							{$rankCounts[rank] ?? 0}
+						</span>
+					</div>
+				{/each}
 				<div class="flex flex-col items-center">
-					<span class="text-xs text-textc-dim">{rank}</span>
-					<span class="text-lg text-textc-normal">
-						{$rankCounts[rank] ?? 0}
-					</span>
+					<span class="text-xs text-clear-fc">FC</span>
+					<span class="text-lg text-textc-normal">{$fcCount}</span>
 				</div>
-			{/each}
-			<div class="flex flex-col items-center">
-				<span class="text-xs text-clear-fc">FC</span>
-				<span class="text-lg text-textc-normal">{$fcCount}</span>
+				<div class="flex flex-col items-center">
+					<span class="text-xs text-clear-aj">AJ</span>
+					<span class="text-lg text-textc-normal">{$ajCount}</span>
+				</div>
+				<div class="flex flex-col items-center justify-end">
+					<span class="text-xs text-textc-dim">/{$totalCount}</span>
+				</div>
 			</div>
-			<div class="flex flex-col items-center">
-				<span class="text-xs text-clear-aj">AJ</span>
-				<span class="text-lg text-textc-normal">{$ajCount}</span>
-			</div>
-			<div class="flex flex-col items-center justify-end">
-				<span class="text-xs text-textc-dim">/{$totalCount}</span>
-			</div>
-		</div>
 
-		<!-- OVER POWER Progress -->
-		{#if $showOverPower !== 'hide'}
-			<div class="flex flex-row items-center justify-center">
-				<div class="flex flex-col items-center justify-center">
-					<span class="text-xs text-textc-dim">OVER POWER</span>
-					<span class="text-lg text-textc-normal">
-						{($totalOverpower / opScale).toFixed(2)}
-					</span>
-					<span class="text-xs text-textc-dim">
-						&#xff0f;{($maxOverpower / opScale).toFixed(1)}
-					</span>
+			<!-- OVER POWER Progress -->
+			{#if $showOverPower !== 'hide'}
+				<div class="flex flex-row items-center justify-center">
+					<div class="flex flex-col items-center justify-center">
+						<span class="text-xs text-textc-dim">OVER POWER</span>
+						<span class="text-lg text-textc-normal">
+							{($totalOverpower / opScale).toFixed(2)}
+						</span>
+						<span class="text-xs text-textc-dim">
+							&#xff0f;{($maxOverpower / opScale).toFixed(1)}
+						</span>
+					</div>
+					<ProgressBar
+						class="mx-4 flex-1"
+						current={$totalOverpower}
+						max={$maxOverpower}
+						showLabel={true} />
 				</div>
-				<ProgressBar
-					class="mx-4 flex-1"
-					current={$totalOverpower}
-					max={$maxOverpower}
-					showLabel={true} />
-			</div>
-		{/if}
+			{/if}
+		</div>
 	</div>
 
 	<RecordTable records={$shownRecords} />
