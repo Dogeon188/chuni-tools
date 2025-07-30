@@ -25,8 +25,8 @@
 
 	const columns: Column[] = $derived([
 		{ name: 'order', sortBy: 'rating', noSortArrow: true },
-		{ name: 'play_order', sortBy: 'playOrder', hidden: $_page !== 'history' },
 		{ name: 'title', sortBy: 'title' },
+		{ name: 'play_order', sortBy: 'playOrder', hidden: $_page !== 'history' },
 		{ name: 'const', sortBy: 'const' },
 		{
 			name: 'rank',
@@ -73,120 +73,127 @@
 	}
 </script>
 
-<table class="w-full text-center">
-	<thead>
-		<tr>
-			{#each columns as column}
-				{#if !column.hidden}
-					<th
-						class="cursor-pointer whitespace-nowrap select-none"
-						onclick={() => {
-							sortReverse = sortBy === column.sortBy ? !sortReverse : false
-							sortBy = column.sortBy
-						}}>
-						{#if column.sortBy && !column.noSortArrow}
-							<span class="sort-arrow">
-								{sortBy === column.sortBy
-									? sortReverse
-										? '▲'
-										: '▼'
-									: ''}
-							</span>
-						{/if}
-						{columnHeaderTexts[column.name]}
-					</th>
-				{/if}
-			{/each}
-		</tr>
-	</thead>
-	<tbody>
-		{#each sortedRecords as record (record.order)}
-			<tr
-				class="gap-2 border-t border-bgc-accent"
-				class:ajc={record.score >= 1010000}>
-				<!-- Order by Rating -->
-				<td
-					class:text-clear-aj={record.order <= 30}
-					class:text-textc-muted={record.order > 40}>
-					{record.order}
-				</td>
-
-				<!-- Song Title -->
-				<td
-					class="max-w-60 overflow-hidden text-left text-nowrap overflow-ellipsis"
-					colspan={$_page === 'history' ? 2 : 1}>
-					<span class="text-xs text-diff-{record.difficulty.toLowerCase()}">
-						{record.difficulty}
-					</span>
-					{record.title}
-				</td>
-
-				<!-- Chart Constant -->
-				<td class="whitespace-nowrap">
-					{record.const.toFixed(1)}
-					{#if record.constUncertain}
-						<span class="text-xs text-textc-dim">?</span>
+<div class="w-full overflow-x-auto">
+	<table
+		class="w-full text-center text-xs md:text-base">
+		<thead>
+			<tr>
+				{#each columns as column}
+					{#if !column.hidden}
+						<th
+							class="cursor-pointer whitespace-nowrap select-none hover:text-textc-normal"
+							class:text-textc-normal={sortBy === column.sortBy}
+							class:text-textc-dim={sortBy !== column.sortBy}
+							onclick={() => {
+								sortReverse =
+									sortBy === column.sortBy ? !sortReverse : false
+								sortBy = column.sortBy
+							}}>
+							{#if column.sortBy && !column.noSortArrow}
+								<span class="sort-arrow">
+									{sortBy === column.sortBy
+										? sortReverse
+											? '▲'
+											: '▼'
+										: ''}
+								</span>
+							{/if}
+							{columnHeaderTexts[column.name]}
+						</th>
 					{/if}
-				</td>
-
-				{#if $showOverPower === 'hide'}
-					<!-- Rank -->
-					<td class="ajc-glow text-{rankColor(record.score)}">
-						{record.score < 0 ? '-' : record.rank}
-					</td>
-				{:else if $showOverPower === 'value'}
-					<!-- Over Power Value -->
-					<td class="whitespace-nowrap">
-						{record.const < 0
-							? '-'
-							: (record.op / 10000).toFixed(2)}<!--
-							--><span
-							class="text-xs text-textc-dim">
-							&#xFF0F;<!-- 
-								-->{record.const < 0
-								? '-'
-								: (record.opMax / 10000).toFixed(1)}
-						</span>
-					</td>
-				{:else if $showOverPower === 'percent'}
-					<!-- Over Power Percent -->
-					<td>
-						{record.opPercent.toPrecision(5)}<!--
-						--><span
-							class="text-xs text-textc-dim">%</span>
-					</td>
-				{/if}
-
-				<!-- Score -->
-				<td class="ajc-glow">{record.score < 0 ? '-' : record.score}</td>
-
-				<!-- Rating -->
-				<td>
-					{record.const < 0 || record.score == -1
-						? '-'
-						: record.rating == null
-							? '??.??'
-							: (record.rating / 100).toFixed(2)}
-				</td>
-
-				<!-- Clear -->
-				{#if $_page !== 'recent'}
-					<td
-						class="ajc-glow font-bold"
-						class:text-clear-fc={record.clear == 'FC'}
-						class:text-clear-aj={record.clear == 'AJ'}>
-						{record.clear}
-					</td>
-				{/if}
-
-				<!-- Play Count -->
-				{#if $showPlayCount && $_page === 'best'}
-					<td>{record.playCount}</td>
-				{/if}
+				{/each}
 			</tr>
-		{/each}
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			{#each sortedRecords as record (record.order)}
+				<tr
+					class="gap-2 border-t border-bgc-accent"
+					class:ajc={record.score >= 1010000}>
+					<!-- Order by Rating -->
+					<td
+						class:text-rank-sss={record.order <= 30}
+						class:text-textc-muted={record.order > 40}>
+						{record.order}
+					</td>
+
+					<!-- Song Title -->
+					<td
+						class="max-w-48 overflow-hidden text-left
+					 text-nowrap overflow-ellipsis md:max-w-60 lg:max-w-72 xl:max-w-96"
+						colspan={$_page === 'history' ? 2 : 1}>
+						<span class="text-xs text-diff-{record.difficulty.toLowerCase()}">
+							{record.difficulty}
+						</span>
+						{record.title}
+					</td>
+
+					<!-- Chart Constant -->
+					<td class="whitespace-nowrap">
+						{record.const.toFixed(1)}
+						{#if record.constUncertain}
+							<span class="text-xs text-textc-dim">?</span>
+						{/if}
+					</td>
+
+					{#if $showOverPower === 'hide'}
+						<!-- Rank -->
+						<td class="ajc-glow text-{rankColor(record.score)}">
+							{record.score < 0 ? '-' : record.rank}
+						</td>
+					{:else if $showOverPower === 'value'}
+						<!-- Over Power Value -->
+						<td class="whitespace-nowrap">
+							{record.const < 0
+								? '-'
+								: (record.op / 10000).toFixed(2)}<!--
+							--><span
+								class="text-xs text-textc-dim">
+								&#xFF0F;<!-- 
+								-->{record.const < 0
+									? '-'
+									: (record.opMax / 10000).toFixed(1)}
+							</span>
+						</td>
+					{:else if $showOverPower === 'percent'}
+						<!-- Over Power Percent -->
+						<td>
+							{record.opPercent.toPrecision(5)}<!--
+						--><span
+								class="text-xs text-textc-dim">%</span>
+						</td>
+					{/if}
+
+					<!-- Score -->
+					<td class="ajc-glow">{record.score < 0 ? '-' : record.score}</td>
+
+					<!-- Rating -->
+					<td>
+						{record.const < 0 || record.score == -1
+							? '-'
+							: record.rating == null
+								? '??.??'
+								: (record.rating / 100).toFixed(2)}
+					</td>
+
+					<!-- Clear -->
+					{#if $_page !== 'recent'}
+						<td
+							class="ajc-glow font-bold"
+							class:text-clear-fc={record.clear == 'FC'}
+							class:text-clear-aj={record.clear == 'AJ'}>
+							{record.clear}
+						</td>
+					{/if}
+
+					<!-- Play Count -->
+					{#if $showPlayCount && $_page === 'best'}
+						<td>{record.playCount}</td>
+					{/if}
+				</tr>
+			{/each}
+		</tbody>
+	</table>
+</div>
 
 <!-- Dummy elements for SSR to recognize difficulty color classes -->
 <div class="invisible">
@@ -205,7 +212,7 @@
 <style>
 	th,
 	td {
-		padding: 0.5rem;
+		padding: 0.5rem 0.25rem;
 	}
 
 	.ajc .ajc-glow {

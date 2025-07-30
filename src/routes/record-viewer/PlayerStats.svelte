@@ -26,7 +26,8 @@
 				<h3 class="whitespace-nowrap">{$playerStats.name}</h3>
 				<h3>{$playerStats.rating}</h3>
 			</div>
-			<div class="flex flex-col justify-center gap-2 text-center text-sm">
+			<div
+				class="flex flex-col justify-center gap-2 text-center text-xs md:text-sm">
 				{#each $playerStats.honors as honor}
 					{#if honor !== null}
 						<div class="w-full rounded-md bg-bgc-dim px-1 py-1">
@@ -42,7 +43,7 @@
 				{/each}
 			</div>
 		</div>
-		<div class="flex w-fit flex-col whitespace-nowrap">
+		<div class="flex w-fit flex-col text-sm md:text-base whitespace-nowrap">
 			<div class="flex flex-row justify-between gap-8">
 				<span class="text-textc-info">Generated At</span>
 				<span class="stats-item-content">

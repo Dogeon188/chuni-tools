@@ -81,7 +81,7 @@
 
 <Loading />
 
-<header class="flex gap-4 p-4">
+<header class="flex gap-16 px-4 pb-4">
 	<a
 		id="best"
 		href="#best"
@@ -117,7 +117,7 @@
 	</a>
 </header>
 
-<main>
+<div>
 	<PlayerStats />
 
 	<button class="btn btn-primary" onclick={() => settingsRef!.open()}>
@@ -125,4 +125,10 @@
 	</button>
 
 	<RecordTable records={$shownRecords} />
-</main>
+</div>
+
+<style>
+	h4 {
+		margin-bottom: 0;
+	}
+</style>

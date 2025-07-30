@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @custom-variant light (&:where([data-theme='light'], [data-theme='light'] *));
-@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *, @media (prefers-color-scheme: dark)));
 
 @theme {
 	--color-diff-bas: var(--color-green-500);
@@ -28,7 +28,7 @@
 
 @theme {
 	--color-textc-normal: var(--color-gray-900);
-	--color-textc-dim: var(--color-gray-700);
+	--color-textc-dim: var(--color-gray-600);
 	--color-textc-muted: var(--color-gray-500);
 	--color-textc-strong: var(--color-amber-600);
 	--color-textc-inverse: var(--color-gray-50);
@@ -50,7 +50,7 @@
 	:host {
 		@variant dark {
 			--color-textc-normal: var(--color-gray-100);
-			--color-textc-dim: var(--color-gray-300);
+			--color-textc-dim: var(--color-gray-400);
 			--color-textc-muted: var(--color-gray-500);
 			--color-textc-strong: var(--color-amber-200);
 			--color-textc-info: var(--color-blue-200);
@@ -71,6 +71,11 @@
 }
 
 /* Base styles */
+* {
+	transition-property: background-color;
+	transition-duration: 200ms;
+}
+
 html {
 	scroll-behavior: smooth;
 }
