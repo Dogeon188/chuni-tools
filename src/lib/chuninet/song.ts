@@ -9,7 +9,7 @@ export enum Difficulty {
 export const difficulties = Object.values(Difficulty)
 
 export enum Genre {
-	'POPS & ANIME' = '0',
+	'POPS&ANIME' = '0',
 	'niconico' = '2',
 	'東方Project' = '3',
 	'ORIGINAL' = '5',
@@ -44,7 +44,7 @@ export const versionId = {
 	LUMINOUS: 17,
 	'LUMINOUS+': 18,
 	VERSE: 19,
-	'XVERSE': 20
+	XVERSE: 20
 }
 
 export const versions = Object.keys(versionId).filter(

@@ -13,7 +13,7 @@
 
 	--color-honor-normal: var(--color-gray-400);
 	--color-honor-bronze: var(--color-amber-400);
-	--color-honor-silver: var(--color-teal-400);
+	--color-honor-silver: var(--color-teal-500);
 	--color-honor-gold: var(--color-yellow-400);
 	--color-honor-platina: var(--color-amber-200);
 	--color-honor-rainbow: var(--color-green-400);
@@ -33,7 +33,7 @@
 	--color-textc-muted: var(--color-gray-500);
 	--color-textc-strong: var(--color-amber-600);
 	--color-textc-inverse: var(--color-gray-50);
-	--color-textc-info: var(--color-blue-600);
+	--color-textc-info: var(--color-cyan-700);
 	--color-bgc-normal: var(--color-gray-50);
 	--color-bgc-dim: var(--color-gray-100);
 	--color-bgc-accent: var(--color-gray-200);
@@ -244,4 +244,17 @@ label,
 
 .text-shadow {
 	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.animate-marquee {
+	animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
 }

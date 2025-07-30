@@ -4,23 +4,22 @@
 	import Markdown from '../lib/components/Markdown.svelte'
 </script>
 
-<footer class="mt-auto border-t border-borderc-normal text-textc-dim">
+<footer class="mt-auto border-t border-borderc-normal text-textc-dim md:text-base">
 	<div class="mx-auto my-4 max-w-7xl bg-bgc-dim px-4 sm:px-6 lg:px-8">
 		<div
-			class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+			class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center"
+		>
 			<!-- Language Selector -->
 
 			<div class="language-select flex flex-row items-center gap-3">
-				<label
-					for="language-dropdown"
-					class="!mb-0 whitespace-nowrap">
+				<label for="language-dropdown" class="!mb-0 text-sm whitespace-nowrap">
 					{m['common.choose_language']()}
 				</label>
 				<LanguageSelect />
 			</div>
 
 			<!-- Powered by message -->
-			<Markdown inline class="text-sm" content={m['common.powered_by']()} />
+			<Markdown inline class="text-xs" content={m['common.powered_by']()} />
 		</div>
 	</div>
 </footer>

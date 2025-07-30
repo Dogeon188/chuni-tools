@@ -14,15 +14,13 @@
 		$bestRecord.filter((v) => v.version == $currentVersionId)
 	)
 	const oldVersionB30 = $derived(oldVersionRecords.slice(0, 30).map((s) => s.rating))
-	const newVersionB20 = $derived(
-		newVersionRecords.slice(0, 20).map((s) => s.rating)
-	)
-	const recentB30 = $derived(
-		$playHistory.slice(0, 30).map((s) => s.rating)
-	)
+	const newVersionB20 = $derived(newVersionRecords.slice(0, 20).map((s) => s.rating))
+	const recentB30 = $derived($playHistory.slice(0, 30).map((s) => s.rating))
 </script>
 
-<div class="card flex flex-row items-center justify-center gap-4 md:gap-16 lg:max-w-2/3 lg:mx-auto">
+<div
+	class="card flex flex-row items-center justify-center gap-4 md:gap-16 lg:mx-auto lg:max-w-2/3"
+>
 	{#if $playerStats}
 		<div class="flex max-w-1/2 flex-col">
 			<!-- Name & Rating -->
@@ -33,11 +31,15 @@
 
 			<!-- Honors -->
 			<div
-				class="flex flex-col justify-center gap-2 text-center text-xs md:text-sm">
+				class="flex flex-col justify-center gap-2 text-center text-xs md:text-sm"
+			>
 				{#each $playerStats.honors as honor}
 					{#if honor !== null}
-						<div class="w-full rounded-md bg-bgc-dim px-1 py-1">
-							<span class="text-honor-{honor.color}">
+						<div class="w-full overflow-clip rounded-md bg-bgc-dim px-1 py-1">
+							<span
+								class="font-bold text-honor-{honor.color} text-nowrap inline-block"
+								class:animate-marquee={honor.text.length > 20}
+							>
 								{honor.text}
 							</span>
 						</div>
@@ -50,40 +52,42 @@
 			</div>
 		</div>
 
-		<div class="grid grid-cols-[2fr_1fr] gap-x-4 w-fit text-sm whitespace-nowrap md:text-base">
+		<div
+			class="grid w-fit grid-cols-[2fr_1fr] gap-x-4 text-sm whitespace-nowrap md:text-base"
+		>
 			<!-- Generated At -->
-			<span class="text-textc-info text-right">
+			<span class="text-right text-textc-info">
 				{m['viewer.stats.generated_at']()}
 			</span>
 			<span class="text-left">
 				{new Date().toLocaleDateString()}
 			</span>
-			
+
 			<!-- New Version B20 -->
-			<span class="text-textc-info text-right">
+			<span class="text-right text-textc-info">
 				{m['viewer.stats.current20']()}
 			</span>
 			<span class="text-left">
 				{floorToFixed(calcBestN(newVersionB20, 20) / 100, 4)}
 			</span>
-			
+
 			<!-- Old Version B30 -->
-			<span class="text-textc-info text-right">
+			<span class="text-right text-textc-info">
 				{m['viewer.stats.old30']()}
 			</span>
 			<span class="text-left">
 				{floorToFixed(calcBestN(oldVersionB30, 30) / 100, 4)}
 			</span>
-			
+
 			{#if $_page === 'best'}
 				<!-- Play Count -->
-				<span class="text-textc-info text-right">
+				<span class="text-right text-textc-info">
 					{m['viewer.stats.play_count']()}
 				</span>
 				<span class="text-left">{$playerStats.playCount} </span>
 			{:else if $_page === 'recent' || $_page === 'history'}
 				<!-- Recent B30 -->
-				<span class="text-textc-info text-right">
+				<span class="text-right text-textc-info">
 					{m['viewer.stats.recent30']()}
 				</span>
 				<span class="text-left">
