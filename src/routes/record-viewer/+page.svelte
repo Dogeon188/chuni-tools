@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { Genre, genres } from '$lib/chuninet/song'
 	import NotificationPopup from '$lib/components/NotificationPopup.svelte'
 	import type { EventHandler } from 'svelte/elements'
+	import { derived } from 'svelte/store'
 	import { _page } from './+page'
 	import {
 		allFetched,
@@ -11,6 +13,13 @@
 	} from './fetched'
 	import Loading from './Loading.svelte'
 	import PlayerStats from './PlayerStats.svelte'
+	import {
+		filterConstMax,
+		filterConstMin,
+		filterDifficulty,
+		filterGenre,
+		showOverPower
+	} from './preference'
 	import RecordTable from './RecordTable.svelte'
 	import Settings from './Settings.svelte'
 
@@ -26,8 +35,39 @@
 	playHistory.subscribe(() => {})
 	bestRecord.subscribe(() => {})
 
+	const filteredBestRecord = derived(
+		[
+			bestRecord,
+			filterDifficulty,
+			filterGenre,
+			filterConstMin,
+			filterConstMax,
+			showOverPower
+		],
+		([
+			$bestRecord,
+			$filterDifficulty,
+			$filterGenre,
+			$filterConstMin,
+			$filterConstMax,
+			$showOverPower
+		]) =>
+			$bestRecord.filter(
+				(record) =>
+					($showOverPower != 'hide' || record.score >= 0) &&
+					$filterDifficulty[record.difficulty] &&
+					$filterGenre[genres.find((g) => Genre[g] == record.genre)!] &&
+					$filterConstMax >= record.const &&
+					record.const >= $filterConstMin
+			)
+	)
+
 	const shownRecords = $derived(
-		$_page === 'best' ? bestRecord : $_page === 'recent' ? recentRecord : playHistory
+		$_page === 'best'
+			? filteredBestRecord
+			: $_page === 'recent'
+				? recentRecord
+				: playHistory
 	)
 </script>
 
@@ -61,7 +101,7 @@
 		<h4
 			class:!text-textc-normal={$_page === 'recent'}
 			class:!text-textc-dim={$_page !== 'recent'}>
-			CURRENT
+			RECENT
 		</h4>
 	</a>
 	<a

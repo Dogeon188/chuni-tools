@@ -39,28 +39,36 @@ export function Stream<T>(initializer: () => Promise<T>, initial_value?: T): Rea
 	})
 }
 
+type Stores =
+	| Readable<unknown>
+	| [Readable<unknown>, ...Array<Readable<unknown>>]
+	| Array<Readable<unknown>>
+
+/** One or more values from `Readable` stores. */
+type StoresValues<T> =
+	T extends Readable<infer U>
+		? U
+		: { [K in keyof T]: T[K] extends Readable<infer U> ? U : never }
+
 export const noUpdate = Symbol('noUpdate')
 type NoUpdateSymbol = typeof noUpdate
 
 /**
- * Creates a derived store that asynchronously transforms values from source stores.
+ * Creates a derived store that handles async computations with race condition protection.
  *
- * This function creates a derived store that executes an async callback whenever
- * the source store(s) change. It handles race conditions by ensuring only the
- * most recent async operation updates the store value. This is useful for
- * performing async operations (like API calls) that depend on reactive data.
+ * This function creates a Svelte-style derived store that can handle asynchronous operations
+ * while preventing race conditions by ensuring only the most recent async operation can
+ * update the store value.
  *
- * The function is overloaded to support both single store and multiple stores:
- * - Single store: transforms one Readable<S> to Readable<T>
- * - Multiple stores: transforms an array of Readable stores to Readable<R>
+ * @template S - The type of the input stores object
+ * @template T - The type of the derived value
  *
- * @template S The type of the source store value (single store variant)
- * @template T The type of the derived store value (single store variant)
- * @template R The type of the derived store value (multiple stores variant)
- * @param stores Either a single Readable store or an array of Readable stores
- * @param callback Async function that transforms the store value(s)
- * @param initial_value Optional initial value for the derived store
- * @returns A Readable store containing the transformed value
+ * @param stores - The input stores to derive from
+ * @param callback - Async function that computes the derived value from store values.
+ *                   Can return `NoUpdateSymbol` to skip updating the store.
+ * @param initial_value - Optional initial value for the derived store
+ *
+ * @returns A readable store containing the derived value
  *
  * @example
  * ```typescript
@@ -91,21 +99,9 @@ type NoUpdateSymbol = typeof noUpdate
  * );
  * ```
  */
-export function DerivedStream<S, T>(
-	stores: Readable<S>,
-	callback: (value: S) => Promise<T | NoUpdateSymbol>,
-	initial_value?: T
-): Readable<T>
-export function DerivedStream<S extends Readable<unknown>[], T>(
+export function DerivedStream<S extends Stores, T>(
 	stores: S,
-	callback: (values: {
-		[K in keyof S]: S[K] extends Readable<infer U> ? U : never
-	}) => Promise<T | NoUpdateSymbol>,
-	initial_value?: T | undefined
-): Readable<T>
-export function DerivedStream<S, T>(
-	stores: Readable<S> | Readable<unknown>[],
-	callback: (values: S | unknown[]) => Promise<T | NoUpdateSymbol>,
+	callback: (values: StoresValues<S>) => Promise<T | NoUpdateSymbol>,
 	initial_value?: T | undefined
 ): Readable<T> {
 	// Track the timestamp of the most recent async operation to prevent race conditions

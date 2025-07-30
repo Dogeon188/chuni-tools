@@ -61,7 +61,7 @@ import { getCookie, getPostMessageFunction, getScriptBaseUrl } from '$lib/web';
 								)
 							)
 						},
-						Math.random() * 1000 + 500
+						Math.random() * 500 + 500
 					)
 				})
 				break

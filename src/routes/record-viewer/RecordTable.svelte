@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ranksMap } from '$lib/chuninet/rating'
 	import { recordSorts } from '$lib/chuninet/record'
 	import { m } from '$lib/paraglide/messages'
 	import { _page } from './+page'
@@ -9,6 +10,12 @@
 	let sortBy = $state('rating')
 	let sortReverse = $state(false)
 
+	const sortedRecords = $derived(
+		records.toSorted(
+			sortReverse ? (a, b) => -recordSorts[sortBy](a, b) : recordSorts[sortBy]
+		)
+	)
+
 	type Column = {
 		name: string
 		sortBy: string
@@ -16,25 +23,26 @@
 		hidden?: boolean
 	}
 
-	const sortedRecords = $derived(records.toSorted((a, b) => recordSorts[sortBy](a, b)))
-	const reversedRecords = $derived(
-		sortReverse ? sortedRecords.toReversed() : sortedRecords
-	)
-
 	const columns: Column[] = $derived([
 		{ name: 'order', sortBy: 'rating', noSortArrow: true },
 		{ name: 'play_order', sortBy: 'playOrder', hidden: $_page !== 'history' },
 		{ name: 'title', sortBy: 'title' },
 		{ name: 'const', sortBy: 'const' },
 		{
+			name: 'rank',
+			sortBy: 'score',
+			hidden: $showOverPower !== 'hide',
+			noSortArrow: true
+		},
+		{ name: 'overpower', sortBy: 'op', hidden: $showOverPower !== 'value' },
+		{
 			name: 'overpower_percent',
 			sortBy: 'opp',
 			hidden: $showOverPower !== 'percent'
 		},
-		{ name: 'overpower', sortBy: 'op', hidden: $showOverPower !== 'value' },
 		{ name: 'score', sortBy: 'score' },
 		{ name: 'rating', sortBy: 'rating' },
-		{ name: 'clear', sortBy: 'aj' },
+		{ name: 'clear', sortBy: 'aj', hidden: $_page === 'recent' },
 		{
 			name: 'play_count',
 			sortBy: 'playCount',
@@ -47,12 +55,21 @@
 		play_order: m['viewer.table.play_order'](),
 		title: m['viewer.table.title'](),
 		const: m['viewer.table.const'](),
-		overpower_percent: m['viewer.table.overpower_percent'](),
+		rank: m['viewer.table.rank'](),
 		overpower: m['viewer.table.overpower'](),
+		overpower_percent: m['viewer.table.overpower_percent'](),
 		score: m['viewer.table.score'](),
 		rating: m['viewer.table.rating'](),
 		clear: m['viewer.table.clear'](),
 		play_count: m['viewer.table.play_count']()
+	}
+
+	function rankColor(score: number): string {
+		if (score >= ranksMap['SSS']) return 'rank-sss'
+		if (score >= ranksMap['S']) return 'rank-s'
+		if (score >= ranksMap['A']) return 'rank-a'
+		if (score >= ranksMap['B']) return 'rank-b'
+		return 'textc-muted'
 	}
 </script>
 
@@ -64,8 +81,8 @@
 					<th
 						class="cursor-pointer whitespace-nowrap select-none"
 						onclick={() => {
+							sortReverse = sortBy === column.sortBy ? !sortReverse : false
 							sortBy = column.sortBy
-							sortReverse = !sortReverse
 						}}>
 						{#if column.sortBy && !column.noSortArrow}
 							<span class="sort-arrow">
@@ -83,44 +100,86 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each reversedRecords as record (record.order)}
-			<tr class="gap-2 border-t border-bgc-accent">
-				<td>{record.order}</td>
-				<td colspan={$_page === 'history' ? 2 : 1}>
-					{record.title}
+		{#each sortedRecords as record (record.order)}
+			<tr
+				class="gap-2 border-t border-bgc-accent"
+				class:ajc={record.score >= 1010000}>
+				<!-- Order by Rating -->
+				<td
+					class:text-clear-aj={record.order <= 30}
+					class:text-textc-muted={record.order > 40}>
+					{record.order}
+				</td>
+
+				<!-- Song Title -->
+				<td
+					class="max-w-60 overflow-hidden text-left text-nowrap overflow-ellipsis"
+					colspan={$_page === 'history' ? 2 : 1}>
 					<span class="text-xs text-diff-{record.difficulty.toLowerCase()}">
 						{record.difficulty}
 					</span>
+					{record.title}
 				</td>
-				<td>{record.const}</td>
-				{#if $showOverPower === 'percent'}
+
+				<!-- Chart Constant -->
+				<td class="whitespace-nowrap">
+					{record.const.toFixed(1)}
+					{#if record.constUncertain}
+						<span class="text-xs text-textc-dim">?</span>
+					{/if}
+				</td>
+
+				{#if $showOverPower === 'hide'}
+					<!-- Rank -->
+					<td class="ajc-glow text-{rankColor(record.score)}">
+						{record.score < 0 ? '-' : record.rank}
+					</td>
+				{:else if $showOverPower === 'value'}
+					<!-- Over Power Value -->
+					<td class="whitespace-nowrap">
+						{record.const < 0
+							? '-'
+							: (record.op / 10000).toFixed(2)}<!--
+							--><span
+							class="text-xs text-textc-dim">
+							&#xFF0F;<!-- 
+								-->{record.const < 0
+								? '-'
+								: (record.opMax / 10000).toFixed(1)}
+						</span>
+					</td>
+				{:else if $showOverPower === 'percent'}
+					<!-- Over Power Percent -->
 					<td>
 						{record.opPercent.toPrecision(5)}<!--
 						--><span
 							class="text-xs text-textc-dim">%</span>
 					</td>
-				{:else if $showOverPower === 'value'}
-					<td class="whitespace-nowrap">
-						{record.const < 0
-							? '-'
-							: (record.op / 10000).toFixed(2)}<!--
-						--><span
-							class="text-xs text-textc-dim">
-							&#xFF0F;<!-- 
-							-->{record.const < 0
-								? '-'
-								: (record.opMax / 10000).toFixed(1)}
-						</span>
+				{/if}
+
+				<!-- Score -->
+				<td class="ajc-glow">{record.score < 0 ? '-' : record.score}</td>
+
+				<!-- Rating -->
+				<td>
+					{record.const < 0 || record.score == -1
+						? '-'
+						: record.rating == null
+							? '??.??'
+							: (record.rating / 100).toFixed(2)}
+				</td>
+
+				<!-- Clear -->
+				{#if $_page !== 'recent'}
+					<td
+						class="ajc-glow font-bold"
+						class:text-clear-fc={record.clear == 'FC'}
+						class:text-clear-aj={record.clear == 'AJ'}>
+						{record.clear}
 					</td>
 				{/if}
-				<td>{record.score}</td>
-				<td>
-					{record.const < 0 ? '-' : (record.const?.toFixed(1) ?? '??.?')}
-					{#if !record.constUncertain}
-						<span class="text-xs text-textc-dim">?</span>
-					{/if}
-				</td>
-				<td>{record.clear}</td>
+
+				<!-- Play Count -->
 				{#if $showPlayCount && $_page === 'best'}
 					<td>{record.playCount}</td>
 				{/if}
@@ -136,11 +195,20 @@
 	<div class="text-diff-exp">Expert</div>
 	<div class="text-diff-mas">Master</div>
 	<div class="text-diff-ult">Ultima</div>
+
+	<div class="text-rank-sss">SSS</div>
+	<div class="text-rank-s">S</div>
+	<div class="text-rank-a">A</div>
+	<div class="text-rank-b">B</div>
 </div>
 
 <style>
 	th,
 	td {
 		padding: 0.5rem;
+	}
+
+	.ajc .ajc-glow {
+		text-shadow: 0 0 10px var(--color-clear-aj);
 	}
 </style>

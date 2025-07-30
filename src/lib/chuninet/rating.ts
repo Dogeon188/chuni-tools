@@ -18,6 +18,10 @@ const rankPoints: [number, string][] = [
 
 export const ranks = rankPoints.map((v) => v[1])
 
+export const ranksMap: Record<string, number> = Object.fromEntries(
+	rankPoints.map((v) => [v[1], v[0]])
+)
+
 export function calcRank(score: number) {
 	let r = 0
 	rankPoints.some((v, i) => ((r = i), score >= v[0]))
