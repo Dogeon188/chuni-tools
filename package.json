@@ -7,7 +7,7 @@
 		"dev:app": "vite dev",
 		"build": "npm run build:paraglide && npm run build:scripts && npm run build:app",
 		"build:dev": "ENV=development npm run build:scripts && npm run build:app",
-		"build:app": "vite build",
+		"build:app": "ENV=production vite build",
 		"build:scripts": "ENV=production vite build --config vite.scripts.config.ts",
 		"build:scripts:dev": "ENV=development vite build --config vite.scripts.config.ts",
 		"build:paraglide": "npx @inlang/paraglide-js compile --project ./i18n/project.inlang --outdir ./src/lib/paraglide",
