@@ -3,6 +3,8 @@
 	import { Genre, genres } from '$lib/chuninet/song'
 	import NotificationPopup from '$lib/components/NotificationPopup.svelte'
 	import ProgressBar from '$lib/components/ProgressBar.svelte'
+	import { m } from '$lib/paraglide/messages'
+	import { saveResultAsPicture } from '$lib/share'
 	import type { EventHandler } from 'svelte/elements'
 	import { derived } from 'svelte/store'
 	import { _page } from './+page'
@@ -20,7 +22,8 @@
 		filterConstMin,
 		filterDifficulty,
 		filterGenre,
-		showOverPower
+		showOverPower,
+		usedConstData
 	} from './preference'
 	import RecordTable from './RecordTable.svelte'
 	import Settings from './Settings.svelte'
@@ -103,6 +106,21 @@
 	const maxOverpower = derived(filteredBestRecord, ($filteredBestRecord) =>
 		$filteredBestRecord.reduce((pre, record) => pre + record.opMax, 0)
 	)
+
+	// menu buttons
+
+	function toggleConstData() {
+		if ($usedConstData === __INTL_VERSION__) {
+			usedConstData.set(__JP_VERSION__)
+		} else {
+			usedConstData.set(__INTL_VERSION__)
+		}
+	}
+
+	const constDataMessages = {
+		[__INTL_VERSION__]: (m as any)[`common.version.${__INTL_VERSION__}`](),
+		[__JP_VERSION__]: (m as any)[`common.version.${__JP_VERSION__}`]()
+	}
 </script>
 
 <svelte:window on:hashchange={routeChange} />
@@ -115,9 +133,45 @@
 
 <Loading />
 
+<!-- Menu Buttons -->
+<div class="fixed top-4 right-4 z-[999] flex flex-row gap-4">
+	<button
+		onclick={saveResultAsPicture}
+		class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-normal text-2xl shadow-lg transition-shadow hover:bg-bgc-accent hover:shadow-2xl"
+		title={m['viewer.menu.save_pic']()}
+		aria-label={m['viewer.menu.save_pic']()}>
+		<span class="material-icons">photo_camera_back</span>
+	</button>
+	{#if __INTL_VERSION__ !== __JP_VERSION__}
+		<button
+			onclick={toggleConstData}
+			class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-normal text-2xl shadow-lg transition-shadow hover:bg-bgc-accent hover:shadow-2xl"
+			title={m['viewer.menu.change_const']({
+				name: constDataMessages[$usedConstData]
+			})}
+			aria-label={m['viewer.menu.change_const']({
+				name: constDataMessages[$usedConstData]
+			})}>
+			{#if $usedConstData === __INTL_VERSION__}
+				<span class="material-icons">public</span>
+			{:else}
+				<span>🇯🇵</span>
+			{/if}
+		</button>
+	{/if}
+	<button
+		onclick={settingsRef!.open}
+		class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-normal text-2xl shadow-lg transition-shadow hover:bg-bgc-accent hover:shadow-2xl"
+		title={m['viewer.menu.settings']()}
+		aria-label={m['viewer.menu.settings']()}>
+		<span class="material-icons">settings</span>
+	</button>
+</div>
+
 <header class="flex gap-16 px-4 pb-4">
 	<a id="best" href="#best" class="!decoration-none !no-underline">
 		<h4
+			class="!mb-0"
 			class:!text-textc-normal={$_page === 'best'}
 			class:!text-textc-dim={$_page !== 'best'}>
 			BEST
@@ -125,6 +179,7 @@
 	</a>
 	<a id="recent" href="#recent" class="!decoration-none !no-underline">
 		<h4
+			class="!mb-0"
 			class:!text-textc-normal={$_page === 'recent'}
 			class:!text-textc-dim={$_page !== 'recent'}>
 			RECENT
@@ -132,6 +187,7 @@
 	</a>
 	<a id="history" href="#history" class="!decoration-none !no-underline">
 		<h4
+			class="!mb-0"
 			class:!text-textc-normal={$_page === 'history'}
 			class:!text-textc-dim={$_page !== 'history'}>
 			HISTORY
@@ -139,10 +195,11 @@
 	</a>
 </header>
 
+<!-- Main Content -->
 <div>
 	<PlayerStats />
 
-	<div class="card lg:max-w-2/3 lg:mx-auto">
+	<div class="card lg:mx-auto lg:max-w-2/3">
 		<!-- Rank Counts -->
 		<div class="flex flex-row justify-center gap-4 md:gap-8">
 			{#each ['S', 'S+', 'SS', 'SS+', 'SSS', 'SSS+'] as rank}
@@ -187,15 +244,5 @@
 		{/if}
 	</div>
 
-	<button class="btn btn-primary" onclick={() => settingsRef!.open()}>
-		Open Settings
-	</button>
-
 	<RecordTable records={$shownRecords} />
 </div>
-
-<style>
-	h4 {
-		margin-bottom: 0;
-	}
-</style>

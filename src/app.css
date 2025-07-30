@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'material-icons/iconfont/material-icons.css';
 
 @custom-variant light (&:where([data-theme='light'], [data-theme='light'] *));
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *, @media (prefers-color-scheme: dark)));
@@ -11,11 +12,11 @@
 	--color-diff-ult: var(--color-cyan-500);
 
 	--color-honor-normal: var(--color-gray-400);
-    --color-honor-bronze: var(--color-amber-400);
-    --color-honor-silver: var(--color-teal-400);
-    --color-honor-gold: var(--color-yellow-400);
-    --color-honor-platina: var(--color-amber-200);
-    --color-honor-rainbow: var(--color-green-400);
+	--color-honor-bronze: var(--color-amber-400);
+	--color-honor-silver: var(--color-teal-400);
+	--color-honor-gold: var(--color-yellow-400);
+	--color-honor-platina: var(--color-amber-200);
+	--color-honor-rainbow: var(--color-green-400);
 
 	--color-clear-fc: var(--color-green-500);
 	--color-clear-aj: var(--color-amber-500);
@@ -195,9 +196,10 @@ strong {
 	@apply mb-4 rounded-lg border border-borderc-normal bg-bgc-info p-4;
 	@apply relative pl-10;
 	&::before {
-		@apply absolute left-3 top-4 h-4 w-4;
-		content: '';
-		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2306b6d4'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'/%3e%3c/svg%3e");
+		@apply absolute top-4 left-3 h-4 w-4;
+		content: 'lightbulb';
+		font-family: 'Material Icons';
+		color: var(--color-textc-info);
 		background-repeat: no-repeat;
 		background-size: contain;
 	}
@@ -230,7 +232,8 @@ select {
 	}
 }
 
-label, .label {
+label,
+.label {
 	@apply mb-3 block text-sm font-medium text-textc-dim;
 }
 

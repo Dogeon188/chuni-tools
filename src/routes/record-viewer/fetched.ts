@@ -106,6 +106,7 @@ export const playHistory = DerivedStream(
 
 export const forceUpdaterForPlayCount = writable(Date.now())
 
+let prevConstData: string | undefined = undefined
 const rawBestRecord: BestRecord[] = []
 const fetchedDifficulties = writable(
 	Object.fromEntries(difficulties.map((d) => [d, undefined])) as Record<
@@ -131,9 +132,11 @@ export const bestRecord = DerivedStream(
 			)
 			.map(([key]) => key as Difficulty)
 
-		if (updatingDifficulties.length === 0) {
+		if (updatingDifficulties.length === 0 && prevConstData === get(usedConstData)) {
 			return noUpdate
 		}
+
+		prevConstData = get(usedConstData)
 
 		const logHandle = logger.log('')
 

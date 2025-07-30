@@ -94,6 +94,11 @@
 			},
 			"reset": "Reset All Preferences"
 		},
+		"menu": {
+			"save_pic": "Save or share B40 as image",
+			"change_const": "Change song constant data (Current: {name})",
+			"settings": "Open settings"
+		},
 		"stats": {
 			"generated_at": "Generated At",
 			"current20": "New Version B20",

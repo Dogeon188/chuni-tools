@@ -24,6 +24,9 @@ export default defineConfig({
 		fs: {
 			allow: ['..']
 		},
+		hmr: {
+			overlay: false
+		},
 		https: {
 			key: fs.readFileSync('./.cert/key.pem'),
 			cert: fs.readFileSync('./.cert/cert.pem')
