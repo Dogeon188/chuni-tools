@@ -149,6 +149,11 @@ strong {
 	@apply transition-all duration-200;
 }
 
+.btn:disabled {
+	@apply cursor-not-allowed opacity-50;
+	@apply bg-bgc-accent;
+}
+
 .btn-primary {
 	@apply bg-blue-600 text-white;
 	@apply hover:bg-blue-700 focus:ring-blue-500;

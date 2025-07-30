@@ -2,7 +2,9 @@
 	import { ranksMap } from '$lib/chuninet/rating'
 	import { requestFor } from '$lib/cwr'
 	import logger from '$lib/logger'
+	import { m } from '$lib/paraglide/messages'
 	import { _page } from './+page'
+	import { forceUpdaterForPlayCount } from './fetched'
 	import { showOverPower, showPlayCount } from './preference'
 
 	let { record }: { record: ParsedRecord } = $props()
@@ -15,7 +17,21 @@
 		return 'textc-muted'
 	}
 
-	let playCount: number | null | undefined = $state(record.playCount)
+
+	function fetchPlayCount(): void {
+		requestFor('songPlayCount', record.difficulty, record.idx)
+			.then((pc) => {
+				record.playCount = pc
+				forceUpdaterForPlayCount.set(Date.now())
+			})
+			.catch(() => {
+				record.playCount = null
+				logger.log(
+					// `Failed to fetch play count for ${record.title} (${record.difficulty})`
+					m['viewer.fetch.play_count.error']()
+				)
+			})
+	}
 </script>
 
 <tr class="gap-2 border-t border-bgc-accent" class:ajc={record.score >= 1010000}>
@@ -95,29 +111,14 @@
 
 	<!-- Play Count -->
 	{#if $showPlayCount && $_page === 'best'}
-		{#key playCount}
-			{#if record.playCount === undefined}
-				<td
-					class="cursor-pointer"
-					onclick={() => {
-						if (playCount !== undefined) return
-						playCount = null
-						requestFor('songPlayCount', record.difficulty, record.idx)
-							.then((pc) => {
-								record.playCount = playCount = pc
-							})
-							.catch(() => {
-								record.playCount = null
-								logger.log(
-									`Failed to fetch play count for ${record.title} (${record.difficulty})`
-								)
-							})
-					}}>
-					<span class="rounded bg-bgc-normal">&emsp;</span>
-				</td>
-			{:else}
-				<td>{record.playCount ?? '?'}</td>
-			{/if}
+		{#key $forceUpdaterForPlayCount}
+				{#if record.playCount === undefined}
+					<td class="cursor-pointer" onclick={fetchPlayCount}>
+						<span class="rounded bg-bgc-normal">&emsp;</span>
+					</td>
+				{:else}
+					<td>{record.playCount ?? '?'}</td>
+				{/if}
 		{/key}
 	{/if}
 </tr>

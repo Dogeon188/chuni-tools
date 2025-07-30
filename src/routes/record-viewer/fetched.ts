@@ -104,6 +104,8 @@ export const playHistory = DerivedStream(
 	[]
 )
 
+export const forceUpdaterForPlayCount = writable(Date.now())
+
 const rawBestRecord: BestRecord[] = []
 const fetchedDifficulties = writable(
 	Object.fromEntries(difficulties.map((d) => [d, undefined])) as Record<
@@ -114,10 +116,7 @@ const fetchedDifficulties = writable(
 export const bestRecord = DerivedStream(
 	[constData, filterDifficulty],
 	async (values) => {
-		const [$constData, $filterDifficulty] = values as [
-			Record<string, SongConstData>,
-			Record<Difficulty, boolean>
-		]
+		const [$constData, $filterDifficulty] = values
 
 		// If constData is not available yet
 		if (!$constData || Object.keys($constData).length === 0) {
@@ -146,7 +145,7 @@ export const bestRecord = DerivedStream(
 						diff: `<span class="font-bold" style="color:var(--color-diff-${diff.toLowerCase()});">${diff}</span>`
 					})
 				)
-				logHandle.refreshCountdown(5000)
+				logHandle.refreshCountdown()
 				rawBestRecord.push(...(await requestFor('bestRecord', diff)))
 				fetchedDifficulties.update((prev) => ({ ...prev, [diff]: true }))
 			} catch (error) {

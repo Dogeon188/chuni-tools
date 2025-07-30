@@ -74,7 +74,7 @@
 <svelte:window on:hashchange={routeChange} />
 
 {#if $allFetched}
-	<NotificationPopup position="top-right" maxVisible={5} showProgress={false} />
+	<NotificationPopup position="bottom-right" maxVisible={5} showProgress={false} />
 {/if}
 
 <Settings bind:this={settingsRef} />

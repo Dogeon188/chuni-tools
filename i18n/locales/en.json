@@ -53,7 +53,7 @@
 	},
 	"viewer": {
 		"title": "CHUNI TOOLS Score Viewer",
-        "press_to_start": "Analyze Rating",
+		"press_to_start": "Analyze Rating",
 		"settings": {
 			"title": "Settings",
 			"filters": {
@@ -99,6 +99,10 @@
 				"using_const": "Used song constant version: {name}",
 				"progress": "Fetching record for {diff} difficulty...",
 				"unknown_song": "Found unknown song(s):\n\n{songs}\n\nPlease contact the author via X (formerly Twitter) or Discord to report this issue."
+			},
+			"play_count": {
+				"progress": "Fetching play count... ({progress}/{all})",
+				"error": "Failed to fetch play count! You may need to reload the page now."
 			},
 			"error": {
 				"service_down": "CHUNITHM-NET service is under maintenance.\n\nPlease check the available time on the website and come back later.",

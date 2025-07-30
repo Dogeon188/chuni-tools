@@ -4,8 +4,11 @@
 	import Modal from '$lib/components/Modal.svelte'
 	import MultiSelectBox from '$lib/components/MultiSelectBox.svelte'
 	import Switch from '$lib/components/Switch.svelte'
+	import { requestFor } from '$lib/cwr'
+	import logger from '$lib/logger'
 	import { m } from '$lib/paraglide/messages'
 	import { theme } from '$lib/preference'
+	import { bestRecord, forceUpdaterForPlayCount } from './fetched'
 	import {
 		diffUpdateInterval,
 		filterConstMax,
@@ -28,6 +31,64 @@
 
 	export function close() {
 		isOpen = false
+	}
+
+	const playCountFetchRange = $state({
+		from: 1,
+		to: 40
+	})
+	const isRangeValid = $derived(
+		playCountFetchRange.from > 0 && playCountFetchRange.to >= playCountFetchRange.from
+	)
+	let isFetching = $state(false)
+
+	async function fetchMultiplePlayCounts(): Promise<void> {
+		if (!isRangeValid) return
+
+		isOpen = false
+		isFetching = true
+
+		const from = playCountFetchRange.from
+		const to = playCountFetchRange.to
+		const rangeToFetch = $bestRecord.slice(from - 1, to)
+
+		const handle = logger.log(
+			m['viewer.fetch.play_count.progress']({
+				progress: 0,
+				all: to - from + 1
+			})
+		)
+
+		let progress = 0
+
+		try {
+			for (const record of rangeToFetch) {
+				if (record.playCount === undefined) {
+					// Fetch play count for each record
+					const playCount = await requestFor(
+						'songPlayCount',
+						record.difficulty,
+						record.idx
+					)
+					record.playCount = playCount
+					forceUpdaterForPlayCount.set(Date.now())
+				}
+				progress += 1
+				handle.updateContent(
+					m['viewer.fetch.play_count.progress']({
+						progress,
+						all: to - from + 1
+					})
+				)
+				handle.refreshCountdown()
+			}
+		} catch (error) {
+			console.error("Failed to fetch play counts:", error)
+			logger.log(m['viewer.fetch.play_count.error']())
+		} finally {
+			isFetching = false
+			handle.remove()
+		}
 	}
 
 	const constDataMessages = {
@@ -126,21 +187,25 @@
 			<div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center">
 				<div class="flex min-w-0 flex-1 items-center gap-2">
 					<input
+						bind:value={playCountFetchRange.from}
 						type="number"
 						min="1"
 						class="input input-bordered min-w-[80px] flex-1"
 						placeholder={m['viewer.settings.data.fetch_play_count.from']()} />
 					<span class="flex-shrink-0 text-textc-dim">~</span>
 					<input
+						bind:value={playCountFetchRange.to}
 						type="number"
 						min="1"
 						class="input input-bordered min-w-[80px] flex-1"
 						placeholder={m['viewer.settings.data.fetch_play_count.to']()} />
 				</div>
-				<button class="btn btn-primary w-full flex-shrink-0 sm:w-auto">
+				<button
+					class="btn btn-primary w-full flex-shrink-0 sm:w-auto"
+					disabled={!isRangeValid || isFetching}
+					onclick={fetchMultiplePlayCounts}>
 					{m['viewer.settings.data.fetch_play_count.button']()}
 				</button>
-				<!-- TODO: Implement batch fetch play count -->
 			</div>
 		{/if}
 

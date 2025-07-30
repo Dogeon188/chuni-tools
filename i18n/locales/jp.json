@@ -91,6 +91,10 @@
 				"progress": "{diff} のレコードを取得中...",
 				"unknown_song": "これらの楽曲は定数データが欠けています：\n\n{songs}\n\nこの問題を報告するには、X（旧Twitter）またはDiscordを通じて作者に連絡してください。"
 			},
+			"play_count": {
+				"progress": "プレイ回数を取得中... ({progress}/{all})",
+				"error": "プレイ回数の取得に失敗しました。ページをリロードする必要があるかもしれません。"
+			},
 			"error": {
 				"service_down": "CHUNITHM-NETはメンテナンス中です。\n\nCHUNITHM-NETの利用可能時間を確認して、後で戻ってきてください。",
 				"rejected": "だが断る！\n\nおそらく、他の場所でCHUNITHM-NETを開いているためです。**ページをリロード**、**[CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)に再ログイン**、または**ブックマークレットを再実行**してみてください。",
