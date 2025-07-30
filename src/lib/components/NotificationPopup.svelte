@@ -70,7 +70,7 @@
 					<!-- Progress bar -->
 					{#if showProgress}
 						<div class="absolute top-0 left-0 h-1 bg-blue-500 transition-all duration-100 ease-linear"
-							 style="width: {getProgress(message)}%">
+							 style:width="{getProgress(message)}%">
 						</div>
 					{/if}
 

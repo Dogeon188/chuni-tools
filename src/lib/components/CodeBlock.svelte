@@ -86,7 +86,8 @@
 
 <div class="relative mb-4 overflow-hidden rounded-lg bg-gray-900 shadow-lg {className}">
 	<!-- Header with title and copy button -->
-	<div class="flex items-center justify-between border-b border-borderc-normal bg-bgc-normal px-4 py-2">
+	<div
+		class="flex items-center justify-between border-b border-borderc-normal bg-bgc-normal px-4 py-2">
 		<div class="flex items-center gap-3">
 			{#if title}
 				<span class="text-sm font-medium text-textc-normal">{title}</span>
@@ -153,8 +154,8 @@
 			bind:this={codeElement}
 			class="m-0 flex-1 overflow-x-auto p-4 font-mono text-sm leading-6"
 			class:pl-4={showLineNumbers}
-			style="tab-size: 2;"><code class="blocklanguage-{language}"
-				>{@html highlightedCode}</code></pre>
+			style:tab-size="2">
+			<code class="blocklanguage-{language}">{@html highlightedCode}</code></pre>
 	</div>
 </div>
 

@@ -29,16 +29,19 @@ export function calcRank(score: number) {
 }
 
 const ratingPoints = [
-	{ score: 1009000, base: 21500, ratio: 0 },
-	{ score: 1007500, base: 20000, ratio: 1 },
-	{ score: 1005000, base: 15000, ratio: 2 },
-	{ score: 1000000, base: 10000, ratio: 1 },
+	{ score: 1009000, base: 21500 /* 2.15 * opScale */, ratio: 0 },
+	{ score: 1007500, base: 20000 /* 2 * opScale */, ratio: 1 },
+	{ score: 1005000, base: 15000 /* 1.5 * opScale */, ratio: 2 },
+	{ score: 1000000, base: 10000 /* 1 * opScale */, ratio: 1 },
 	{ score: 975000, base: 0, ratio: 0.4 },
-	{ score: 900000, base: -50000, ratio: 2 / 3 }
+	{ score: 900000, base: -50000 /* -5 * opScale */, ratio: 2 / 3 }
 ]
 
+export const ratingScale = 100
+export const opScale = 10000
+
 export function calcRawRating(song: ParsedRecord) {
-	const _const = Math.floor(song.const * 10000)
+	const _const = Math.floor(song.const * opScale)
 
 	if (song.score >= 900000) {
 		const point = ratingPoints.find((_point) => song.score >= _point.score)!
@@ -62,12 +65,16 @@ export function calcOp(song: ParsedRecord) {
 	// Multiply the OP by 10000 to circumvent the problem with decimal point arithmetic in JS --Cip
 	if (song.score >= 1010000) return calcOpMax(song)
 
-	const e1 = { AJ: 2000, FC: 1000, '': 0 }[song.clear]
-	const fixedConst = Math.floor(song.const * 10000)
+	const e1 = {
+		AJ: 2000 /* 0.2 * opScale */,
+		FC: 1000 /* 0.1 * opScale */,
+		'': 0
+	}[song.clear]
+	const fixedConst = Math.floor(song.const * opScale)
 	let _rating =
 		song.score < 1007500
 			? song.rawRating
-			: fixedConst + 20000 + 3 * (song.score - 1007500)
+			: fixedConst + 20000 /* 2 * opScale */ + 3 * (song.score - 1007500)
 
 	if (song.score >= 975000) _rating = Math.floor(_rating / 10) * 10
 	else _rating = Math.floor(_rating / 100) * 100
@@ -77,7 +84,7 @@ export function calcOp(song: ParsedRecord) {
 
 export function calcOpMax(song: ParsedRecord) {
 	// Multiply the OP by 10000 to circumvent the problem with decimal point arithmetic in JS --Cip
-	return (song.const + 3) * 5 * 10000
+	return (song.const + 3) * 5 * opScale
 }
 
 export function calcBestN(ratingList: number[], n: number) {

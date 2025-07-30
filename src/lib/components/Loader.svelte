@@ -35,7 +35,7 @@
 	{#each Array(5) as _, i}
 		<div
 			class="dot"
-			style="animation-delay: calc(0.1 * {i} * var(--duration));"
+			style:animation-delay="calc(0.1 * {i} * var(--duration));"
 		></div>
 	{/each}
 </div>

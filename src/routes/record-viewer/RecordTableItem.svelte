@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ranksMap } from '$lib/chuninet/rating'
+	import { opScale, ranksMap, ratingScale } from '$lib/chuninet/rating'
 	import { requestFor } from '$lib/cwr'
 	import logger from '$lib/logger'
 	import { m } from '$lib/paraglide/messages'
@@ -69,13 +69,13 @@
 	{:else if $showOverPower === 'value'}
 		<!-- Over Power Value -->
 		<td class="whitespace-nowrap">
-			{record.const < 0 ? '-' : (record.op / 10000).toFixed(2)}<!--
+			{record.const < 0 ? '-' : (record.op / opScale).toFixed(2)}<!--
 			--><span
 				class="text-xs text-textc-dim">
 				&#xFF0F;<!-- 
 				-->{record.const < 0
 					? '-'
-					: (record.opMax / 10000).toFixed(1)}
+					: (record.opMax / opScale).toFixed(1)}
 			</span>
 		</td>
 	{:else if $showOverPower === 'percent'}
@@ -96,7 +96,7 @@
 			? '-'
 			: record.rating == null
 				? '??.??'
-				: (record.rating / 100).toFixed(2)}
+				: (record.rating / ratingScale).toFixed(2)}
 	</td>
 
 	<!-- Clear -->

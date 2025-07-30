@@ -187,7 +187,8 @@
 		<!-- Active range -->
 		<div
 			class="absolute h-full rounded bg-borderc-form"
-			style="left: {minPercent}%; width: {maxPercent - minPercent}%">
+			style:left="{minPercent}%"
+			style:width="{maxPercent - minPercent}%">
 		</div>
 
 		<!-- Min handle -->
@@ -199,7 +200,7 @@
                    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-borderc-form disabled:cursor-not-allowed disabled:opacity-60"
 			class:shadow-[0_0_0_6px_rgba(59,130,246,0.3)]={isDraggingMin}
 			class:scale-110={isDraggingMin}
-			style="left: {minPercent}%"
+			style:left="{minPercent}%"
 			{disabled}
 			onmousedown={(e) => handleMouseDown(e, 'min')}
 			onkeydown={(e) => handleKeyDown(e, 'min')}
@@ -229,7 +230,7 @@
 				   focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-borderc-form disabled:cursor-not-allowed disabled:opacity-60"
 			class:shadow-[0_0_0_6px_rgba(59,130,246,0.3)]={isDraggingMax}
 			class:scale-110={isDraggingMax}
-			style="left: {maxPercent}%"
+			style:left="{maxPercent}%"
 			{disabled}
 			onmousedown={(e) => handleMouseDown(e, 'max')}
 			onkeydown={(e) => handleKeyDown(e, 'max')}
