@@ -1,9 +1,9 @@
 import {
-    fetchBestRecord,
-    fetchPlayerStats,
-    fetchPlayHistory,
-    fetchRecentRecord,
-    fetchSongPlayCount
+	fetchBestRecord,
+	fetchPlayerStats,
+	fetchPlayHistory,
+	fetchRecentRecord,
+	fetchSongPlayCount
 } from '$lib/chuninet/api';
 import type { Difficulty } from '$lib/chuninet/song';
 import { chuniNet } from '$lib/chuninet/website';
@@ -21,7 +21,7 @@ import { getCookie, getPostMessageFunction, getScriptBaseUrl } from '$lib/web';
 		const b = d.createElement('a')
 		b.className = 'chuni-tool-btn'
 		b.innerText = m['viewer.press_to_start']()
-		b.href = getScriptBaseUrl() + '/record-viewer/#best'
+		b.href = getScriptBaseUrl() + '/record-viewer#best'
 		b.target = 'recordViewer-' + Date.now()
 
 		d.querySelector('.clearfix')?.insertAdjacentElement('afterend', b)
