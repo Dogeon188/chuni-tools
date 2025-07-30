@@ -1,9 +1,26 @@
-import { paraglideVitePlugin } from '@inlang/paraglide-js';
-import { sveltekit } from '@sveltejs/kit/vite';
-import tailwindcss from '@tailwindcss/vite';
-import fs from 'node:fs';
-import { defineConfig } from 'vitest/config';
-import { viteDefine } from './vite.common.config.js';
+import { paraglideVitePlugin } from '@inlang/paraglide-js'
+import { sveltekit } from '@sveltejs/kit/vite'
+import tailwindcss from '@tailwindcss/vite'
+import fs from 'node:fs'
+import { defineConfig } from 'vitest/config'
+import { viteDefine } from './vite.common.config.js'
+
+const serverConfig = process.env.ENV === 'production' ? {
+	cors: {
+		origin: '*',
+		credentials: true
+	},
+	fs: {
+		allow: ['..']
+	},
+	hmr: {
+		overlay: false
+	},
+	https: {
+		key: fs.readFileSync('./.cert/key.pem'),
+		cert: fs.readFileSync('./.cert/cert.pem')
+	}
+} : {}
 
 export default defineConfig({
 	define: viteDefine,
@@ -11,27 +28,12 @@ export default defineConfig({
 		paraglideVitePlugin({
 			project: './i18n/project.inlang',
 			outdir: './src/lib/paraglide',
-			strategy: ["cookie", "baseLocale"]
+			strategy: ['cookie', 'baseLocale']
 		}),
 		tailwindcss(),
 		sveltekit()
 	],
-	server: {
-		cors: {
-			origin: '*',
-			credentials: true
-		},
-		fs: {
-			allow: ['..']
-		},
-		hmr: {
-			overlay: false
-		},
-		https: {
-			key: fs.readFileSync('./.cert/key.pem'),
-			cert: fs.readFileSync('./.cert/cert.pem')
-		}
-	},
+	server: serverConfig,
 	test: {
 		projects: [
 			{
@@ -60,4 +62,4 @@ export default defineConfig({
 			}
 		]
 	}
-});
+})

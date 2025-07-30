@@ -5,7 +5,6 @@
 	"printWidth": 90,
 	"semi": false,
 	"tabWidth": 4,
-	"svelteBracketNewLine": false,
 	"svelteSortOrder": "options-scripts-markup-styles",
 	"plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
 	"overrides": [
