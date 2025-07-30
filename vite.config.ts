@@ -8,13 +8,13 @@ import { viteDefine } from './vite.common.config.js';
 export default defineConfig({
 	define: viteDefine,
 	plugins: [
-		tailwindcss(),
-		sveltekit(),
 		paraglideVitePlugin({
 			project: './i18n/project.inlang',
 			outdir: './src/lib/paraglide',
 			strategy: ["cookie", "baseLocale"]
-		})
+		}),
+		tailwindcss(),
+		sveltekit()
 	],
 	server: {
 		cors: {
