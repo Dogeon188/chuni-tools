@@ -196,10 +196,10 @@
 </header>
 
 <!-- Main Content -->
-<div>
+<div id="main-content">
 	<PlayerStats />
 
-	<div class="card lg:mx-auto lg:max-w-2/3">
+	<div class="card lg:mx-auto lg:max-w-2/3 mt-8 mb-4">
 		<!-- Rank Counts -->
 		<div class="flex flex-row justify-center gap-4 md:gap-8">
 			{#each ['S', 'S+', 'SS', 'SS+', 'SSS', 'SSS+'] as rank}

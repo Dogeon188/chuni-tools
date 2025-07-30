@@ -104,7 +104,7 @@
 </div>
 
 <!-- Dummy elements for SSR to recognize difficulty color classes -->
-<div class="invisible">
+<div class="hidden">
 	<div class="text-diff-bas">Basic</div>
 	<div class="text-diff-adv">Advanced</div>
 	<div class="text-diff-exp">Expert</div>

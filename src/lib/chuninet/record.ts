@@ -72,7 +72,7 @@ export function parseRecord(
 			return
 		} else {
 			r.const = songInfo[r.difficulty as Difficulty]!
-			if (songInfo.uncertain?.includes(r.difficulty)) r.constUncertain = true
+			r.constUncertain = songInfo.uncertain?.includes(r.difficulty)
 			r.rawRating = calcRawRating(r)
 			r.genre = `${songInfo.genre}`
 			r.rating = Math.floor(r.rawRating / 100)

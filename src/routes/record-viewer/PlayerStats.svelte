@@ -97,7 +97,7 @@
 </div>
 
 <!-- Dummy elements for SSR to recognize honor color classes -->
-<div class="invisible">
+<div class="hidden">
 	<span class="text-honor-normal">Normal</span>
 	<span class="text-honor-bronze">Bronze</span>
 	<span class="text-honor-silver">Silver</span>

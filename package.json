@@ -57,6 +57,7 @@
 	"dependencies": {
 		"@inlang/paraglide-js": "^2.2.0",
 		"@types/markdown-it-container": "^2.0.10",
+		"html-to-image": "^1.11.13",
 		"markdown-it": "^14.1.0",
 		"markdown-it-container": "^4.0.0",
 		"material-icons": "^1.13.14"
