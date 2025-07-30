@@ -12,9 +12,7 @@
 </svelte:head>
 
 <div class="card mx-auto max-w-3xl">
-	<h1>
-		{m['about.title']()}
-	</h1>
+	<h1>{m['about.title']()}</h1>
 
 	<Markdown content={m['about.intro']()} />
 	<Markdown content={m['about.usage']()} />

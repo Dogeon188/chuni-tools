@@ -19,10 +19,10 @@
 </script>
 
 <div
-	class="card flex flex-row items-center justify-center gap-4 md:gap-16 lg:mx-auto lg:max-w-2/3"
+	class="card flex max-w-full flex-col items-center justify-center gap-4 md:flex-row md:gap-16 lg:mx-auto lg:max-w-2/3"
 >
 	{#if $playerStats}
-		<div class="flex max-w-1/2 flex-col">
+		<div class="flex max-w-full flex-col md:max-w-1/2">
 			<!-- Name & Rating -->
 			<div class="flex flex-row justify-center gap-4">
 				<h3 class="whitespace-nowrap">{$playerStats.name}</h3>
@@ -35,9 +35,9 @@
 			>
 				{#each $playerStats.honors as honor}
 					{#if honor !== null}
-						<div class="w-full overflow-clip rounded-md bg-bgc-dim px-1 py-1">
+						<div class="overflow-clip rounded-md bg-bgc-dim px-1 py-1">
 							<span
-								class="font-bold text-honor-{honor.color} text-nowrap inline-block"
+								class="font-bold text-honor-{honor.color} inline-block text-nowrap"
 								class:animate-marquee={honor.text.length > 20}
 							>
 								{honor.text}
