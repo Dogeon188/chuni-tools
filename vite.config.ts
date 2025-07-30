@@ -5,7 +5,7 @@ import fs from 'node:fs'
 import { defineConfig } from 'vitest/config'
 import { viteDefine } from './vite.common.config.js'
 
-const serverConfig = process.env.ENV === 'production' ? {
+const serverConfig = process.env.ENV === 'development' ? {
 	cors: {
 		origin: '*',
 		credentials: true

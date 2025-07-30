@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"dev:app": "vite dev",
-		"build": "npm run build:paraglide && npm run build:scripts && npm run build:app",
+		"build": "npm run build:app && npm run build:paraglide && npm run build:scripts && npm run build:app",
 		"build:dev": "ENV=development npm run build:scripts && npm run build:app",
 		"build:app": "ENV=production vite build",
 		"build:scripts": "ENV=production vite build --config vite.scripts.config.ts",
