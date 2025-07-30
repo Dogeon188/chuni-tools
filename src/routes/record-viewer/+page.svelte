@@ -142,7 +142,7 @@
 <div>
 	<PlayerStats />
 
-	<div class="card">
+	<div class="card lg:max-w-2/3 lg:mx-auto">
 		<!-- Rank Counts -->
 		<div class="flex flex-row justify-center gap-4 md:gap-8">
 			{#each ['S', 'S+', 'SS', 'SS+', 'SSS', 'SSS+'] as rank}

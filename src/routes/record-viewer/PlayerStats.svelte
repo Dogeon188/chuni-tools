@@ -2,6 +2,7 @@
 	import { calcBestN } from '$lib/chuninet/rating'
 	import Loader from '$lib/components/Loader.svelte'
 	import { floorToFixed } from '$lib/numeric'
+	import { m } from '$lib/paraglide/messages'
 	import { _page } from './+page'
 	import { bestRecord, playHistory, playerStats } from './fetched'
 	import { currentVersionId } from './preference'
@@ -9,23 +10,28 @@
 	const oldVersionRecords = $derived(
 		$bestRecord.filter((v) => v.version != $currentVersionId)
 	)
-	const currentVersionRecords = $derived(
+	const newVersionRecords = $derived(
 		$bestRecord.filter((v) => v.version == $currentVersionId)
 	)
-	const bestRating = $derived(oldVersionRecords.slice(0, 30).map((s) => s.rating))
-	const currentRating = $derived(
-		currentVersionRecords.slice(0, 20).map((s) => s.rating)
+	const oldVersionB30 = $derived(oldVersionRecords.slice(0, 30).map((s) => s.rating))
+	const newVersionB20 = $derived(
+		newVersionRecords.slice(0, 20).map((s) => s.rating)
 	)
-	const historyRating = $derived($playHistory.map((s) => s.rating))
+	const recentB30 = $derived(
+		$playHistory.slice(0, 30).map((s) => s.rating)
+	)
 </script>
 
-<div class="card flex flex-row items-center justify-center gap-16">
+<div class="card flex flex-row items-center justify-center gap-4 md:gap-16 lg:max-w-2/3 lg:mx-auto">
 	{#if $playerStats}
 		<div class="flex max-w-1/2 flex-col">
+			<!-- Name & Rating -->
 			<div class="flex flex-row justify-center gap-4">
 				<h3 class="whitespace-nowrap">{$playerStats.name}</h3>
 				<h3>{$playerStats.rating}</h3>
 			</div>
+
+			<!-- Honors -->
 			<div
 				class="flex flex-col justify-center gap-2 text-center text-xs md:text-sm">
 				{#each $playerStats.honors as honor}
@@ -43,39 +49,46 @@
 				{/each}
 			</div>
 		</div>
-		<div class="flex w-fit flex-col text-sm md:text-base whitespace-nowrap">
-			<div class="flex flex-row justify-between gap-8">
-				<span class="text-textc-info">Generated At</span>
-				<span class="stats-item-content">
-					{new Date().toLocaleDateString()}
-				</span>
-			</div>
-			<div class="flex flex-row justify-between gap-4">
-				<span class="text-textc-info">Best 30</span>
-				<span class="stats-item-content">
-					{floorToFixed(calcBestN(bestRating, 30) / 100, 4)}
-				</span>
-			</div>
-			<div class="flex flex-row justify-between gap-4">
-				<span class="text-textc-info">Current 20</span>
-				<span class="stats-item-content">
-					{floorToFixed(calcBestN(currentRating, 20) / 100, 4)}
-				</span>
-			</div>
+
+		<div class="grid grid-cols-[2fr_1fr] gap-x-4 w-fit text-sm whitespace-nowrap md:text-base">
+			<!-- Generated At -->
+			<span class="text-textc-info text-right">
+				{m['viewer.stats.generated_at']()}
+			</span>
+			<span class="text-left">
+				{new Date().toLocaleDateString()}
+			</span>
+			
+			<!-- New Version B20 -->
+			<span class="text-textc-info text-right">
+				{m['viewer.stats.current20']()}
+			</span>
+			<span class="text-left">
+				{floorToFixed(calcBestN(newVersionB20, 20) / 100, 4)}
+			</span>
+			
+			<!-- Old Version B30 -->
+			<span class="text-textc-info text-right">
+				{m['viewer.stats.old30']()}
+			</span>
+			<span class="text-left">
+				{floorToFixed(calcBestN(oldVersionB30, 30) / 100, 4)}
+			</span>
+			
 			{#if $_page === 'best'}
-				<div class="flex flex-row justify-between gap-4">
-					<span class="text-textc-info no-underline">Best 30</span>
-					<span class="stats-item-content">
-						{floorToFixed(calcBestN(bestRating, 30) / 100, 4)}
-					</span>
-				</div>
+				<!-- Play Count -->
+				<span class="text-textc-info text-right">
+					{m['viewer.stats.play_count']()}
+				</span>
+				<span class="text-left">{$playerStats.playCount} </span>
 			{:else if $_page === 'recent' || $_page === 'history'}
-				<div class="flex flex-row justify-between gap-4">
-					<span class="text-textc-info no-underline">History 30</span>
-					<span class="stats-item-content">
-						{floorToFixed(calcBestN(historyRating, 30) / 100, 4)}
-					</span>
-				</div>
+				<!-- Recent B30 -->
+				<span class="text-textc-info text-right">
+					{m['viewer.stats.recent30']()}
+				</span>
+				<span class="text-left">
+					{floorToFixed(calcBestN(recentB30, 30) / 100, 4)}
+				</span>
 			{/if}
 		</div>
 	{:else}

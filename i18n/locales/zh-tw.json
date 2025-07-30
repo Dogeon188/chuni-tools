@@ -82,6 +82,13 @@
 				"title": "遊玩資料"
 			}
 		},
+		"stats": {
+			"generated_at": "生成時間",
+			"current20": "新曲B20",
+			"old30": "舊曲B30",
+			"play_count": "遊玩次數",
+			"recent30": "近期B30"
+		},
 		"fetch": {
 			"record": {
 				"using_const": "使用的譜面定數版本：{name}",

@@ -94,6 +94,13 @@
 			},
 			"reset": "Reset All Preferences"
 		},
+		"stats": {
+			"generated_at": "Generated At",
+			"current20": "New Version B20",
+			"old30": "Old Version B30",
+			"play_count": "Play Count",
+			"recent30": "Recent B30"
+		},
 		"fetch": {
 			"record": {
 				"using_const": "Used song constant version: {name}",

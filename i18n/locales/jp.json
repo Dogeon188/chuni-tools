@@ -85,6 +85,13 @@
 				}
 			}
 		},
+		"stats": {
+			"generated_at": "生成日時",
+			"current20": "新曲枠20",
+			"old30": "ベスト枠30",
+			"play_count": "プレイ回数",
+			"recent30": "リーセント枠30"
+		},
 		"fetch": {
 			"record": {
 				"using_const": "使っている譜面定数バージョン: {name}",
