@@ -84,7 +84,7 @@
 	})
 </script>
 
-<div class="relative mb-4 overflow-hidden rounded-lg bg-gray-900 shadow-lg {className}">
+<div class="relative overflow-hidden rounded-lg max-w-full {className}">
 	<!-- Header with title and copy button -->
 	<div
 		class="flex items-center justify-between border-b border-borderc-normal bg-bgc-normal px-4 py-2">
@@ -101,8 +101,8 @@
 		<button
 			type="button"
 			class="flex cursor-pointer items-center gap-1 rounded border-none bg-bgc-accent/75 px-2 py-1 text-xs text-textc-dim transition-colors duration-200 hover:bg-bgc-accent hover:text-textc-normal"
-			class:!text-green-400={copied}
-			class:!bg-green-900={copied}
+			class:!text-textc-info={copied}
+			class:!bg-bgc-info={copied}
 			onclick={copyToClipboard}
 			title={copied ? 'Copied!' : 'Copy to clipboard'}>
 			{#if copied}
@@ -128,7 +128,7 @@
 		{/if}
 		<pre
 			bind:this={codeElement}
-			class="m-0 flex-1 overflow-x-auto p-4 font-mono text-sm leading-6"
+			class="!m-0 flex-1 overflow-x-auto p-4 font-mono text-sm leading-6 bg-gray-800 !rounded-t-none"
 			class:pl-4={showLineNumbers}
 			style:tab-size="2"><code class="blocklanguage-{language}"
 				>{@html highlightedCode}</code></pre>

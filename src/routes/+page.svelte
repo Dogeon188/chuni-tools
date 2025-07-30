@@ -16,24 +16,18 @@
 		{m['about.title']()}
 	</h1>
 
-	<div class="max-w-none">
-		<Markdown content={m['about.intro.about']()} />
-		<Markdown content={m['about.intro.contact']()} />
-	</div>
-
-	<div class="max-w-none">
-		<h2>{m['about.usage.title']()}</h2>
-		<h3><Markdown content={m['about.usage.viewer.title']()} /></h3>
-		<Markdown content={m['about.usage.viewer.description']()} />
-		<h3><Markdown content={m['about.usage.export_csv.title']()} /></h3>
-		<Markdown content={m['about.usage.export_csv.description']()} />
-	</div>
+	<Markdown content={m['about.intro']()} />
+	<Markdown content={m['about.usage']()} />
 
 	<div class="max-w-none">
 		<h2>{m['about.bookmarklet.title']()}</h2>
-		<CodeBlock title="bookmarklet" code={bookmarkletScript} language="js" />
+		<CodeBlock class="mb-4" code={bookmarkletScript} language="js" />
 		<Markdown content={m['about.bookmarklet.steps']()} />
-		<img src="img/chuni-net-viewer-button.png" alt="Chuni Net Viewer Button" class="block mb-4 w-lg mx-auto" />
+		<img
+			src="img/chuni-net-viewer-button.png"
+			alt="Chuni Net Viewer Button"
+			class="mx-auto mb-4 block w-lg"
+		/>
 		<Markdown content={m['about.bookmarklet.afterward']()} />
 	</div>
 </div>

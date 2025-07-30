@@ -77,6 +77,7 @@
 			<Markdown content={errorMessages[getErrorType($fetchError)]} />
 			<CodeBlock
 				showLanguage={false}
+				class="mb-4"
 				language="txt"
 				code={$fetchError?.name +
 					': ' +

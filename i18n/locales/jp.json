@@ -9,30 +9,17 @@
 		}
 	},
 	"about": {
-		"title": "CHUNITHM Toolsについて",
-		"intro": {
-			"about": "CHUNITHM Toolsを使用すると、CHUNITHMで**ベストレコード**、**最近のプレイ履歴**など、さまざまなプレイレコードを検索できます。楽曲定数データと組み合わせることで、ゲーム内の**レーティング**の詳細も確認できます。",
-			"contact": "今後さらなる機能の追加が予定されており、最高の体験を提供するためにブックマークレットツールを継続的に更新していきます。ご意見やご提案、改善点などがございましたら、[GitHub](https://github.com/Dogeon188/chuni-tools/issues)でイシューを作成するか、公式X（旧Twitter）アカウント[@ChuniToolsIntl](https://x.com/ChuniToolsIntl)にDMをお送りください。"
-		},
-		"usage": {
-			"title": "CHUNITHM Toolsでできること",
-			"viewer": {
-				"title": "レコードビューア",
-				"description": "レコードビューア機能です。この機能を使用するには、CHUNITHM-NETの[ホームページ](https://chunithm-net-eng.com/mobile/home/)でCHUNITHM Toolsを実行する必要があります。\n\nハイスコアレコード、最近のプレイレコードなどを検索できます。楽曲定数データを使用することで、**レーティングとOVER POWER**のデータも取得できます。レコードビューアの使用方法の詳細については、[このページ（作成中）](https://dogeon188.github.io/chuni-tools/record-viewer/manual)を参照してください。"
-			},
-			"export_csv": {
-				"title": "データをCSVでエクスポート",
-				"description": "**全難易度のハイスコアレコード**を単一のCSVファイルとしてエクスポートします。この機能を使用するには、CHUNITHM-NETの[楽曲レコード](https://chunithm-net-eng.com/mobile/record/musicGenre)ページでCHUNITHM Toolsを実行する必要があります。\n\nCSVファイルは、Excelなどのスプレッドシートソフトウェアで開くことができ、自分のレコードをさらに詳しく分析することができます。\n::: note ダウンロードファイルは**UTF-8エンコーディングで開く**必要があります。そうしないと、ファイルが正しく読み込まれない可能性があります。\n:::"
-			}
-		},
+		"title": "CHUNI TOOLSについて",
+		"intro": "CHUNI TOOLSを使用すると、CHUNITHMで**ベストレコード**、**最近のプレイ履歴**など、さまざまなプレイレコードを検索できます。楽曲定数データと組み合わせることで、ゲーム内の**レーティング**の詳細も確認できます。\n\n今後さらなる機能の追加が予定されており、最高の体験を提供するためにブックマークレットツールを継続的に更新していきます。ご意見やご提案、改善点などがございましたら、[GitHub](https://github.com/Dogeon188/chuni-tools/issues)でイシューを作成するか、公式X（旧Twitter）アカウント[@ChuniToolsIntl](https://x.com/ChuniToolsIntl)にDMをお送りください。",
+		"usage": "## CHUNI TOOLSでできること\n\n### レコードビューア\n\nレコードビューア機能です。この機能を使用するには、CHUNITHM-NETの[ホームページ](https://chunithm-net-eng.com/mobile/home/)でCHUNI TOOLSを実行する必要があります。\n\nハイスコアレコード、最近のプレイレコードなどを検索できます。楽曲定数データを使用することで、**レーティングとOVER POWER**のデータも取得できます。レコードビューアの使用方法の詳細については、[このページ（作成中）](https://dogeon188.github.io/chuni-tools/record-viewer-manual)を参照してください。\n\n### データをCSVでエクスポート\n\n**全難易度のハイスコアレコード**を単一のCSVファイルとしてエクスポートします。この機能を使用するには、CHUNITHM-NETの[楽曲レコード](https://chunithm-net-eng.com/mobile/record/musicGenre)ページでCHUNI TOOLSを実行する必要があります。\n\nCSVファイルは、Excelなどのスプレッドシートソフトウェアで開くことができ、自分のレコードをさらに詳しく分析することができます。\n::: note ダウンロードファイルは**UTF-8エンコーディングで開く**必要があります。そうしないと、ファイルが正しく読み込まれない可能性があります。\n:::",
 		"bookmarklet": {
-			"title": "CHUNITHM Toolsブックマークレットの使用方法",
+			"title": "CHUNI TOOLSブックマークレットの使用方法",
 			"steps": "1. 上記のリンクをコピーします。\n2. このページをブックマークに追加し、名前を**CHUNI TOOLS**に変更します。\n3. ブックマークリストを開き、追加したブックマークを見つけて**編集**し、元のリンクをクリアして、コピーしたリンクを貼り付け、最後に**保存**をクリックします。\n4. [CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)にアクセスします。以前にCHUNITHM-NETにログインしたことがない場合は、まずCHUNITHM-NETにログインする必要があります。[CHUNITHM-NETへのログイン方法は？（中国語）](https://chunithm.fandom.com/zh/wiki/CHUNITHM-NET?variant=zh-tw#Aime_%E5%B8%B3%E8%99%9F%E7%B6%81%E5%AE%9A)\n5. ログインに成功したら、**CHUNITHM-NETページで**ブックマークリストを開き、追加した**CHUNI TOOLS**ブックマークを見つけてクリックします。\n6. これで、下の画像に示すように、ページの上部にボタンが表示されます。**ボタンをクリック**すると、処理が実行されます。",
-			"afterward": "すべての手順に従って初回のレコードビューアの起動に成功した後は、**手順4から手順6**を繰り返すだけです。ブックマークレットの使用中に問題が発生した場合は、TwitterやDiscordで作者にDMしてください。"
+			"afterward": "すべての手順に従って初回のレコードビューアの起動に成功した後は、**手順4から手順6**を繰り返すだけです。ブックマークレットの使用中に問題が発生した場合は、XやDiscordで公式アカウントにDMしてください。"
 		}
 	},
 	"chuni_tools": {
-		"already_run": "CHUNITHM Toolsはすでに実行されています。もう一度実行するには、ページをリフレッシュしてください。",
+		"already_run": "CHUNI TOOLSはすでに実行されています。もう一度実行するには、ページをリフレッシュしてください。",
 		"wrong_place": "おっと！間違ったページにいるようです。CHUNITHM-NET Intl. ({chuniNetUrl})を開いてログインし、もう一度試してください。",
 		"require_login": "CHUNITHM-NETにログインしてください。",
 		"require_reload": "おっと！何か問題が発生しました。CHUNITHM-NETをリロードしてください。"
@@ -44,7 +31,7 @@
 	},
 	"viewer": {
 		"title": "CHUNI TOOLS レコードビューア",
-        "press_to_start": "レコードビューアへ",
+		"press_to_start": "レコードビューアへ",
 		"settings": {
 			"title": "設定",
 			"filters": {
@@ -87,7 +74,7 @@
 		},
 		"menu": {
 			"save_pic": "ベスト枠40を保存・共有",
-			"save_error": "スコアをPNGに変換中にエラーが発生しました。エラーメッセージをスクリーンショットして作者に送信してください。\n\n{error}",
+			"save_error": "スコアをPNGに変換中にエラーが発生しました。エラーメッセージをスクリーンショットして公式アカウントに送信してください。\n\n{error}",
 			"change_const": "楽曲定数データを変更する（現在: {name}）",
 			"settings": "設定"
 		},
@@ -102,7 +89,7 @@
 			"record": {
 				"using_const": "使っている譜面定数バージョン: {name}",
 				"progress": "{diff} のレコードを取得中...",
-				"unknown_song": "これらの楽曲は定数データが欠けています：\n\n{songs}\n\nこの問題を報告するには、X（旧Twitter）またはDiscordを通じて作者に連絡してください。"
+				"unknown_song": "これらの楽曲は定数データが欠けています：\n\n{songs}\n\nこの問題を報告するには、X（旧Twitter）またはDiscordを通じて公式アカウントに連絡してください。"
 			},
 			"play_count": {
 				"progress": "プレイ回数を取得中... ({progress}/{all})",
@@ -113,7 +100,7 @@
 				"rejected": "だが断る！\n\nおそらく、他の場所でCHUNITHM-NETを開いているためです。**ページをリロード**、**[CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)に再ログイン**、または**ブックマークレットを再実行**してみてください。",
 				"timeout": "接続が失われました。\n\nおそらく、CHUNITHM-NETのタブを他の場所に誤って移動してしまったためです。**[CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)**を再度開き、**ブックマークレットを再実行**してください。",
 				"noopener": "場所が間違っています！\n\nレコードビューアを使用するには、[CHUNITHM-NET](https://chunithm-net-eng.com/mobile/)を正しく開いてブックマークレットを実行してください。また、**ボタンを左クリック**したことを確認してください。中クリックなどで新しいタブを開かないでください。\n\n元のCHUNITHM-NETページを誤って閉じた場合は、このページを閉じてから再試行してください。",
-				"unknown": "未知のエラーが発生しました。\n\n**エラーのスクリーンショットまたはメッセージを**作者に送信してください。"
+				"unknown": "未知のエラーが発生しました。\n\n**エラーのスクリーンショットまたはメッセージを**公式アカウントに送信してください。"
 			}
 		},
 		"table": {

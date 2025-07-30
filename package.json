@@ -3,10 +3,10 @@
 	"version": "2.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "ENV=development vite dev",
+		"dev": "npm run dev:scripts && npm run dev:app",
 		"dev:app": "ENV=development vite dev",
 		"dev:scripts": "ENV=development vite build --config vite.scripts.config.ts",
-		"build": "ENV=production npm run build:app && npm run build:paraglide && npm run build:scripts && npm run build:app",
+		"build": "ENV=production npm run prepare && npm run build:paraglide && npm run build:scripts && npm run build:app",
 		"build:dev": "ENV=development npm run build:scripts && npm run build:app",
 		"build:app": "ENV=production vite build",
 		"build:scripts": "ENV=production vite build --config vite.scripts.config.ts",
