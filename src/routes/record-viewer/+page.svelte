@@ -120,6 +120,8 @@
 <div>
 	<PlayerStats />
 
+	<!-- Rank Counts -->
+
 	<button class="btn btn-primary" onclick={() => settingsRef!.open()}>
 		Open Settings
 	</button>
