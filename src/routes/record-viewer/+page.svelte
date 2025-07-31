@@ -82,7 +82,9 @@
 
 	const rankCounts = derived(filteredBestRecord, ($filteredBestRecord) => {
 		const counts: Record<string, number> = {}
-		ranks.forEach((rank) => { counts[rank] = 0 })
+		ranks.forEach((rank) => {
+			counts[rank] = 0
+		})
 		$filteredBestRecord.forEach((record) => {
 			if (record.score >= 0) {
 				counts[record.rank] = (counts[record.rank] || 0) + 1
@@ -210,10 +212,12 @@
 
 <!-- Main Content -->
 <div id="main-content">
-	<div class="flex flex-col items-center gap-4 px-4 xl:flex-row">
+	<div class="mb-4 flex flex-col items-center gap-4 px-4 xl:flex-row">
 		<PlayerStats />
 
-		<div class="card mb-4 flex max-w-full flex-col gap-4 lg:mx-auto lg:max-w-2/3">
+		<div
+			class="card mb-4 flex w-full max-w-full flex-col gap-4 md:w-auto lg:mx-auto lg:max-w-2/3"
+		>
 			<!-- Rank Counts -->
 			<div
 				class="flex max-w-full flex-row flex-wrap justify-center gap-4 md:flex-nowrap"

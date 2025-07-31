@@ -43,16 +43,19 @@
 </script>
 
 <div
-	class="relative flex h-8 w-full items-center overflow-hidden rounded-2xl {className}"
-	style:background-color={backgroundColor}>
+	class="relative flex h-6 w-full items-center overflow-hidden rounded-2xl {className}"
+	style:background-color={backgroundColor}
+>
 	<div
 		class="relative flex h-full items-center justify-center rounded-2xl transition-all duration-300 ease-in-out"
 		style:width="{percentage}%"
-		style:background-color={foregroundColor}>
+		style:background-color={foregroundColor}
+	>
 		{#if showLabel}
 			<span
 				class="overflow-hidden text-xs font-medium whitespace-nowrap drop-shadow-sm"
-				style:color={textColor}>
+				style:color={textColor}
+			>
 				{label}
 			</span>
 		{/if}
