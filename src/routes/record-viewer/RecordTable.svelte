@@ -26,7 +26,7 @@
 	const columns: Column[] = $derived([
 		{ name: 'order', sortBy: 'rating', noSortArrow: true },
 		{ name: 'title', sortBy: 'title' },
-		{ name: 'play_order', sortBy: 'playOrder', hidden: $_page !== 'history' },
+		{ name: 'play_order', sortBy: 'playOrder', hidden: $_page !== 'recent' },
 		{ name: 'const', sortBy: 'const' },
 		{
 			name: 'rank',
@@ -42,7 +42,7 @@
 		},
 		{ name: 'score', sortBy: 'score' },
 		{ name: 'rating', sortBy: 'rating' },
-		{ name: 'clear', sortBy: 'aj', hidden: $_page === 'recent' },
+		{ name: 'clear', sortBy: 'aj', hidden: $_page === 'current' },
 		{
 			name: 'play_count',
 			sortBy: 'playCount',

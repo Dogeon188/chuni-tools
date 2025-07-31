@@ -32,6 +32,9 @@
 
 	const routeChange: EventHandler<HashChangeEvent, Window> = (event) => {
 		$_page = (new URL(event.newURL).hash.slice(1) as typeof $_page) || 'best'
+		if (!['best', 'current', 'recent'].includes($_page)) {
+			$_page = 'best'
+		}
 	}
 
 	// Subscribe to the stores to ensure they are loaded
@@ -70,7 +73,7 @@
 	const shownRecords = $derived(
 		$_page === 'best'
 			? filteredBestRecord
-			: $_page === 'recent'
+			: $_page === 'current'
 				? recentRecord
 				: playHistory
 	)
@@ -137,7 +140,7 @@
 <Loading />
 
 <!-- Menu Buttons -->
-<div class="fixed top-2 right-2 sm:top-4 sm:right-4 z-[999] flex flex-row gap-2">
+<div class="fixed top-2 right-2 z-[999] flex flex-row gap-2 sm:top-4 sm:right-4">
 	<button
 		onclick={saveResultAsPicture}
 		class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-none bg-bgc-normal text-2xl text-textc-dim shadow-lg transition-shadow hover:bg-bgc-accent hover:shadow-2xl"
@@ -174,14 +177,23 @@
 	</button>
 </div>
 
-<header class="flex gap-4 sm:gap-16 p-4 sm:pt-0">
+<header class="flex gap-4 p-4 sm:gap-16 sm:pt-0">
 	<a id="best" href="#best" class="!decoration-none !no-underline">
 		<h4
 			class="!mb-0"
 			class:!text-textc-normal={$_page === 'best'}
 			class:!text-textc-dim={$_page !== 'best'}
 		>
-			BEST
+			{m['viewer.tabs.best']()}
+		</h4>
+	</a>
+	<a id="current" href="#current" class="!decoration-none !no-underline">
+		<h4
+			class="!mb-0"
+			class:!text-textc-normal={$_page === 'current'}
+			class:!text-textc-dim={$_page !== 'current'}
+		>
+			{m['viewer.tabs.current']()}
 		</h4>
 	</a>
 	<a id="recent" href="#recent" class="!decoration-none !no-underline">
@@ -190,16 +202,7 @@
 			class:!text-textc-normal={$_page === 'recent'}
 			class:!text-textc-dim={$_page !== 'recent'}
 		>
-			RECENT
-		</h4>
-	</a>
-	<a id="history" href="#history" class="!decoration-none !no-underline">
-		<h4
-			class="!mb-0"
-			class:!text-textc-normal={$_page === 'history'}
-			class:!text-textc-dim={$_page !== 'history'}
-		>
-			HISTORY
+			{m['viewer.tabs.recent']()}
 		</h4>
 	</a>
 </header>
@@ -211,22 +214,24 @@
 
 		<div class="card mb-4 flex max-w-full flex-col gap-4 lg:mx-auto lg:max-w-2/3">
 			<!-- Rank Counts -->
-			<div class="flex flex-row max-w-full flex-wrap justify-center gap-4 md:gap-8">
+			<div
+				class="flex max-w-full flex-row flex-wrap justify-center gap-4 md:flex-nowrap"
+			>
 				{#each ['S', 'S+', 'SS', 'SS+', 'SSS', 'SSS+'] as rank}
 					<div class="flex flex-col items-center">
 						<span class="text-xs text-textc-dim">{rank}</span>
-						<span class="md:text-lg text-textc-normal">
+						<span class="text-textc-normal md:text-lg">
 							{$rankCounts[rank] ?? 0}
 						</span>
 					</div>
 				{/each}
 				<div class="flex flex-col items-center">
 					<span class="text-xs text-clear-fc">FC</span>
-					<span class="md:text-lg text-textc-normal">{$fcCount}</span>
+					<span class="text-textc-normal md:text-lg">{$fcCount}</span>
 				</div>
 				<div class="flex flex-col items-center">
 					<span class="text-xs text-clear-aj">AJ</span>
-					<span class="md:text-lg text-textc-normal">{$ajCount}</span>
+					<span class="text-textc-normal md:text-lg">{$ajCount}</span>
 				</div>
 				<div class="flex flex-col items-center justify-end">
 					<span class="text-xs text-textc-dim">/{$totalCount}</span>
@@ -238,7 +243,7 @@
 				<div class="flex flex-row items-center justify-center">
 					<div class="flex flex-col items-center justify-center">
 						<span class="text-xs text-textc-dim">OVER POWER</span>
-						<span class="md:text-lg text-textc-normal">
+						<span class="text-textc-normal md:text-lg">
 							{($totalOverpower / opScale).toFixed(2)}
 						</span>
 						<span class="text-xs text-textc-dim">

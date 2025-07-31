@@ -19,7 +19,7 @@
 </script>
 
 <div
-	class="card flex max-w-full flex-col items-center justify-center gap-4 md:flex-row md:gap-16 lg:mx-auto lg:max-w-2/3"
+	class="card flex max-w-full flex-col items-center justify-center gap-4 md:flex-row md:gap-8 lg:mx-auto lg:max-w-2/3"
 >
 	{#if $playerStats}
 		<div class="flex max-w-full flex-col md:max-w-1/2">
@@ -85,7 +85,7 @@
 					{m['viewer.stats.play_count']()}
 				</span>
 				<span class="text-left">{$playerStats.playCount} </span>
-			{:else if $_page === 'recent' || $_page === 'history'}
+			{:else if $_page === 'current' || $_page === 'recent'}
 				<!-- Recent B30 -->
 				<span class="text-right text-textc-info">
 					{m['viewer.stats.recent30']()}

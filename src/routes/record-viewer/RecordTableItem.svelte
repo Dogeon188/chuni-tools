@@ -46,7 +46,7 @@
 	<td
 		class="max-w-48 overflow-hidden text-left
 	 text-nowrap overflow-ellipsis md:max-w-60 lg:max-w-72 xl:max-w-96"
-		colspan={$_page === 'history' ? 2 : 1}>
+		colspan={$_page === 'recent' ? 2 : 1}>
 		<span class="text-xs text-diff-{record.difficulty.toLowerCase()}">
 			{record.difficulty}
 		</span>
@@ -100,7 +100,7 @@
 	</td>
 
 	<!-- Clear -->
-	{#if $_page !== 'recent'}
+	{#if $_page !== 'current'}
 		<td
 			class="ajc-glow font-bold"
 			class:text-clear-fc={record.clear == 'FC'}

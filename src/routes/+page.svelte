@@ -22,7 +22,7 @@
 		<CodeBlock class="mb-4" code={bookmarkletScript} language="js" />
 		<Markdown content={m['about.bookmarklet.steps']()} />
 		<img
-			src="img/chuni-net-viewer-button.png"
+			src="img/viewer-button.png"
 			alt="Chuni Net Viewer Button"
 			class="mx-auto mb-4 block w-lg"
 		/>

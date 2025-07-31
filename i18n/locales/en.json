@@ -40,6 +40,11 @@
 	},
 	"viewer": {
 		"title": "CHUNI TOOLS Score Viewer",
+		"tabs": {
+			"best": "BEST",
+			"current": "CURRENT",
+			"recent": "RECENT"
+		},
 		"press_to_start": "Analyze Rating",
 		"settings": {
 			"title": "Settings",
@@ -89,8 +94,8 @@
 		},
 		"stats": {
 			"generated_at": "Generated At",
-			"current20": "New Version B20",
-			"old30": "Old Version B30",
+			"current20": "Current B20",
+			"old30": "Old B30",
 			"play_count": "Play Count",
 			"recent30": "Recent B30"
 		},
