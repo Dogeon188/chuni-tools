@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { recordSorts } from '$lib/chuninet/record'
 	import { m } from '$lib/paraglide/messages'
+	import { VirtualList } from 'svelte-virtuallists'
 	import { _page } from './+page'
 	import { showOverPower, showPlayCount } from './preference'
 	import RecordTableItem from './RecordTableItem.svelte'
@@ -65,7 +66,44 @@
 	}
 </script>
 
-<div class="w-full overflow-x-auto">
+<VirtualList class="record-table h-fit max-h-[125rem] w-full text-center" items={sortedRecords} isTable>
+	{#snippet header()}
+		<thead class="sticky top-0 bg-bgc-dim">
+			<tr>
+				{#each columns as column}
+					{#if !column.hidden}
+						<th
+							class="cursor-pointer px-2 py-1 whitespace-nowrap select-none hover:text-textc-normal"
+							class:text-textc-normal={sortBy === column.sortBy}
+							class:text-textc-dim={sortBy !== column.sortBy}
+							onclick={() => {
+								sortReverse =
+									sortBy === column.sortBy ? !sortReverse : false
+								sortBy = column.sortBy
+							}}
+						>
+							{#if column.sortBy && !column.noSortArrow}
+								<span class="sort-arrow">
+									{sortBy === column.sortBy
+										? sortReverse
+											? '▲'
+											: '▼'
+										: ''}
+								</span>
+							{/if}
+							{columnHeaderTexts[column.name]}
+						</th>
+					{/if}
+				{/each}
+			</tr>
+		</thead>
+	{/snippet}
+	{#snippet vl_slot({ item })}
+		<RecordTableItem record={item} />
+	{/snippet}
+</VirtualList>
+
+<!-- <div class="w-full overflow-x-auto">
 	<table class="w-full text-center text-xs md:text-base">
 		<thead>
 			<tr>
@@ -79,7 +117,8 @@
 								sortReverse =
 									sortBy === column.sortBy ? !sortReverse : false
 								sortBy = column.sortBy
-							}}>
+							}}
+						>
 							{#if column.sortBy && !column.noSortArrow}
 								<span class="sort-arrow">
 									{sortBy === column.sortBy
@@ -101,7 +140,7 @@
 			{/each}
 		</tbody>
 	</table>
-</div>
+</div> -->
 
 <!-- Dummy elements for SSR to recognize difficulty color classes -->
 <div class="hidden">
@@ -118,7 +157,12 @@
 </div>
 
 <style>
-	th {
-		padding: 0.5rem 0.25rem;
+	:global(.record-table table) {
+		border-collapse: collapse;
+		width: 100%;
+		thead {
+			position: sticky;
+			top: 0;
+		}
 	}
 </style>

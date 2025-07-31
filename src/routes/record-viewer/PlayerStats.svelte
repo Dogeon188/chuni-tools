@@ -53,7 +53,7 @@
 		</div>
 
 		<div
-			class="grid w-fit grid-cols-[2fr_1fr] gap-x-4 text-sm whitespace-nowrap md:text-base"
+			class="grid w-fit grid-cols-2 md:grid-cols-[2fr_1fr] gap-x-4 text-sm whitespace-nowrap md:text-base"
 		>
 			<!-- Generated At -->
 			<span class="text-right text-textc-info">

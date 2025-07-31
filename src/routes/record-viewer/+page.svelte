@@ -82,6 +82,7 @@
 
 	const rankCounts = derived(filteredBestRecord, ($filteredBestRecord) => {
 		const counts: Record<string, number> = {}
+		ranks.forEach((rank) => { counts[rank] = 0 })
 		$filteredBestRecord.forEach((record) => {
 			if (record.score >= 0) {
 				counts[record.rank] = (counts[record.rank] || 0) + 1

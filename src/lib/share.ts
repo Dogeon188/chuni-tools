@@ -13,10 +13,11 @@ export async function saveResultAsPicture() {
 	const n = <HTMLElement>resultNode?.cloneNode(true)
 
 	n.id = 'copied-main'
-    n.classList.add('p-4')
+	n.classList.add('p-4')
 	n.querySelectorAll('tbody tr:nth-child(n+41)').forEach((tr) => {
 		tr.remove()
 	})
+	n.querySelector('table')?.style.removeProperty('margin-bottom')
 
 	resultNode?.parentElement?.appendChild(n)
 
