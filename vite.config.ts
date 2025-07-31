@@ -5,24 +5,28 @@ import fs from 'node:fs'
 import { defineConfig } from 'vitest/config'
 import { viteDefine } from './vite.common.config.js'
 
-const serverConfig = process.env.ENV === 'development' ? {
-	cors: {
-		origin: '*',
-		credentials: true
-	},
-	fs: {
-		allow: ['..']
-	},
-	hmr: {
-		overlay: false
-	},
-	https: {
-		key: fs.readFileSync('./.cert/key.pem'),
-		cert: fs.readFileSync('./.cert/cert.pem')
-	}
-} : {}
+const serverConfig =
+	process.env.ENV === 'development'
+		? {
+				cors: {
+					origin: '*',
+					credentials: true
+				},
+				fs: {
+					allow: ['..']
+				},
+				hmr: {
+					overlay: false
+				},
+				https: {
+					key: fs.readFileSync('./.cert/key.pem'),
+					cert: fs.readFileSync('./.cert/cert.pem')
+				}
+			}
+		: {}
 
 export default defineConfig({
+	assetsInclude: ['**/*.md'],
 	define: viteDefine,
 	plugins: [
 		paraglideVitePlugin({

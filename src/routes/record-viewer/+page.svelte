@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { opScale, ranks } from '$lib/chuninet/rating'
-	import { Genre, genres } from '$lib/chuninet/song'
+	import { Genre, genres, versionId2Name } from '$lib/chuninet/song'
 	import NotificationPopup from '$lib/components/NotificationPopup.svelte'
 	import ProgressBar from '$lib/components/ProgressBar.svelte'
 	import { m } from '$lib/paraglide/messages'
@@ -22,6 +22,7 @@
 		filterConstMin,
 		filterDifficulty,
 		filterGenre,
+		filterVersion,
 		showOverPower,
 		usedConstData
 	} from './preference'
@@ -48,6 +49,7 @@
 			bestRecord,
 			filterDifficulty,
 			filterGenre,
+			filterVersion,
 			filterConstMin,
 			filterConstMax,
 			showOverPower
@@ -56,6 +58,7 @@
 			$bestRecord,
 			$filterDifficulty,
 			$filterGenre,
+			$filterVersion,
 			$filterConstMin,
 			$filterConstMax,
 			$showOverPower
@@ -64,9 +67,12 @@
 				(record) =>
 					($showOverPower != 'hide' || record.score >= 0) &&
 					$filterDifficulty[record.difficulty] &&
+					$filterVersion[versionId2Name[record.version]] &&
 					$filterGenre[genres.find((g) => Genre[g] == record.genre)!] &&
-					$filterConstMax >= record.const &&
-					record.const >= $filterConstMin
+					/* $filterConstMax >= record.const */
+					$filterConstMax > record.const - 0.05 &&
+					/* record.const >= $filterConstMin */
+					record.const + 0.05 > $filterConstMin
 			)
 	)
 
@@ -216,11 +222,11 @@
 		<PlayerStats />
 
 		<div
-			class="card mb-4 flex w-full max-w-full flex-col gap-4 md:w-auto lg:mx-auto lg:max-w-2/3"
+			class="card mb-4 flex w-full max-w-full flex-col gap-4 !p-4 md:w-auto md:!p-8 lg:mx-auto lg:max-w-2/3"
 		>
 			<!-- Rank Counts -->
 			<div
-				class="flex max-w-full flex-row flex-wrap justify-center gap-4 md:flex-nowrap"
+				class="flex max-w-full flex-row justify-center gap-2 sm:gap-4 md:flex-nowrap"
 			>
 				{#each ['S', 'S+', 'SS', 'SS+', 'SSS', 'SSS+'] as rank}
 					<div class="flex flex-col items-center">
