@@ -46,6 +46,9 @@ export const versionId = {
 	VERSE: 19,
 	XVERSE: 20
 }
+export const versionId2Name = Object.fromEntries(
+	Object.entries(versionId).map(([k, v]) => [v, k])
+) as Record<number, keyof typeof versionId>
 
 export const versions = Object.keys(versionId).filter(
 	(key) => key !== 'UNKNOWN'

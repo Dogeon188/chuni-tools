@@ -19,10 +19,10 @@
 </script>
 
 <div
-	class="card flex w-full max-w-full items-center justify-center gap-4 flex-row md:w-auto md:gap-8 lg:mx-auto lg:max-w-2/3"
+	class="card flex w-full max-w-full flex-row items-center justify-center gap-4 !p-4 md:w-auto md:gap-8 md:!p-8 lg:mx-auto lg:max-w-2/3"
 >
 	{#if $playerStats}
-		<div class="flex flex-col max-w-1/2">
+		<div class="flex max-w-1/2 flex-col">
 			<!-- Name & Rating -->
 			<div class="flex flex-row justify-center gap-4">
 				<h3 class="whitespace-nowrap">{$playerStats.name}</h3>

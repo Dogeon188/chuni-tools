@@ -114,7 +114,7 @@
 		{#key $forceUpdaterForPlayCount}
 				{#if record.playCount === undefined}
 					<td class="cursor-pointer" onclick={fetchPlayCount}>
-						<span class="rounded bg-bgc-normal">&emsp;</span>
+						<span class="rounded bg-bgc-accent">&emsp;</span>
 					</td>
 				{:else}
 					<td>{record.playCount ?? '?'}</td>
