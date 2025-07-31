@@ -1,6 +1,6 @@
 {
 	"name": "chuni-tools",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"type": "module",
 	"scripts": {
 		"dev": "npm run dev:scripts && npm run dev:app",
