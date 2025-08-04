@@ -47,7 +47,7 @@
 		class="max-w-48 overflow-hidden text-left
 	 text-nowrap overflow-ellipsis md:max-w-60 lg:max-w-72 xl:max-w-96"
 		colspan={$_page === 'recent' ? 2 : 1}>
-		<span class="text-xs text-diff-{record.difficulty.toLowerCase()}">
+		<span class="text-[8px] sm:text-xs text-diff-{record.difficulty.toLowerCase()}">
 			{record.difficulty}
 		</span>
 		{record.title}
@@ -125,7 +125,7 @@
 
 <style>
 	td {
-		padding: 0.5rem 0.25rem;
+		padding: 0.25rem;
 	}
 
 	.ajc .ajc-glow {

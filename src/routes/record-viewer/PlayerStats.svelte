@@ -19,19 +19,20 @@
 </script>
 
 <div
-	class="card flex w-full max-w-full flex-row items-center justify-center gap-4 !p-4 md:w-auto md:gap-8 md:!p-8 lg:mx-auto lg:max-w-2/3"
+	class="card flex w-full max-w-full flex-col items-center justify-center gap-4 !p-4 md:w-auto md:gap-8 md:!p-8 lg:mx-auto lg:max-w-2/3"
 >
 	{#if $playerStats}
-		<div class="flex max-w-1/2 flex-col">
-			<!-- Name & Rating -->
-			<div class="flex flex-row justify-center gap-4">
-				<h3 class="whitespace-nowrap">{$playerStats.name}</h3>
-				<h3>{$playerStats.rating}</h3>
+		<!-- Name & Rating -->
+		<div class="flex flex-row items-end justify-center gap-4">
+			<div class="text-xl font-bold whitespace-nowrap md:text-3xl">
+				{$playerStats.name}
 			</div>
-
+			<div class="font-bold text-textc-dim md:text-xl">{$playerStats.rating}</div>
+		</div>
+		<div class="flex flex-col sm:flex-row items-center gap-4 max-w-full">
 			<!-- Honors -->
 			<div
-				class="flex flex-col justify-center gap-2 text-center text-xs md:text-sm"
+				class="flex max-w-full sm:max-w-1/2 flex-col justify-center gap-2 text-center text-xs md:text-sm"
 			>
 				{#each $playerStats.honors as honor}
 					{#if honor !== null}
@@ -50,50 +51,50 @@
 					{/if}
 				{/each}
 			</div>
-		</div>
 
-		<div
-			class="grid w-fit grid-cols-2 gap-x-4 text-sm whitespace-nowrap md:grid-cols-[2fr_1fr] md:text-base"
-		>
-			<!-- Generated At -->
-			<span class="text-right text-textc-info">
-				{m['viewer.stats.generated_at']()}
-			</span>
-			<span class="text-left">
-				{new Date().toLocaleDateString()}
-			</span>
-
-			<!-- New Version B20 -->
-			<span class="text-right text-textc-info">
-				{m['viewer.stats.current20']()}
-			</span>
-			<span class="text-left">
-				{floorToFixed(calcBestN(newVersionB20, 20) / 100, 4)}
-			</span>
-
-			<!-- Old Version B30 -->
-			<span class="text-right text-textc-info">
-				{m['viewer.stats.old30']()}
-			</span>
-			<span class="text-left">
-				{floorToFixed(calcBestN(oldVersionB30, 30) / 100, 4)}
-			</span>
-
-			{#if $_page === 'best'}
-				<!-- Play Count -->
+			<div
+				class="grid min-w-1/2 grid-cols-2 gap-x-4 text-xs whitespace-nowrap sm:text-sm md:grid-cols-[2fr_1fr] md:text-base"
+			>
+				<!-- Generated At -->
 				<span class="text-right text-textc-info">
-					{m['viewer.stats.play_count']()}
-				</span>
-				<span class="text-left">{$playerStats.playCount} </span>
-			{:else if $_page === 'current' || $_page === 'recent'}
-				<!-- Recent B30 -->
-				<span class="text-right text-textc-info">
-					{m['viewer.stats.recent30']()}
+					{m['viewer.stats.generated_at']()}
 				</span>
 				<span class="text-left">
-					{floorToFixed(calcBestN(recentB30, 30) / 100, 4)}
+					{new Date().toLocaleDateString()}
 				</span>
-			{/if}
+
+				<!-- New Version B20 -->
+				<span class="text-right text-textc-info">
+					{m['viewer.stats.current20']()}
+				</span>
+				<span class="text-left">
+					{floorToFixed(calcBestN(newVersionB20, 20) / 100, 4)}
+				</span>
+
+				<!-- Old Version B30 -->
+				<span class="text-right text-textc-info">
+					{m['viewer.stats.old30']()}
+				</span>
+				<span class="text-left">
+					{floorToFixed(calcBestN(oldVersionB30, 30) / 100, 4)}
+				</span>
+
+				{#if $_page === 'best'}
+					<!-- Play Count -->
+					<span class="text-right text-textc-info">
+						{m['viewer.stats.play_count']()}
+					</span>
+					<span class="text-left">{$playerStats.playCount} </span>
+				{:else if $_page === 'current' || $_page === 'recent'}
+					<!-- Recent B30 -->
+					<span class="text-right text-textc-info">
+						{m['viewer.stats.recent30']()}
+					</span>
+					<span class="text-left">
+						{floorToFixed(calcBestN(recentB30, 30) / 100, 4)}
+					</span>
+				{/if}
+			</div>
 		</div>
 	{:else}
 		<Loader />

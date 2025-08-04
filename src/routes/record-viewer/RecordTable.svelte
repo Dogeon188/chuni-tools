@@ -66,7 +66,7 @@
 	}
 </script>
 
-<VirtualList class="record-table h-fit max-h-[125rem] w-full text-center" items={sortedRecords} isTable>
+<VirtualList class="record-table h-fit max-h-[125rem] w-full text-center text-sm sm:text-base" items={sortedRecords} isTable>
 	{#snippet header()}
 		<thead class="sticky top-0 bg-bgc-dim">
 			<tr>

@@ -218,7 +218,7 @@
 
 <!-- Main Content -->
 <div id="main-content">
-	<div class="mb-4 flex flex-col items-center gap-4 px-4 xl:flex-row">
+	<div class="mb-4 flex flex-col items-center gap-4 sm:px-4 xl:flex-row">
 		<PlayerStats />
 
 		<div
