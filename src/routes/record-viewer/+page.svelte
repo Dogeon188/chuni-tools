@@ -72,7 +72,9 @@
 					/* $filterConstMax >= record.const */
 					$filterConstMax > record.const - 0.05 &&
 					/* record.const >= $filterConstMin */
-					record.const + 0.05 > $filterConstMin
+					record.const + 0.05 > $filterConstMin &&
+					/* remove charts from current version */
+					!$recentRecord.map(record => record.title).includes(record.title)
 			)
 	)
 
