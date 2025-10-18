@@ -17,7 +17,7 @@ The chart constant data is from [CHUNITHM譜面定数メインフレーム](http
 **Setup https certificate** <br>
 chuni-tools can only be used with https. Install a tool such as [mkcert](https://github.com/FiloSottile/mkcert) and run the following.
 ```sh
-mkdir cert
+mkdir .cert
 cd .cert
 mkcert -cert-file cert.pem -key-file key.pem localhost
 cd ..
