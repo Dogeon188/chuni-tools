@@ -33,7 +33,7 @@
 
 	const routeChange: EventHandler<HashChangeEvent, Window> = (event) => {
 		$_page = (new URL(event.newURL).hash.slice(1) as typeof $_page) || 'best'
-		if (!['best', 'current', 'recent'].includes($_page)) {
+		if (!['best', 'current', 'recent', 'old'].includes($_page)) {
 			$_page = 'best'
 		}
 	}
@@ -75,14 +75,19 @@
 					record.const + 0.05 > $filterConstMin
 			)
 	)
+	
+	const old30 = derived([filteredBestRecord], ([$filteredBestRecord]) => 
+		$filteredBestRecord.filter((record) => !$recentRecord.map(record => record.title).includes(record.title))
+	);
+	
+	const shownRecordsMap = {
+		'best': filteredBestRecord,
+		'current': recentRecord,
+		'recent': playHistory,
+		'old': old30,
+	}
 
-	const shownRecords = $derived(
-		$_page === 'best'
-			? filteredBestRecord
-			: $_page === 'current'
-				? recentRecord
-				: playHistory
-	)
+	const shownRecords = $derived(shownRecordsMap[$_page] || recentRecord)
 
 	// rank counts
 
@@ -205,13 +210,22 @@
 			{m['viewer.tabs.current']()}
 		</h4>
 	</a>
-	<a id="recent" href="#recent" class="!decoration-none !no-underline">
+	<!-- <a id="recent" href="#recent" class="!decoration-none !no-underline">
 		<h4
 			class="!mb-0"
 			class:!text-textc-normal={$_page === 'recent'}
 			class:!text-textc-dim={$_page !== 'recent'}
 		>
 			{m['viewer.tabs.recent']()}
+		</h4>
+	</a> -->
+	<a id="old" href="#old" class="!decoration-none !no-underline">
+		<h4
+			class="!mb-0"
+			class:!text-textc-normal={$_page === 'old'}
+			class:!text-textc-dim={$_page !== 'old'}
+		>
+			{m['viewer.tabs.old']()}
 		</h4>
 	</a>
 </header>

@@ -29,3 +29,7 @@ src/lib/paraglide
 
 # Dev
 /.cert
+/.vscode
+/messages
+/project.inlang
+

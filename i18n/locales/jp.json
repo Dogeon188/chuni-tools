@@ -34,7 +34,8 @@
 		"tabs": {
 			"best": "ベスト",
 			"current": "新曲",
-			"recent": "リーセント"
+			"recent": "リーセント",
+			"old": "旧曲"
 		},
 		"press_to_start": "レコードビューアへ",
 		"settings": {

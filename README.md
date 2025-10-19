@@ -14,8 +14,42 @@ The chart constant data is from [CHUNITHM譜面定数メインフレーム](http
 
 ## Dev
 
-To initialize the repository, first use `bun install` or `npm install` to install the dependencies. After that, use `bun dev` or `npm run dev` to start the development server for the website part.
+**Setup https certificate** <br>
+chuni-tools can only be used with https. Install a tool such as [mkcert](https://github.com/FiloSottile/mkcert) and run the following.
+```sh
+mkdir .cert
+cd .cert
+mkcert -cert-file cert.pem -key-file key.pem localhost
+cd ..
+```
 
-To build the bookmarklet script, first create a certificate with any tool you like (e.g. [mkcert](https://github.com/FiloSottile/mkcert)) at `./cert`, then run `bun dev:scripts` or `npm run dev:scripts`. This will start a development server hosting from `./build`. Due to technical limitations, you still need to manually build the bookmarklet script separately with `bun build:scripts` or `npm run build:scripts`, which will output the script to `./build/scripts/*.js`.
+**Init Repo**
+```sh
+npm install
+# OR
+bun install
+```
+**Build scripts** <br>
+Due to technical limitations, you still need to manually build the bookmarklet script separately with the following command
+```sh
+npm run build:scripts
+# OR 
+bun build:scripts
+```
+The scripts will be generated at `./build/scripts/`.
 
-With `bun run build` or `npm run build`, you can build and compile the code to `./build`, then GitHub Pages will handle the rest.
+**Run Dev Environment**
+```
+npm run dev
+# OR
+bun dev
+```
+chuni-tools should be running on localhost and can be accessed at `https://localhost:5173`. You may get a warning about insecure certificate, you can safely ignore it.
+
+**Build Production Environment**
+```sh
+npm run build
+# OR
+bun run build
+```
+then GitHub Pages will handle the rest.
