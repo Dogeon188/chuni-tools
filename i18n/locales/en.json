@@ -43,7 +43,8 @@
 		"tabs": {
 			"best": "BEST",
 			"current": "CURRENT",
-			"recent": "RECENT"
+			"recent": "RECENT",
+			"old": "OLD"
 		},
 		"press_to_start": "Analyze Rating",
 		"settings": {
